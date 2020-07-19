@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ASPECT_RATIO, TouchableFeedback} from '../../utils/regex';
+import {Icon} from "native-base";
 
 class CommonButton extends Component {
 
@@ -9,13 +10,20 @@ class CommonButton extends Component {
     }
 
     render() {
-        const {theme, backgroundColor, borderColor, title, textColor, container, onPress} = this.props;
+        const {theme, backgroundColor, borderColor, title, textColor, container, onPress, dropDownArrow, arrowColor} = this.props;
 
         return (
             <View style={[styles.viewContainer, container]}>
                 <TouchableFeedback onPress={()=>onPress()}>
                     <View style={[styles.buttonInnerContainer, {backgroundColor, borderColor}]}>
                         <Text style={[styles.buttonText, {color: textColor}]}>{title}</Text>
+                        {
+                            dropDownArrow
+                            && <Icon type={'Feather'}
+                                     name={'chevron-down'}
+                                     style={{fontSize: 20, color: arrowColor, position: 'absolute', right: 20}}
+                            />
+                        }
                     </View>
                 </TouchableFeedback>
             </View>
@@ -30,6 +38,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
     },
     buttonInnerContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 18,
@@ -38,6 +47,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: ASPECT_RATIO(16),
-        fontWeight: '600',
+        fontWeight: '500',
     }
 });

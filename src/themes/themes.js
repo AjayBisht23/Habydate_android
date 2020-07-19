@@ -2,24 +2,24 @@ import {
   Black,
   White,
   gradientColor,
-  gradientTransparent, BUBBLELEFT, BUBBLERIGHT, TEXTCOLOR, INFOTEXTCOLOR, TIMETEXTCOLOR, PINK, BORDER,
+  gradientTransparent, BUBBLELEFT, BUBBLERIGHT, TEXTCOLOR, INFOTEXTCOLOR, TIMETEXTCOLOR, PINK, BORDER, LIGHTWHITE,
 } from './constantColors';
 
 export const THEMES = [
   {
-    key: 'DARK',
-    gradientColors: gradientColor,
-    gradientTransparentColors: gradientTransparent,
+    key: 'LIGHT',
     container: {
-      backgroundColor: Black,
-      headerTextColor: White,
+      backgroundColor: White,
+      headerTextColor: Black,
     },
-    primaryColor: White,
-    subPrimaryColor: White,
-    secondaryColor: White,
-    subSecondaryColor: White,
+    backgroundColor: White,
+    primaryColor: Black,
+    subPrimaryColor: INFOTEXTCOLOR,
+    secondaryColor: TEXTCOLOR,
+    subSecondaryColor: TIMETEXTCOLOR,
     pinkColor: PINK,
     borderColor: BORDER,
+    textInputBackgroundColor: LIGHTWHITE,
     chatTheme: {
       backgroundColor: Black,
       left: {
@@ -32,18 +32,16 @@ export const THEMES = [
       },
       right: {
         wrapper: {
-          backgroundColor: BUBBLELEFT
+          backgroundColor: BUBBLERIGHT
         },
         text: {
-          color: Black
+          color: White
         }
       },
     }
   },
   {
-    key: 'LIGHT',
-    gradientColors: gradientColor,
-    gradientTransparentColors: gradientTransparent,
+    key: 'DARK',
     container: {
       backgroundColor: White,
       headerTextColor: Black,
@@ -55,6 +53,7 @@ export const THEMES = [
     subSecondaryColor: TIMETEXTCOLOR,
     pinkColor: PINK,
     borderColor: BORDER,
+    textInputBackgroundColor: LIGHTWHITE,
     chatTheme: {
       backgroundColor: Black,
       left: {

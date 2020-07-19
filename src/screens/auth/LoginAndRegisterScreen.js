@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {connect} from 'react-redux';
-import Header from '../../components/general/Header';
+import HeaderComponent from '../../components/general/HeaderComponent';
 import {BORDER} from '../../themes/constantColors';
 import {Icon} from "native-base";
 import CountryPicker from 'react-native-country-picker-modal';
@@ -49,7 +49,7 @@ class LoginAndRegisterScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                 <Header theme onLeftPress={this.onBackPress}/>
+                 <HeaderComponent theme onLeftPress={this.onBackPress}/>
                  <View style={{flex: 1}}>
                      <Text style={[styles.titleText, {color: theme.primaryColor}]}>{title}</Text>
                      <Text style={[styles.subTitleText, {color: theme.subPrimaryColor}]}>{subTitle}</Text>

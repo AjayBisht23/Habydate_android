@@ -1,7 +1,7 @@
 import React, {Component, createRef} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
-import Header from '../../components/general/Header';
+import HeaderComponent from '../../components/general/HeaderComponent';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import {Black, White} from '../../themes/constantColors';
 import {ASPECT_RATIO, shadow, W_WIDTH} from '../../utils/regex';
@@ -22,11 +22,10 @@ class VerificationScreen extends Component {
     };
 
     nextPress = () => {
-        const {phone_number, countryCode, callingCode} = this.state;
+        const {value} = this.state;
         const {navigation, route} = this.props;
         let params = route.params;
-        let type = params.type;
-        navigation.navigate('Verification', {type, callingCode, phone_number});
+        navigation.navigate('RegistrationStep', {...params, value});
     };
 
     onChangeText = code => {
@@ -47,7 +46,7 @@ class VerificationScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <Header theme onLeftPress={this.onBackPress}/>
+                <HeaderComponent theme onLeftPress={this.onBackPress}/>
                 <View style={{flex: 1}}>
                     <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Enter verification code'}</Text>
                     <Text style={[styles.subTitleText, {color: theme.subPrimaryColor}]}>

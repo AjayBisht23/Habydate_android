@@ -9,6 +9,7 @@ import GetStartedScreen from '../screens/auth/GetStartedScreen';
 import HomeScreen from '../screens/dashboard/HomeScreen';
 import LoginAndRegisterScreen from '../screens/auth/LoginAndRegisterScreen';
 import VerificationScreen from '../screens/auth/VerificationScreen';
+import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -47,6 +48,7 @@ class AppNavigator extends React.PureComponent {
                   <Stack.Screen name="GetStarted" component={GetStartedScreen}/>
                   <Stack.Screen name="LoginAndRegister" component={LoginAndRegisterScreen}/>
                   <Stack.Screen name="Verification" component={VerificationScreen}/>
+                  <Stack.Screen name="RegistrationStep" component={RegistrationStepScreen}/>
                 </Stack.Navigator>
               : <Drawer.Navigator initialRouteName="Home">
                   <Drawer.Screen name="Home" component={HomeScreen} />
