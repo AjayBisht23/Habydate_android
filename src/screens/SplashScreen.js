@@ -41,10 +41,7 @@ class SplashScreen extends Component {
           justifyContent: 'center',
           backgroundColor: PINK,
         }}>
-        {/*<FastImage*/}
-        {/*  source={require('./../assets/appicons.png')}*/}
-        {/*  style={{width: 80, height: 80}}*/}
-        {/*/>*/}
+        <FastImage source={require('./../assets/splash_logo.png')} style={{width: 136, height: 120}}/>
       </View>
     );
   }

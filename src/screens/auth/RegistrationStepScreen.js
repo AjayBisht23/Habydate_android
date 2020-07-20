@@ -39,8 +39,14 @@ class RegistrationStepScreen extends Component {
     };
 
     onContinuesPress = (index) => {
+        let page = index + 1;
+        if (page > 8) {
+            const {navigation} = this.props;
+            navigation.navigate('AddPhoto');
+            return;
+        }
         this.scrollRef.scrollTo({x: (index * W_WIDTH), y: 0, animated: true});
-        this.setPage(index+1);
+        this.setPage(page);
     };
 
     setPage = (page) => {
@@ -50,6 +56,9 @@ class RegistrationStepScreen extends Component {
     onScrollMoment = (e) => {
         let offset = e.nativeEvent.contentOffset;
         let page = Math.round(offset.x / W_WIDTH) + 1;
+        if (page > 8)
+            return;
+
         this.setPage(page);
     };
 

@@ -27,11 +27,8 @@ class GetStartedScreen extends Component {
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                  <View style={styles.iconView}>
-                     <FastImage
-                       source={{uri: 'https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/tinder.png'}}
-                       style={{width: 70, height: 70}}
-                     />
-                     <Text style={[styles.logoText, {color: theme.pinkColor}]}>Epicbae</Text>
+                     <FastImage source={require('./../../assets/get_logo.png')} style={{width: 113, height: 82}}/>
+                     {/*<Text style={[styles.logoText, {color: theme.pinkColor}]}>Epicbae</Text>*/}
                  </View>
                  <Text style={[styles.titleText, {color: theme.primaryColor}]}>Chat. Date. Invite.</Text>
                  <CommonButton

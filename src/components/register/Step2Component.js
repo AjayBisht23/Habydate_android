@@ -3,13 +3,16 @@ import {StyleSheet, Text, View, ScrollView, FlatList, Modal} from 'react-native'
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
 import HeightModal from './HeightModal';
+import { DatePickerDialog } from 'react-native-datepicker-dialog'
+import moment from 'moment';
 
 class Step2Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            birthday: '',
+            dobText: 'MM / DD / YYYY',
+            dobDate: null,
             height: `0' / 00'`,
             modalVisible: false,
             selectedBodyType: '',
@@ -65,6 +68,37 @@ class Step2Component extends Component {
         this.setState({modalVisible: true});
     };
 
+    /**
+     * DOB textbox click listener
+     */
+    onDOBPress = () => {
+        let dobDate = this.state.dobDate;
+
+        if(!dobDate || dobDate == null){
+            dobDate = new Date();
+            this.setState({
+                dobDate: dobDate
+            });
+        }
+
+        //To open the dialog
+        this.dobDialogRef.open({
+            date: dobDate,
+            maxDate: new Date()
+        });
+    };
+
+    /**
+     * Call back for dob date picked event
+     *
+     */
+    onDOBDatePicked = (date) => {
+        this.setState({
+            dobDate: date,
+            dobText: moment(date).format('MM / DD / YYYY')
+        });
+    };
+
     onBodyTypePress = (item) => {
         this.setState({selectedBodyType: item.title});
     };
@@ -114,7 +148,7 @@ class Step2Component extends Component {
     };
 
     render() {
-        const {birthday, height, bodyTypeData, genderData, modalVisible} = this.state;
+        const {dobText, height, bodyTypeData, genderData, modalVisible} = this.state;
         const {theme} = this.props;
 
         return (
@@ -123,7 +157,16 @@ class Step2Component extends Component {
                     <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'My Birthday is'}</Text>
                     <View>
                         <Text style={[styles.titleTextInput, {color: theme.subPrimaryColor}]}>Date of Birth*</Text>
-                        <Text style={[styles.titleTextInput, {color: theme.subSecondaryColor}]}>Your age will be public</Text>
+                        <CommonButton
+                            theme={theme}
+                            container={{marginTop: 5}}
+                            backgroundColor={theme.textInputBackgroundColor}
+                            borderColor={theme.textInputBackgroundColor}
+                            textColor={theme.subPrimaryColor}
+                            title={dobText}
+                            onPress={this.onDOBPress}
+                        />
+                        <Text style={[styles.titleTextInput, {marginVertical: 10, color: theme.subSecondaryColor}]}>Your age will be public</Text>
                         <Text style={[styles.titleTextInput, {color: theme.subPrimaryColor}]}>Height</Text>
                         <CommonButton
                             theme={theme}
@@ -177,6 +220,7 @@ class Step2Component extends Component {
                                  }}
                     />
                 </Modal>
+                <DatePickerDialog ref={ref => this.dobDialogRef = ref} onDatePicked={this.onDOBDatePicked.bind(this)} />
             </View>
         );
     }

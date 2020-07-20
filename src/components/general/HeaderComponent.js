@@ -11,16 +11,16 @@ import {
 
 class HeaderComponent extends React.PureComponent {
     render() {
-        const {theme, onLeftPress, type, currentIndex} = this.props;
+        const {theme, title, rightView, onLeftPress, type, currentIndex} = this.props;
 
-        if (type === 1) {
+        if (type === 1) { // Register Step Header
             let getIndex = currentIndex;
             return (
                 <Header transparent>
                     <Left>
                         {
                             currentIndex === 1
-                                ? <Button style={{width: 40}} transparent onPress={()=>onLeftPress(1)}>
+                                ? <Button transparent onPress={()=>onLeftPress(1)}>
                                     <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
                                 </Button>
                                 : <Button style={{paddingLeft: 15}} transparent onPress={()=>onLeftPress(2)}>
@@ -36,7 +36,7 @@ class HeaderComponent extends React.PureComponent {
                     </Body>
                     <Right>
                         {
-                            getIndex > 2 && <Button style={{}} transparent onPress={()=>onLeftPress(3)}>
+                            getIndex > 2 && <Button transparent onPress={()=>onLeftPress(3)}>
                                 <Text style={{fontSize: 14, fontWeight: '600', color: theme.pinkColor}}>Skip</Text>
                             </Button>
                         }
@@ -48,10 +48,18 @@ class HeaderComponent extends React.PureComponent {
         return (
             <Header transparent>
                 <Left>
-                    <Button style={{width: 40}} transparent onPress={()=>onLeftPress()}>
+                    <Button transparent onPress={()=>onLeftPress()}>
                         <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
                     </Button>
                 </Left>
+                <Body>
+                    {
+                        title && <Text style={{fontSize: 22, fontWeight: '500', color: theme.primaryColor}}>{title}</Text>
+                    }
+                </Body>
+                <Right>
+                    {rightView}
+                </Right>
             </Header>
         );
     }

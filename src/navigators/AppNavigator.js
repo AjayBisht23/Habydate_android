@@ -10,6 +10,8 @@ import HomeScreen from '../screens/dashboard/HomeScreen';
 import LoginAndRegisterScreen from '../screens/auth/LoginAndRegisterScreen';
 import VerificationScreen from '../screens/auth/VerificationScreen';
 import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
+import AddPhotoScreen from '../screens/auth/AddPhotoScreen';
+import CongratulationsScreen from '../screens/auth/CongratulationsScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,6 +51,8 @@ class AppNavigator extends React.PureComponent {
                   <Stack.Screen name="LoginAndRegister" component={LoginAndRegisterScreen}/>
                   <Stack.Screen name="Verification" component={VerificationScreen}/>
                   <Stack.Screen name="RegistrationStep" component={RegistrationStepScreen}/>
+                  <Stack.Screen name="AddPhoto" component={AddPhotoScreen}/>
+                  <Stack.Screen name="Congratulations" component={CongratulationsScreen}/>
                 </Stack.Navigator>
               : <Drawer.Navigator initialRouteName="Home">
                   <Drawer.Screen name="Home" component={HomeScreen} />

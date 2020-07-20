@@ -19,7 +19,7 @@ import {
 import {getStore} from '../../App';
 // import {defaultRestClient} from "./restClient";
 import * as messages from './messages';
-import {Black, INFOTEXTCOLOR, White} from '../themes/constantColors';
+import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
 
 export const {OS} = Platform;
 export const TouchableFeedback =
@@ -61,7 +61,7 @@ export const shadow = (elevation, spread = 5, offsetX = 0, offsetY = 0) => Platf
     },
     shadowOpacity: 0.5,
     shadowRadius: spread,
-    shadowColor: INFOTEXTCOLOR
+    shadowColor: TIMETEXTCOLOR
   },
   android: {
     elevation: elevation
