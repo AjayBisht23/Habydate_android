@@ -12,6 +12,21 @@ import VerificationScreen from '../screens/auth/VerificationScreen';
 import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
 import AddPhotoScreen from '../screens/auth/AddPhotoScreen';
 import CongratulationsScreen from '../screens/auth/CongratulationsScreen';
+import MenuScreen from '../screens/dashboard/menu/MenuScreen';
+import {W_WIDTH} from '../utils/regex';
+import MatchesScreen from '../screens/dashboard/matches/MatchesScreen';
+import MessagesScreen from '../screens/dashboard/messages/MessagesScreen';
+import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMeScreen';
+import SeekerRequestScreen from '../screens/dashboard/messages/SeekerRequestScreen';
+import PaymentPackagesScreen from '../screens/dashboard/payment/PaymentPackagesScreen';
+import PaymentMethodScreen from '../screens/dashboard/payment/PaymentMethodScreen';
+import NotificationsScreen from '../screens/dashboard/notifications/NotificationsScreen';
+import SeekerDetailScreen from '../screens/dashboard/seekers/SeekerDetailScreen';
+import SeekerListsScreen from '../screens/dashboard/seekers/SeekerListsScreen';
+import SeekerUsersScreen from '../screens/dashboard/seekers/SeekerUsersScreen';
+import SeekerSendRequestScreen from '../screens/dashboard/seekers/SeekerSendRequestScreen';
+import SettingsScreen from '../screens/dashboard/settings/SettingsScreen';
+import AccountSettingScreen from '../screens/dashboard/settings/AccountSettingScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -26,6 +41,61 @@ const navigationOption = () => {
 };
 
 let appNav = null;
+
+function MatchesStackScreen() {
+  return (
+      <Stack.Navigator screenOptions={navigationOption()}>
+        <Stack.Screen name="Matches" component={MatchesScreen} />
+      </Stack.Navigator>
+  );
+}
+
+function MessagesStackScreen() {
+  return (
+      <Stack.Navigator screenOptions={navigationOption()}>
+        <Stack.Screen name="Messages" component={MessagesScreen} />
+        <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
+        <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
+      </Stack.Navigator>
+  );
+}
+
+function PaymentStackScreen() {
+  return (
+      <Stack.Navigator screenOptions={navigationOption()}>
+        <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
+        <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
+      </Stack.Navigator>
+  );
+}
+
+function NotificationStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="Notification" component={NotificationsScreen} />
+            <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
+        </Stack.Navigator>
+    );
+}
+
+function SeekerStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            {/*<Stack.Screen name="SeekerList" component={SeekerListsScreen} />*/}
+            <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
+            <Stack.Screen name="SeekerSendRequest" component={SeekerSendRequestScreen} />
+        </Stack.Navigator>
+    );
+}
+
+function SettingStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="Setting" component={SettingsScreen} />
+            <Stack.Screen name="AccountSetting" component={AccountSettingScreen} />
+        </Stack.Navigator>
+    );
+}
 
 class AppNavigator extends React.PureComponent {
   constructor(props) {
@@ -54,8 +124,16 @@ class AppNavigator extends React.PureComponent {
                   <Stack.Screen name="AddPhoto" component={AddPhotoScreen}/>
                   <Stack.Screen name="Congratulations" component={CongratulationsScreen}/>
                 </Stack.Navigator>
-              : <Drawer.Navigator initialRouteName="Home">
+              : <Drawer.Navigator initialRouteName="Home"
+                                  drawerContent={props => <MenuScreen {...props} />}
+                                  edgeWidth={W_WIDTH - 50}>
                   <Drawer.Screen name="Home" component={HomeScreen} />
+                  <Drawer.Screen name="Payments" component={PaymentStackScreen} />
+                  <Drawer.Screen name="Matches" component={MatchesStackScreen} />
+                  <Drawer.Screen name="Messages" component={MessagesStackScreen} />
+                  <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
+                  <Drawer.Screen name="Seekers" component={SeekerStackScreen} />
+                  <Drawer.Screen name="Settings" component={SettingStackScreen} />
                 </Drawer.Navigator>
           }
       </NavigationContainer>

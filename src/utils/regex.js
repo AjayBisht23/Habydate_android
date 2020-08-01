@@ -31,9 +31,11 @@ const X_HEIGHT = 812;
 const XSMAX_WIDTH = 414;
 const XSMAX_HEIGHT = 896;
 
-export const {height: W_HEIGHT, width: W_WIDTH} = Dimensions.get('window');
+export const W_HEIGHT = Dimensions.get('window').height;
+export const W_WIDTH = Dimensions.get('window').width;
 
 export const ASPECT_RATIO = (value) => (value * X_HEIGHT) / 812;
+export const HEIGHT_RATIO = (value) => (value * W_HEIGHT);
 
 let isIPhoneX = false;
 

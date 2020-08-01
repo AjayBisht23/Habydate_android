@@ -93,7 +93,7 @@ class Step5Component extends Component {
                         <FlatList
                             data={maritalData}
                             renderItem={this.renderMaritalItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                     </View>
                 </ScrollView>

@@ -98,7 +98,7 @@ class Step6Component extends Component {
                         <FlatList
                             data={lookingData}
                             renderItem={this.renderLookingForItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                     </View>
                 </ScrollView>

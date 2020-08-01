@@ -88,7 +88,7 @@ class Step7Component extends Component {
                         <FlatList
                             data={religionData}
                             renderItem={this.renderReligionItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                     </View>
                 </ScrollView>

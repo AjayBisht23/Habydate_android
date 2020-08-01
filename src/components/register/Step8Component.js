@@ -149,19 +149,19 @@ class Step8Component extends Component {
                         <FlatList
                             data={drinkingData}
                             renderItem={this.renderDrinkingItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Smoking`}</Text>
                         <FlatList
                             data={smokingData}
                             renderItem={this.renderSmokingItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Eating`}</Text>
                         <FlatList
                             data={eatingData}
                             renderItem={this.renderEatingItem}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                     </View>
                 </ScrollView>

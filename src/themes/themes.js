@@ -2,7 +2,16 @@ import {
   Black,
   White,
   gradientColor,
-  gradientTransparent, BUBBLELEFT, BUBBLERIGHT, TEXTCOLOR, INFOTEXTCOLOR, TIMETEXTCOLOR, PINK, BORDER, LIGHTWHITE,
+  gradientTransparent,
+  BUBBLELEFT,
+  BUBBLERIGHT,
+  TEXTCOLOR,
+  INFOTEXTCOLOR,
+  TIMETEXTCOLOR,
+  PINK,
+  BORDER,
+  LIGHTWHITE,
+  PRIMARYB,
 } from './constantColors';
 
 export const THEMES = [
@@ -13,6 +22,7 @@ export const THEMES = [
       headerTextColor: Black,
     },
     backgroundColor: White,
+    primaryBackgroundColor: PRIMARYB,
     primaryColor: Black,
     subPrimaryColor: INFOTEXTCOLOR,
     secondaryColor: TEXTCOLOR,

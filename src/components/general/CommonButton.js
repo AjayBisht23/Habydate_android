@@ -10,12 +10,12 @@ class CommonButton extends Component {
     }
 
     render() {
-        const {theme, backgroundColor, borderColor, title, textColor, container, onPress, dropDownArrow, arrowColor} = this.props;
+        const {theme, backgroundColor, borderColor, title, textColor, container, innerContainer, onPress, dropDownArrow, arrowColor} = this.props;
 
         return (
             <View style={[styles.viewContainer, container]}>
                 <TouchableFeedback onPress={()=>onPress()}>
-                    <View style={[styles.buttonInnerContainer, {backgroundColor, borderColor}]}>
+                    <View style={[styles.buttonInnerContainer, {backgroundColor, borderColor}, innerContainer]}>
                         <Text style={[styles.buttonText, {color: textColor}]}>{title}</Text>
                         {
                             dropDownArrow
