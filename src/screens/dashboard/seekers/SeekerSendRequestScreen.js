@@ -105,6 +105,7 @@ class SeekerSendRequestScreen extends Component {
                                         backgroundColor: theme.textInputBackgroundColor,
                                         height: 100,
                                         padding: 15,
+                                        paddingTop: 15,
                                         borderRadius: 15,
                                         marginTop: 5
                                     }}

@@ -25,6 +25,8 @@
     "react-native-datepicker-dialog": "0.0.9",
     "react-native-fast-image": "^8.2.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-parallax-scroll-view": "^0.21.3",
+    "react-native-read-more-text": "^1.1.2",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.1.1",
     "react-native-screens": "^2.9.0",

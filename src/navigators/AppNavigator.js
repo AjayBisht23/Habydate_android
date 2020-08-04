@@ -27,6 +27,9 @@ import SeekerUsersScreen from '../screens/dashboard/seekers/SeekerUsersScreen';
 import SeekerSendRequestScreen from '../screens/dashboard/seekers/SeekerSendRequestScreen';
 import SettingsScreen from '../screens/dashboard/settings/SettingsScreen';
 import AccountSettingScreen from '../screens/dashboard/settings/AccountSettingScreen';
+import MyProfileScreen from '../screens/dashboard/profile/MyProfileScreen';
+import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen';
+import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -42,6 +45,25 @@ const navigationOption = () => {
 
 let appNav = null;
 
+function MyProfileStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            {/*<Stack.Screen name="MyProfile" component={MyProfileScreen} />*/}
+            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
+            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+        </Stack.Navigator>
+    );
+}
+
+function PaymentStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
+            <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
+        </Stack.Navigator>
+    );
+}
+
 function MatchesStackScreen() {
   return (
       <Stack.Navigator screenOptions={navigationOption()}>
@@ -56,15 +78,6 @@ function MessagesStackScreen() {
         <Stack.Screen name="Messages" component={MessagesScreen} />
         <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
         <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
-      </Stack.Navigator>
-  );
-}
-
-function PaymentStackScreen() {
-  return (
-      <Stack.Navigator screenOptions={navigationOption()}>
-        <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
-        <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
       </Stack.Navigator>
   );
 }
@@ -127,6 +140,7 @@ class AppNavigator extends React.PureComponent {
               : <Drawer.Navigator initialRouteName="Home"
                                   drawerContent={props => <MenuScreen {...props} />}
                                   edgeWidth={W_WIDTH - 50}>
+                  <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
                   <Drawer.Screen name="Home" component={HomeScreen} />
                   <Drawer.Screen name="Payments" component={PaymentStackScreen} />
                   <Drawer.Screen name="Matches" component={MatchesStackScreen} />

@@ -130,7 +130,7 @@ class MenuScreen extends Component {
                             borderColor={theme.primaryColor}
                             textColor={theme.backgroundColor}
                             title={'My Profile'}
-                            onPress={this.discoverNowPress}
+                            onPress={() => navigation.navigate('MyProfile')}
                         />
                         <FlatList
                             data={data}
