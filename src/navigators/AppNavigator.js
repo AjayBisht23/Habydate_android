@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import SplashScreen from '../screens/SplashScreen';
 import enableFontPatch from './enableFontPatch';
 import GetStartedScreen from '../screens/auth/GetStartedScreen';
-import HomeScreen from '../screens/dashboard/HomeScreen';
+import HomeScreen from '../screens/dashboard/home/HomeScreen';
 import LoginAndRegisterScreen from '../screens/auth/LoginAndRegisterScreen';
 import VerificationScreen from '../screens/auth/VerificationScreen';
 import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
@@ -45,10 +45,20 @@ const navigationOption = () => {
 
 let appNav = null;
 
+function HomeStackScreen() {
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
+            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+        </Stack.Navigator>
+    );
+}
+
 function MyProfileStackScreen() {
     return (
         <Stack.Navigator screenOptions={navigationOption()}>
-            {/*<Stack.Screen name="MyProfile" component={MyProfileScreen} />*/}
+            <Stack.Screen name="MyProfile" component={MyProfileScreen} />
             <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
             <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
         </Stack.Navigator>
@@ -141,7 +151,7 @@ class AppNavigator extends React.PureComponent {
                                   drawerContent={props => <MenuScreen {...props} />}
                                   edgeWidth={W_WIDTH - 50}>
                   <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
-                  <Drawer.Screen name="Home" component={HomeScreen} />
+                  <Drawer.Screen name="Home" component={HomeStackScreen} />
                   <Drawer.Screen name="Payments" component={PaymentStackScreen} />
                   <Drawer.Screen name="Matches" component={MatchesStackScreen} />
                   <Drawer.Screen name="Messages" component={MessagesStackScreen} />

@@ -11,7 +11,7 @@ import {
 
 class HeaderComponent extends React.PureComponent {
     render() {
-        const {theme, title, rightView, onLeftPress, type, currentIndex} = this.props;
+        const {theme, title, leftView, rightView, onLeftPress, type, currentIndex} = this.props;
 
         if (type === 1) { // Register Step Header
             let getIndex = currentIndex;
@@ -48,9 +48,13 @@ class HeaderComponent extends React.PureComponent {
         return (
             <Header transparent>
                 <Left>
-                    <Button transparent onPress={()=>onLeftPress()}>
-                        <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
-                    </Button>
+                    {
+                        leftView
+                            ? leftView
+                            : <Button transparent onPress={()=>onLeftPress()}>
+                                <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
+                            </Button>
+                    }
                 </Left>
                 <Body>
                     {
