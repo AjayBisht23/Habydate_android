@@ -176,7 +176,7 @@ class MessagesScreen extends Component {
                         data={messageData}
                         extraData={messageData}
                         ListHeaderComponent={this.renderHeader}
-                        renderItem={({item}) => <MessagesComponent theme={theme} item={item}/> }
+                        renderItem={({item}) => <MessagesComponent theme={theme} item={item} navigation={navigation}/> }
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>

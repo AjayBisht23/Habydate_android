@@ -30,6 +30,7 @@ import AccountSettingScreen from '../screens/dashboard/settings/AccountSettingSc
 import MyProfileScreen from '../screens/dashboard/profile/MyProfileScreen';
 import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen';
 import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
+import ChatScreen from '../screens/dashboard/messages/ChatScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -88,6 +89,7 @@ function MessagesStackScreen() {
         <Stack.Screen name="Messages" component={MessagesScreen} />
         <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
         <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>
   );
 }

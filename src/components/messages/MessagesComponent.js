@@ -11,27 +11,29 @@ class MessagesComponent extends Component {
     }
 
     render() {
-        const {theme, item} = this.props;
+        const {theme, item, navigation} = this.props;
 
         return (
-            <View style={[styles.container]}>
-                <View style={styles.rowView}>
-                    <View style={styles.profileView}>
-                        <FastImage source={{uri: item.photoUrl}} style={{width: 46, height: 46, borderRadius: 23}}/>
-                        <View style={[styles.onlineView, {backgroundColor: item.online ? ONLINE : theme.subSecondaryColor}]} />
-                    </View>
-                    <View style={[styles.textView, {borderColor: theme.borderColor}]}>
-                         <View style={[styles.innerRowView]}>
-                             <Text style={[styles.nameText, {color: theme.secondaryColor}]}>{item.name}</Text>
-                             <Text style={[styles.timeText, {color: theme.secondaryColor}]}>{item.date}</Text>
-                         </View>
-                        <View style={[styles.innerRowView, {marginTop: 5}]}>
-                            <Text style={[styles.messageText, {color: theme.primaryColor}]}>{item.massage}</Text>
-                            {item.read && <View style={styles.readView}/>}
+            <TouchableFeedback onPress={() => navigation.navigate('ChatScreen')}>
+                <View style={[styles.container]}>
+                    <View style={styles.rowView}>
+                        <View style={styles.profileView}>
+                            <FastImage source={{uri: item.photoUrl}} style={{width: 46, height: 46, borderRadius: 23}}/>
+                            <View style={[styles.onlineView, {backgroundColor: item.online ? ONLINE : theme.subSecondaryColor}]} />
+                        </View>
+                        <View style={[styles.textView, {borderColor: theme.borderColor}]}>
+                            <View style={[styles.innerRowView]}>
+                                <Text style={[styles.nameText, {color: theme.secondaryColor}]}>{item.name}</Text>
+                                <Text style={[styles.timeText, {color: theme.secondaryColor}]}>{item.date}</Text>
+                            </View>
+                            <View style={[styles.innerRowView, {marginTop: 5}]}>
+                                <Text style={[styles.messageText, {color: theme.primaryColor}]}>{item.massage}</Text>
+                                {item.read && <View style={styles.readView}/>}
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+            </TouchableFeedback>
         );
     }
 }
