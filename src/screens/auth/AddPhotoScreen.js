@@ -9,6 +9,7 @@ class AddPhotoScreen extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props.route.params);
         this.state = {
             profilePicUrl: '',
             photoData: [

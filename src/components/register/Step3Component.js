@@ -2,93 +2,25 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {W_WIDTH} from '../../utils/regex';
+import {personalityData, sexualityData} from '../../json/RegisterJson';
 
 class Step3Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedSexuality: '',
-            selectedPersonality: '',
-            sexualityData: [
-                {
-                    id: 1,
-                    title: 'Straight',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Gay',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Lesbian',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'Bisexual',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Trans',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Others',
-                    selected: false
-                },
-            ],
-            personalityData: [
-                {
-                    id: 1,
-                    title: 'Funny',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Romantic',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Open-minded',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'Faithful',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Shy',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Moody',
-                    selected: false
-                },
-                {
-                    id: 7,
-                    title: 'Entrepreneur',
-                    selected: false
-                },
-                {
-                    id: 8,
-                    title: 'Others',
-                    selected: false
-                },
-            ]
+            selectedSexuality: props.selectedSexuality,
+            selectedPersonality: props.selectedPersonality,
+            sexualityData: sexualityData,
+            personalityData: personalityData
         }
     }
 
     onSexualityPress = (item) => {
-        this.setState({selectedSexuality: item.title});
+        if (item.title === this.state.selectedSexuality)
+            this.setState({selectedSexuality: ''});
+        else
+            this.setState({selectedSexuality: item.title});
     };
 
     renderSexualityItem = ({ item }) => {
@@ -112,10 +44,16 @@ class Step3Component extends Component {
     };
 
     onPersonalityPress = (item) => {
+        const {selectedSexuality, selectedPersonality} = this.state;
         const {onPress} = this.props;
-        this.setState({selectedPersonality: item.title}, () => {
-            onPress(3);
-        });
+        if (item.title === selectedPersonality)
+            this.setState({selectedPersonality: ''});
+        else
+            this.setState({selectedPersonality: item.title}, () => {
+                const {selectedSexuality, selectedPersonality} = this.state;
+                if (selectedPersonality !== '' && selectedSexuality !== '')
+                    onPress(3, {selectedSexuality, selectedPersonality});
+            });
     };
 
     renderPersonalityItem = ({ item }) => {
@@ -158,15 +96,6 @@ class Step3Component extends Component {
                             renderItem={this.renderPersonalityItem}
                             keyExtractor={item => item.id.toString()}
                         />
-                        {/*<CommonButton*/}
-                        {/*    theme={theme}*/}
-                        {/*    container={{marginVertical: ASPECT_RATIO(30)}}*/}
-                        {/*    backgroundColor={theme.pinkColor}*/}
-                        {/*    borderColor={theme.pinkColor}*/}
-                        {/*    textColor={theme.backgroundColor}*/}
-                        {/*    title={'Continue'}*/}
-                        {/*    onPress={this.nextPress}*/}
-                        {/*/>*/}
                     </View>
                 </ScrollView>
             </View>

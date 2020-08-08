@@ -1,67 +1,44 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList, Modal} from 'react-native';
 import CommonButton from '../general/CommonButton';
-import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {ASPECT_RATIO, regex, W_WIDTH} from '../../utils/regex';
 import HeightModal from './HeightModal';
 import { DatePickerDialog } from 'react-native-datepicker-dialog'
 import moment from 'moment';
+import {bodyTypeData, genderData} from '../../json/RegisterJson';
+import * as messages from '../../utils/messages';
 
 class Step2Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dobText: 'MM / DD / YYYY',
+            dobText: props.data.dobText,
             dobDate: null,
-            height: `0' / 00'`,
+            height: props.data.height,
             modalVisible: false,
-            selectedBodyType: '',
-            selectedGender: '',
-            bodyTypeData: [
-                {
-                    id: 1,
-                    title: 'Thin',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Average',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Athletic',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'Curvy',
-                    selected: false
-                },
-            ],
-            genderData: [
-                {
-                    id: 1,
-                    title: 'Man',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Woman',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Non-binary',
-                    selected: false
-                },
-            ]
+            selectedBodyType: props.data.selectedBodyType,
+            selectedGender: props.data.selectedGender,
+            bodyTypeData: bodyTypeData,
+            genderData: genderData
         }
     }
 
     nextPress = () => {
+        const {dobText, height, selectedBodyType, selectedGender} = this.state;
         const {onPress} = this.props;
-        onPress(2);
+
+        if (dobText === 'MM / DD / YYYY')
+            alert(messages.enterDOB);
+        else if (height === `0' / 00'`)
+            alert(messages.enterHeight);
+        else if (regex.isEmpty(selectedBodyType))
+            alert(messages.enterBodyType);
+        else if (regex.isEmpty(selectedGender))
+            alert(messages.enterGender);
+        else {
+            onPress(2, {dobText, height, selectedBodyType, selectedGender});
+        }
     };
 
     openHeightPress = () => {
@@ -74,11 +51,9 @@ class Step2Component extends Component {
     onDOBPress = () => {
         let dobDate = this.state.dobDate;
 
-        if(!dobDate || dobDate == null){
+        if(!dobDate || dobDate === null){
             dobDate = new Date();
-            this.setState({
-                dobDate: dobDate
-            });
+            this.setState({dobDate: dobDate});
         }
 
         //To open the dialog
@@ -204,12 +179,7 @@ class Step2Component extends Component {
                         />
                     </View>
                 </ScrollView>
-                <Modal
-                    animationType={'fade'}
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {}}
-                >
+                <Modal animationType={'fade'} transparent={true} visible={modalVisible} onRequestClose={() => {}}>
                     <HeightModal theme={theme}
                                  onClose={(height) => {
                                      let setStateData = {modalVisible: false};
@@ -217,8 +187,7 @@ class Step2Component extends Component {
                                          setStateData.height = height;
 
                                      this.setState(setStateData);
-                                 }}
-                    />
+                                 }}/>
                 </Modal>
                 <DatePickerDialog ref={ref => this.dobDialogRef = ref} onDatePicked={this.onDOBDatePicked.bind(this)} />
             </View>

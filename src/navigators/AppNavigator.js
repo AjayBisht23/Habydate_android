@@ -31,6 +31,7 @@ import MyProfileScreen from '../screens/dashboard/profile/MyProfileScreen';
 import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen';
 import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
 import ChatScreen from '../screens/dashboard/messages/ChatScreen';
+import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -148,6 +149,7 @@ class AppNavigator extends React.PureComponent {
                   <Stack.Screen name="RegistrationStep" component={RegistrationStepScreen}/>
                   <Stack.Screen name="AddPhoto" component={AddPhotoScreen}/>
                   <Stack.Screen name="Congratulations" component={CongratulationsScreen}/>
+                  <Stack.Screen name="VerifiedCode" component={VerifiedCodeScreen}/>
                 </Stack.Navigator>
               : <Drawer.Navigator initialRouteName="Home"
                                   drawerContent={props => <MenuScreen {...props} />}

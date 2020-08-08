@@ -2,63 +2,28 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {W_WIDTH} from '../../utils/regex';
+import {educationData} from '../../json/RegisterJson';
 
 class Step4Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedEducation: '',
-            educationData: [
-                {
-                    id: 1,
-                    title: 'None',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'High School',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'College',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'Bachelor Degree',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Postgraduate',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Master',
-                    selected: false
-                },
-                {
-                    id: 7,
-                    title: 'Phd/Doctorate',
-                    selected: false
-                },
-                {
-                    id: 8,
-                    title: 'Postdoctoral',
-                    selected: false
-                },
-            ]
+            selectedEducation: props.selectedEducation,
+            educationData: educationData
         }
     }
 
     onEducationPress = (item) => {
+        const {selectedEducation} = this.state;
         const {onPress} = this.props;
-        this.setState({selectedEducation: item.title}, () => {
-            onPress(4);
-        });
+        if (item.title === selectedEducation)
+            this.setState({selectedEducation: ''});
+        else
+            this.setState({selectedEducation: item.title}, () => {
+                const {selectedEducation} = this.state;
+                onPress(4, {selectedEducation});
+            });
     };
 
     renderEducationItem = ({ item }) => {

@@ -2,22 +2,34 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import CommonTextInput from '../general/CommonTextInput';
 import CommonButton from '../general/CommonButton';
-import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {ASPECT_RATIO, regex, W_WIDTH} from '../../utils/regex';
+import * as messages from '../../utils/messages';
 
 class Step1Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            fullName: '',
-            username: '',
-            email: '',
+            fullName: props.data.fullName,
+            username: props.data.username,
+            email: props.data.email,
         }
     }
 
     nextPress = () => {
+        const {fullName, username, email} = this.state;
         const {onPress} = this.props;
-        onPress(1);
+
+        if (regex.isEmpty(fullName))
+            alert(messages.enterFullName);
+        else if (regex.isEmpty(username))
+            alert(messages.enterUserName);
+        else if (regex.isEmpty(email))
+            alert(messages.enterEmail);
+        else if (!regex.validateEmail(email))
+            alert(messages.enterValidEmail);
+        else
+            onPress(1, {fullName, username, email});
     };
 
     render() {

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, ScrollView, Animated} from 'react-native';
 import {connect} from 'react-redux';
-import Swiper from 'react-native-swiper'
 import HeaderComponent from '../../components/general/HeaderComponent';
 import Step1Component from '../../components/register/Step1Component';
 import Step2Component from '../../components/register/Step2Component';
@@ -15,6 +14,24 @@ import {W_WIDTH} from '../../utils/regex';
 
 class RegistrationStepScreen extends Component {
 
+    getData = {
+        fullName: '',
+        username: '',
+        email: '',
+        dobText: 'MM / DD / YYYY',
+        height: `0' / 00'`,
+        selectedBodyType: '',
+        selectedGender: '',
+        selectedSexuality: '',
+        selectedPersonality: '',
+        selectedEducation: '',
+        selectedMaritalStatus: '',
+        selectedLookingFor: '',
+        selectedReligion: '',
+        selectedDrinkingStatus: '',
+        selectedSmokingStatus: '',
+        selectedEatingStatus: '',
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -38,15 +55,17 @@ class RegistrationStepScreen extends Component {
         }
     };
 
-    onContinuesPress = (index) => {
+    onContinuesPress = (index, data) => {
         let page = index + 1;
         if (page > 8) {
             const {navigation} = this.props;
-            navigation.navigate('AddPhoto');
+            this.getData = {...this.getData, ...data};
+            navigation.navigate('AddPhoto', {data: this.getData});
             return;
         }
         this.scrollRef.scrollTo({x: (index * W_WIDTH), y: 0, animated: true});
         this.setPage(page);
+        this.getData = {...this.getData, ...data};
     };
 
     setPage = (page) => {
@@ -78,14 +97,14 @@ class RegistrationStepScreen extends Component {
                             onMomentumScrollEnd={this.onScrollMoment}
                             onScrollEndDrag={this.onScrollMoment}
                 >
-                    <Step1Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step2Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step3Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step4Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step5Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step6Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step7Component theme={theme} onPress={this.onContinuesPress}/>
-                    <Step8Component theme={theme} onPress={this.onContinuesPress}/>
+                    <Step1Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step2Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step3Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step4Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step5Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step6Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step7Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
+                    <Step8Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
                 </ScrollView>
             </View>
         );

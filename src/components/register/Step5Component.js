@@ -2,63 +2,28 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {maritalData} from '../../json/RegisterJson';
 
 class Step5Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedMaritalStatus: '',
-            maritalData: [
-                {
-                    id: 1,
-                    title: 'Single',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Single mom',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Single dad',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'In a relationship',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Married',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Separated',
-                    selected: false
-                },
-                {
-                    id: 7,
-                    title: 'Divorce',
-                    selected: false
-                },
-                {
-                    id: 8,
-                    title: 'Windowed',
-                    selected: false
-                },
-            ]
+            selectedMaritalStatus: props.selectedMaritalStatus,
+            maritalData: maritalData
         }
     }
 
     onMaritalPress = (item) => {
+        const {selectedMaritalStatus} = this.state;
         const {onPress} = this.props;
-        this.setState({selectedMaritalStatus: item.title}, () => {
-            onPress(5);
-        });
+        if (item.title === selectedMaritalStatus)
+            this.setState({selectedMaritalStatus: ''});
+        else
+            this.setState({selectedMaritalStatus: item.title}, () => {
+                const {selectedMaritalStatus} = this.state;
+                onPress(5, {selectedMaritalStatus});
+            });
     };
 
     renderMaritalItem = ({ item }) => {

@@ -2,57 +2,27 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {religionData} from '../../json/RegisterJson';
 
 class Step7Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedReligion: '',
-            religionData: [
-                {
-                    id: 1,
-                    title: 'Christian',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Muslim',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Hindu',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'Atheist',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Sikh',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Buddhist',
-                    selected: false
-                },
-                {
-                    id: 7,
-                    title: 'Others',
-                    selected: false
-                },
-            ]
+            selectedReligion: props.selectedReligion,
+            religionData: religionData
         }
     }
 
     onReligionPress = (item) => {
+        const {selectedReligion} = this.state;
         const {onPress} = this.props;
+        if (item.title === selectedReligion)
+            this.setState({selectedReligion: ''});
+        else
         this.setState({selectedReligion: item.title}, () => {
-            onPress(7);
+            const {selectedReligion} = this.state;
+            onPress(7, {selectedReligion});
         });
     };
 

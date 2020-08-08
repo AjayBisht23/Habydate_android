@@ -12,9 +12,7 @@ class CongratulationsScreen extends Component {
     }
 
     discoverNowPress = () => {
-        regex.setDashboard({
-            token: 'dfm43n34'
-        })
+        regex.setDashboard({token: 'dfm43n34'})
     };
 
     render() {

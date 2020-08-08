@@ -2,68 +2,28 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {lookingData} from '../../json/RegisterJson';
 
 class Step6Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedLookingFor: '',
-            lookingData: [
-                {
-                    id: 1,
-                    title: 'Dating',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Friendship',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Chat Buddy',
-                    selected: false
-                },
-                {
-                    id: 4,
-                    title: 'High Buddy',
-                    selected: false
-                },
-                {
-                    id: 5,
-                    title: 'Sugar Daddy',
-                    selected: false
-                },
-                {
-                    id: 6,
-                    title: 'Sugar Momma',
-                    selected: false
-                },
-                {
-                    id: 7,
-                    title: 'Sugar Baby',
-                    selected: false
-                },
-                {
-                    id: 8,
-                    title: 'Hookups',
-                    selected: false
-                },
-                {
-                    id: 9,
-                    title: 'Friends with benefits',
-                    selected: false
-                },
-            ]
+            selectedLookingFor: props.selectedLookingFor,
+            lookingData: lookingData
         }
     }
 
     onLookingForPress = (item) => {
+        const {selectedLookingFor} = this.state;
         const {onPress} = this.props;
-        this.setState({selectedLookingFor: item.title}, () => {
-            onPress(6);
-        });
+        if (item.title === selectedLookingFor)
+            this.setState({selectedLookingFor: ''});
+        else
+            this.setState({selectedLookingFor: item.title}, () => {
+                const {selectedLookingFor} = this.state;
+                onPress(6, {selectedLookingFor});
+            });
     };
 
     renderLookingForItem = ({ item }) => {

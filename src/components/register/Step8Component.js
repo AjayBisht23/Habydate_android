@@ -2,71 +2,27 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
+import {drinkingData, eatingData, smokingData} from '../../json/RegisterJson';
 
 class Step8Component extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedDrinkingStatus: '',
-            selectedSmokingStatus: '',
-            selectedEatingStatus: '',
-            drinkingData: [
-                {
-                    id: 1,
-                    title: 'Non-drinker',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Social drinker',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Heavy drinker',
-                    selected: false
-                },
-            ],
-            smokingData: [
-                {
-                    id: 1,
-                    title: 'Non-Smoker',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Light Smoker',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Heavy Smoker',
-                    selected: false
-                },
-            ],
-            eatingData: [
-                {
-                    id: 1,
-                    title: 'Vegan',
-                    selected: false
-                },
-                {
-                    id: 2,
-                    title: 'Vegetarian',
-                    selected: false
-                },
-                {
-                    id: 3,
-                    title: 'Non-Vegetarian',
-                    selected: false
-                },
-            ]
+            selectedDrinkingStatus: props.selectedDrinkingStatus,
+            selectedSmokingStatus: props.selectedSmokingStatus,
+            selectedEatingStatus: props.selectedEatingStatus,
+            drinkingData: drinkingData,
+            smokingData: smokingData,
+            eatingData: eatingData
         }
     }
 
     onDrinkingPress = (item) => {
-        this.setState({selectedDrinkingStatus: item.title});
+        if (item.title === this.state.selectedDrinkingStatus)
+            this.setState({selectedDrinkingStatus: ''});
+        else
+            this.setState({selectedDrinkingStatus: item.title});
     };
 
     renderDrinkingItem = ({ item }) => {
@@ -90,7 +46,10 @@ class Step8Component extends Component {
     };
 
     onSmokingPress = (item) => {
-        this.setState({selectedSmokingStatus: item.title});
+        if (item.title === this.state.selectedSmokingStatus)
+            this.setState({selectedSmokingStatus: ''});
+        else
+            this.setState({selectedSmokingStatus: item.title});
     };
 
     renderSmokingItem = ({ item }) => {
@@ -114,7 +73,16 @@ class Step8Component extends Component {
     };
 
     onEatingPress = (item) => {
-        this.setState({selectedEatingStatus: item.title});
+        const {selectedEatingStatus} = this.state;
+        const {onPress} = this.props;
+        if (item.title === selectedEatingStatus)
+            this.setState({selectedEatingStatus: ''});
+        else
+            this.setState({selectedEatingStatus: item.title}, () => {
+                const {selectedDrinkingStatus, selectedSmokingStatus, selectedEatingStatus} = this.state;
+                if (selectedDrinkingStatus !== '' && selectedSmokingStatus !== '' && selectedEatingStatus !== '')
+                    onPress(8, {selectedDrinkingStatus, selectedSmokingStatus, selectedEatingStatus});
+            });
     };
 
     renderEatingItem = ({ item }) => {

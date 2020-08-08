@@ -1,12 +1,19 @@
 'use strict';
 
 let messages = {
-  enterFullName: 'Please enter your full name',
-  enterEmail: 'Please enter your email address.',
-  enterValidEmail: 'Please enter your valid email address.',
-  enterPassword: 'Please enter your password.',
   enterPhoneNumber: 'Please enter your phone number.',
   enterVerifyOtp: 'Please enter verify code.',
+
+  enterFullName: 'Please enter your full name',
+  enterUserName: 'Please enter your username',
+  enterEmail: 'Please enter your email address.',
+  enterValidEmail: 'Please enter your valid email address.',
+  enterDOB: 'Please select your date of birth.',
+  enterHeight: 'Please select your height.',
+  enterBodyType: 'Please select your body type.',
+  enterGender: 'Please select your gender.',
+
+  enterPassword: 'Please enter your password.',
   enterNumberValidPassword: 'Password should be 6-16 characters long',
   enterValidPassword:
     'Password should be 6-16 characters long and must be alphanumeric and must not contain spaces.',
