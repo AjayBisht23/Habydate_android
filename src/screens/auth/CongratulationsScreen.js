@@ -16,14 +16,17 @@ class CongratulationsScreen extends Component {
     };
 
     render() {
-        const {theme} = this.props;
+        const {theme, route} = this.props;
+        let params = route.params;
+        let photoData = params.photoData;
+        let data = params.data;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <View style={styles.iconView}>
-                    <FastImage source={{uri: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
+                    <FastImage source={{uri: photoData[0].path}}
                                style={{width: 150, height: 150, borderRadius: 75}}/>
-                    <Text style={[styles.logoText, {color: theme.secondaryColor}]}>Linda Kelly</Text>
+                    <Text style={[styles.logoText, {color: theme.secondaryColor}]}>{data.fullName}</Text>
                 </View>
                 <View style={[styles.bottomView]}>
                     <View style={{flex: 1, alignItems: 'center'}}>

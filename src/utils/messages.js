@@ -12,6 +12,7 @@ let messages = {
   enterHeight: 'Please select your height.',
   enterBodyType: 'Please select your body type.',
   enterGender: 'Please select your gender.',
+  selectProfile: 'Please select your profile picture.',
 
   enterPassword: 'Please enter your password.',
   enterNumberValidPassword: 'Password should be 6-16 characters long',
