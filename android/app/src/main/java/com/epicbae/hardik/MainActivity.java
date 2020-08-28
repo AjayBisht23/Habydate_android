@@ -1,4 +1,4 @@
-package com.epicbae;
+package com.epicbae.hardik;
 
 import com.facebook.react.ReactActivity;
 

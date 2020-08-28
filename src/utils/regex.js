@@ -92,6 +92,10 @@ export const regex = {
     );
   },
 
+  validatePhoneNumber: (val) => {
+    return /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/.test(val);
+  },
+
   validatePassword: (val) => {
     return /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9!@#$%^&*_]\S{5,16}$/.test(val);
   },

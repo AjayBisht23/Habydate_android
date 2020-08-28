@@ -32,6 +32,8 @@ import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen'
 import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
 import ChatScreen from '../screens/dashboard/messages/ChatScreen';
 import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
+import { firebase } from '@react-native-firebase/analytics';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -128,8 +130,12 @@ class AppNavigator extends React.PureComponent {
     super(props);
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): void {
     appNav = this;
+    await firebase.analytics().setAnalyticsCollectionEnabled(true);
+    GoogleSignin.configure({
+        webClientId: '925724026895-eqjae2u9rie08pnjttsdautkn9vba4o6.apps.googleusercontent.com',
+    });
   }
 
   render() {

@@ -31,12 +31,27 @@ class VerificationScreen extends Component {
             alert(messages.enterVerifyOtp);
         else {
             let type = params.type;
+            let confirmResult = params.confirmResult;
 
-            if (type === 2) {
-                navigation.navigate('VerifiedCode', {...params, value});
+            if (value.length === 6) {
+                confirmResult
+                    .confirm(value)
+                    .then(user => {
+                        this.setState({ userId: user.uid });
+                        alert(`Verified! ${user.uid}`)
+                    })
+                    .catch(error => {
+                        alert(error.message);
+                        console.log(error)
+                    })
             } else {
-                navigation.navigate('RegistrationStep', {...params, value});
+                alert('Please enter a 6 digit OTP code.')
             }
+            // if (type === 2) {
+            //     navigation.navigate('VerifiedCode', {...params, value});
+            // } else {
+            //     navigation.navigate('RegistrationStep', {...params, value});
+            // }
         }
     };
 
@@ -123,7 +138,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(VerificationScreen);
 
-const CELL_COUNT = 4;
+const CELL_COUNT = 6;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -144,7 +159,7 @@ const styles = StyleSheet.create({
     },
     codeFiledRoot: {
         marginTop: 20,
-        width: W_WIDTH - (W_WIDTH - 240),
+        width: W_WIDTH - 60,
         marginLeft: 'auto',
         marginRight: 'auto',
     },

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Epicbae</string>
+    <string name="facebook_app_id">3178930815494275</string>
+    <string name="fb_login_protocol_scheme">fb3178930815494275</string>
 </resources>

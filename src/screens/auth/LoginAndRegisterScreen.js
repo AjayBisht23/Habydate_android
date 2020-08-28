@@ -8,6 +8,7 @@ import CountryPicker from 'react-native-country-picker-modal';
 import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
+import auth from '@react-native-firebase/auth';
 
 class LoginAndRegisterScreen extends Component {
 
@@ -17,6 +18,7 @@ class LoginAndRegisterScreen extends Component {
             countryCode: 'US',
             callingCode: ["1"],
             phone_number: '',
+            confirmResult: null,
         };
     }
 
@@ -26,15 +28,32 @@ class LoginAndRegisterScreen extends Component {
     };
 
     nextPress = () => {
-        const {phone_number, countryCode, callingCode} = this.state;
+        const {phone_number, callingCode} = this.state;
         const {navigation, route} = this.props;
         let params = route.params;
         let type = params.type;
 
         if (regex.isEmpty(phone_number))
             alert(messages.enterPhoneNumber);
-        else
-            navigation.navigate('Verification', {type, callingCode, phone_number});
+        else {
+            let phone = `+${callingCode}${phone_number}`;
+
+            // Request to send OTP
+            if (regex.validatePhoneNumber(phone)) {
+                auth()
+                    .signInWithPhoneNumber(phone)
+                    .then(confirmResult => {
+                        this.setState({ confirmResult });
+                        navigation.navigate('Verification', {type, callingCode, phone_number, confirmResult});
+                    })
+                    .catch(error => {
+                        alert(error.message);
+                        console.log(error)
+                    })
+            } else {
+                alert('Invalid Phone Number')
+            }
+        }
     };
 
     joinNowPress = () => {
