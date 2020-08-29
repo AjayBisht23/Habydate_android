@@ -9,28 +9,28 @@ class Step7Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedReligion: props.selectedReligion,
+            religion: props.religion,
             religionData: religionData
         }
     }
 
     onReligionPress = (item) => {
-        const {selectedReligion} = this.state;
+        const {religion} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedReligion)
-            this.setState({selectedReligion: ''});
+        if (item.title === religion)
+            this.setState({religion: ''});
         else
-        this.setState({selectedReligion: item.title}, () => {
-            const {selectedReligion} = this.state;
-            onPress(7, {selectedReligion});
+        this.setState({religion: item.title}, () => {
+            const {religion} = this.state;
+            onPress(7, {religion});
         });
     };
 
     renderReligionItem = ({ item }) => {
-        const {selectedReligion} = this.state;
+        const {religion} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedReligion === item.title)
+        if (religion === item.title)
             selected = true;
 
         return (

@@ -9,28 +9,28 @@ class Step6Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedLookingFor: props.selectedLookingFor,
+            lookingFor: props.lookingFor,
             lookingData: lookingData
         }
     }
 
     onLookingForPress = (item) => {
-        const {selectedLookingFor} = this.state;
+        const {lookingFor} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedLookingFor)
-            this.setState({selectedLookingFor: ''});
+        if (item.title === lookingFor)
+            this.setState({lookingFor: ''});
         else
-            this.setState({selectedLookingFor: item.title}, () => {
-                const {selectedLookingFor} = this.state;
-                onPress(6, {selectedLookingFor});
+            this.setState({lookingFor: item.title}, () => {
+                const {lookingFor} = this.state;
+                onPress(6, {lookingFor});
             });
     };
 
     renderLookingForItem = ({ item }) => {
-        const {selectedLookingFor} = this.state;
+        const {lookingFor} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedLookingFor === item.title)
+        if (lookingFor === item.title)
             selected = true;
 
         return (

@@ -13,31 +13,31 @@ class Step2Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dobText: props.data.dobText,
+            DoB: props.data.DoB,
             dobDate: null,
             height: props.data.height,
             modalVisible: false,
-            selectedBodyType: props.data.selectedBodyType,
-            selectedGender: props.data.selectedGender,
+            bodyType: props.data.bodyType,
+            gender: props.data.gender,
             bodyTypeData: bodyTypeData,
             genderData: genderData
         }
     }
 
     nextPress = () => {
-        const {dobText, height, selectedBodyType, selectedGender} = this.state;
+        const {DoB, height, bodyType, gender} = this.state;
         const {onPress} = this.props;
 
-        if (dobText === 'MM / DD / YYYY')
+        if (DoB === 'MM / DD / YYYY')
             alert(messages.enterDOB);
         else if (height === `0' / 00'`)
             alert(messages.enterHeight);
-        else if (regex.isEmpty(selectedBodyType))
+        else if (regex.isEmpty(bodyType))
             alert(messages.enterBodyType);
-        else if (regex.isEmpty(selectedGender))
+        else if (regex.isEmpty(gender))
             alert(messages.enterGender);
         else {
-            onPress(2, {dobText, height, selectedBodyType, selectedGender});
+            onPress(2, {DoB, height, bodyType, gender});
         }
     };
 
@@ -70,19 +70,19 @@ class Step2Component extends Component {
     onDOBDatePicked = (date) => {
         this.setState({
             dobDate: date,
-            dobText: moment(date).format('MM / DD / YYYY')
+            DoB: moment(date).format('MM / DD / YYYY')
         });
     };
 
     onBodyTypePress = (item) => {
-        this.setState({selectedBodyType: item.title});
+        this.setState({bodyType: item.title});
     };
 
     renderBodyTypeItem = ({ item }) => {
-        const {selectedBodyType} = this.state;
+        const {bodyType} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedBodyType === item.title)
+        if (bodyType === item.title)
             selected = true;
 
         return (
@@ -99,14 +99,14 @@ class Step2Component extends Component {
     };
 
     onGenderPress = (item) => {
-        this.setState({selectedGender: item.title});
+        this.setState({gender: item.title});
     };
 
     renderGenderItem = ({ item }) => {
-        const {selectedGender} = this.state;
+        const {gender} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedGender === item.title)
+        if (gender === item.title)
             selected = true;
 
         return (
@@ -123,7 +123,7 @@ class Step2Component extends Component {
     };
 
     render() {
-        const {dobText, height, bodyTypeData, genderData, modalVisible} = this.state;
+        const {DoB, height, bodyTypeData, genderData, modalVisible} = this.state;
         const {theme} = this.props;
 
         return (
@@ -138,7 +138,7 @@ class Step2Component extends Component {
                             backgroundColor={theme.textInputBackgroundColor}
                             borderColor={theme.textInputBackgroundColor}
                             textColor={theme.subPrimaryColor}
-                            title={dobText}
+                            title={DoB}
                             onPress={this.onDOBPress}
                         />
                         <Text style={[styles.titleTextInput, {marginVertical: 10, color: theme.subSecondaryColor}]}>Your age will be public</Text>

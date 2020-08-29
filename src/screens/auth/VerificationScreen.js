@@ -7,6 +7,7 @@ import {Black, White} from '../../themes/constantColors';
 import {ASPECT_RATIO, regex, shadow, W_WIDTH} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
+import {getUserDataAndUpdateInFirestore} from '../../config/authFirebase';
 
 class VerificationScreen extends Component {
 
@@ -30,33 +31,33 @@ class VerificationScreen extends Component {
         if (regex.isEmpty(value))
             alert(messages.enterVerifyOtp);
         else {
-            let type = params.type;
             let confirmResult = params.confirmResult;
 
             if (value.length === 6) {
-                confirmResult
-                    .confirm(value)
-                    .then(user => {
-                        this.setState({ userId: user.uid });
-                        alert(`Verified! ${user.uid}`)
-                    })
-                    .catch(error => {
-                        alert(error.message);
-                        console.log(error)
-                    })
-            } else {
-                alert('Please enter a 6 digit OTP code.')
-            }
-            // if (type === 2) {
-            //     navigation.navigate('VerifiedCode', {...params, value});
-            // } else {
-            //     navigation.navigate('RegistrationStep', {...params, value});
-            // }
+                confirmResult.confirm(value).then(response => {
+                    getUserDataAndUpdateInFirestore(response).then(response => {
+                        this.checkUserData(response);
+                    });
+                }).catch(error => {alert(error.message);})
+            } else
+                alert('Please enter a 6 digit OTP code.');
         }
     };
 
-    sendCodeAgainPress = () => {
+    checkUserData = (response) => {
+        const {navigation} = this.props;
+        let user = response.user;
 
+        if (user.stepCompleted > 8) { // Dashboard
+            regex.setDashboard({token: user.uid, ...user})
+        } else if (user.stepCompleted === 8) { // Profile step Remaining
+            navigation.navigate('AddPhoto', {data: user});
+        } else // Register step remaining
+            navigation.navigate('RegistrationStep', {...user});
+    };
+
+    sendCodeAgainPress = () => {
+        this.onBackPress();
     };
 
     onChangeText = code => {
@@ -101,10 +102,10 @@ class VerificationScreen extends Component {
                                     </View>
                                 )}
                             />
-                            <View style={{flexDirection: 'row', justifyContent: 'center', marginTop:  ASPECT_RATIO(55)}}>
-                                <Text style={[styles.resentText, {color: theme.subPrimaryColor}]}>Resend code in </Text>
-                                <Text style={[styles.timeText, {color: theme.primaryColor}]}>15 sec</Text>
-                            </View>
+                            {/*<View style={{flexDirection: 'row', justifyContent: 'center', marginTop:  ASPECT_RATIO(55)}}>*/}
+                            {/*    <Text style={[styles.resentText, {color: theme.subPrimaryColor}]}>Resend code in </Text>*/}
+                            {/*    <Text style={[styles.timeText, {color: theme.primaryColor}]}>15 sec</Text>*/}
+                            {/*</View>*/}
                         </View>
                         <View style={{flex: 1}}>
                             <CommonButton

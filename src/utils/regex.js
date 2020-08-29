@@ -172,7 +172,7 @@ export const regex = {
     });
   },
 
-  logout: async () => {
+  logout: async (navigation) => {
     Alert.alert(
       'Logout',
       messages.logout,
@@ -181,6 +181,7 @@ export const regex = {
         {
           text: 'OK',
           onPress: () => {
+            navigation.closeDrawer();
             regex.clearData();
           },
         },

@@ -12,7 +12,11 @@ class CongratulationsScreen extends Component {
     }
 
     discoverNowPress = () => {
-        regex.setDashboard({token: 'dfm43n34'})
+        const {route} = this.props;
+        let params = route.params;
+        let data = params.data;
+
+        regex.setDashboard({token: data.uid, ...data})
     };
 
     render() {
@@ -26,7 +30,7 @@ class CongratulationsScreen extends Component {
                 <View style={styles.iconView}>
                     <FastImage source={{uri: photoData[0].path}}
                                style={{width: 150, height: 150, borderRadius: 75}}/>
-                    <Text style={[styles.logoText, {color: theme.secondaryColor}]}>{data.fullName}</Text>
+                    <Text style={[styles.logoText, {color: theme.secondaryColor}]}>{data.name}</Text>
                 </View>
                 <View style={[styles.bottomView]}>
                     <View style={{flex: 1, alignItems: 'center'}}>

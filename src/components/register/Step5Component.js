@@ -9,28 +9,28 @@ class Step5Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedMaritalStatus: props.selectedMaritalStatus,
+            maritalStatus: props.maritalStatus,
             maritalData: maritalData
         }
     }
 
     onMaritalPress = (item) => {
-        const {selectedMaritalStatus} = this.state;
+        const {maritalStatus} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedMaritalStatus)
-            this.setState({selectedMaritalStatus: ''});
+        if (item.title === maritalStatus)
+            this.setState({maritalStatus: ''});
         else
-            this.setState({selectedMaritalStatus: item.title}, () => {
-                const {selectedMaritalStatus} = this.state;
-                onPress(5, {selectedMaritalStatus});
+            this.setState({maritalStatus: item.title}, () => {
+                const {maritalStatus} = this.state;
+                onPress(5, {maritalStatus});
             });
     };
 
     renderMaritalItem = ({ item }) => {
-        const {selectedMaritalStatus} = this.state;
+        const {maritalStatus} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedMaritalStatus === item.title)
+        if (maritalStatus === item.title)
             selected = true;
 
         return (

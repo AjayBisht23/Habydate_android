@@ -8,7 +8,7 @@ import CountryPicker from 'react-native-country-picker-modal';
 import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
-import auth from '@react-native-firebase/auth';
+import {signInPhone} from '../../config/authFirebase';
 
 class LoginAndRegisterScreen extends Component {
 
@@ -18,7 +18,6 @@ class LoginAndRegisterScreen extends Component {
             countryCode: 'US',
             callingCode: ["1"],
             phone_number: '',
-            confirmResult: null,
         };
     }
 
@@ -40,19 +39,13 @@ class LoginAndRegisterScreen extends Component {
 
             // Request to send OTP
             if (regex.validatePhoneNumber(phone)) {
-                auth()
-                    .signInWithPhoneNumber(phone)
-                    .then(confirmResult => {
-                        this.setState({ confirmResult });
+                signInPhone(phone).then(confirmResult => {
                         navigation.navigate('Verification', {type, callingCode, phone_number, confirmResult});
-                    })
-                    .catch(error => {
+                    }).catch(error => {
                         alert(error.message);
-                        console.log(error)
                     })
-            } else {
-                alert('Invalid Phone Number')
-            }
+            } else
+                alert('Invalid Phone Number');
         }
     };
 
@@ -74,8 +67,8 @@ class LoginAndRegisterScreen extends Component {
     };
 
     render() {
-        const {phone_number, countryCode, callingCode} = this.state;
-        const {theme, navigation, route} = this.props;
+        const {phone_number, countryCode} = this.state;
+        const {theme, route} = this.props;
         let params = route.params;
         let type = params.type;
 

@@ -9,9 +9,9 @@ class Step8Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedDrinkingStatus: props.selectedDrinkingStatus,
-            selectedSmokingStatus: props.selectedSmokingStatus,
-            selectedEatingStatus: props.selectedEatingStatus,
+            drinkingStatus: props.drinkingStatus,
+            smokingStatus: props.smokingStatus,
+            eatingStatus: props.eatingStatus,
             drinkingData: drinkingData,
             smokingData: smokingData,
             eatingData: eatingData
@@ -19,17 +19,17 @@ class Step8Component extends Component {
     }
 
     onDrinkingPress = (item) => {
-        if (item.title === this.state.selectedDrinkingStatus)
-            this.setState({selectedDrinkingStatus: ''});
+        if (item.title === this.state.drinkingStatus)
+            this.setState({drinkingStatus: ''});
         else
-            this.setState({selectedDrinkingStatus: item.title});
+            this.setState({drinkingStatus: item.title});
     };
 
     renderDrinkingItem = ({ item }) => {
-        const {selectedDrinkingStatus} = this.state;
+        const {drinkingStatus} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedDrinkingStatus === item.title)
+        if (drinkingStatus === item.title)
             selected = true;
 
         return (
@@ -46,17 +46,17 @@ class Step8Component extends Component {
     };
 
     onSmokingPress = (item) => {
-        if (item.title === this.state.selectedSmokingStatus)
-            this.setState({selectedSmokingStatus: ''});
+        if (item.title === this.state.smokingStatus)
+            this.setState({smokingStatus: ''});
         else
-            this.setState({selectedSmokingStatus: item.title});
+            this.setState({smokingStatus: item.title});
     };
 
     renderSmokingItem = ({ item }) => {
-        const {selectedSmokingStatus} = this.state;
+        const {smokingStatus} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedSmokingStatus === item.title)
+        if (smokingStatus === item.title)
             selected = true;
 
         return (
@@ -73,23 +73,23 @@ class Step8Component extends Component {
     };
 
     onEatingPress = (item) => {
-        const {selectedEatingStatus} = this.state;
+        const {eatingStatus} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedEatingStatus)
-            this.setState({selectedEatingStatus: ''});
+        if (item.title === eatingStatus)
+            this.setState({eatingStatus: ''});
         else
-            this.setState({selectedEatingStatus: item.title}, () => {
-                const {selectedDrinkingStatus, selectedSmokingStatus, selectedEatingStatus} = this.state;
-                if (selectedDrinkingStatus !== '' && selectedSmokingStatus !== '' && selectedEatingStatus !== '')
-                    onPress(8, {selectedDrinkingStatus, selectedSmokingStatus, selectedEatingStatus});
+            this.setState({eatingStatus: item.title}, () => {
+                const {drinkingStatus, smokingStatus, eatingStatus} = this.state;
+                if (drinkingStatus !== '' && smokingStatus !== '' && eatingStatus !== '')
+                    onPress(8, {drinkingStatus, smokingStatus, eatingStatus});
             });
     };
 
     renderEatingItem = ({ item }) => {
-        const {selectedEatingStatus} = this.state;
+        const {eatingStatus} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedEatingStatus === item.title)
+        if (eatingStatus === item.title)
             selected = true;
 
         return (

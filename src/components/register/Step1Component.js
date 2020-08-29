@@ -10,17 +10,17 @@ class Step1Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fullName: props.data.fullName,
+            name: props.data.name,
             username: props.data.username,
             email: props.data.email,
         }
     }
 
     nextPress = () => {
-        const {fullName, username, email} = this.state;
+        const {name, username, email} = this.state;
         const {onPress} = this.props;
 
-        if (regex.isEmpty(fullName))
+        if (regex.isEmpty(name))
             alert(messages.enterFullName);
         else if (regex.isEmpty(username))
             alert(messages.enterUserName);
@@ -29,11 +29,11 @@ class Step1Component extends Component {
         else if (!regex.validateEmail(email))
             alert(messages.enterValidEmail);
         else
-            onPress(1, {fullName, username, email});
+            onPress(1, {name, username, email});
     };
 
     render() {
-        const {fullName, username, email} = this.state;
+        const {name, username, email} = this.state;
         const {theme} = this.props;
 
         return (
@@ -44,8 +44,8 @@ class Step1Component extends Component {
                         <CommonTextInput
                             placeholder={'Full Name'}
                             keyboardType={'default'}
-                            value={fullName}
-                            onChangeText={(fullName)=>this.setState({fullName})}
+                            value={name}
+                            onChangeText={(name)=>this.setState({name})}
                         />
                         <CommonTextInput
                             placeholder={'Username'}

@@ -9,28 +9,28 @@ class Step4Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedEducation: props.selectedEducation,
+            education: props.education,
             educationData: educationData
         }
     }
 
     onEducationPress = (item) => {
-        const {selectedEducation} = this.state;
+        const {education} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedEducation)
-            this.setState({selectedEducation: ''});
+        if (item.title === education)
+            this.setState({education: ''});
         else
-            this.setState({selectedEducation: item.title}, () => {
-                const {selectedEducation} = this.state;
-                onPress(4, {selectedEducation});
+            this.setState({education: item.title}, () => {
+                const {education} = this.state;
+                onPress(4, {education});
             });
     };
 
     renderEducationItem = ({ item }) => {
-        const {selectedEducation} = this.state;
+        const {education} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedEducation === item.title)
+        if (education === item.title)
             selected = true;
 
         return (

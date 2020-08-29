@@ -196,7 +196,7 @@ export const maritalData = [
     },
     {
         id: 8,
-        title: 'Windowed',
+        title: 'Widowed',
         selected: false
     },
 ];

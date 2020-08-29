@@ -34,6 +34,7 @@ import ChatScreen from '../screens/dashboard/messages/ChatScreen';
 import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
 import { firebase } from '@react-native-firebase/analytics';
 import { GoogleSignin } from '@react-native-community/google-signin';
+import {WEB_CLIENT_ID} from '../config/firebase';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,6 +45,7 @@ const navigationOption = () => {
   return {
     headerShown: false,
     headerBackTitleVisible: false,
+    gestureEnabled: false
   };
 };
 
@@ -134,7 +136,7 @@ class AppNavigator extends React.PureComponent {
     appNav = this;
     await firebase.analytics().setAnalyticsCollectionEnabled(true);
     GoogleSignin.configure({
-        webClientId: '925724026895-eqjae2u9rie08pnjttsdautkn9vba4o6.apps.googleusercontent.com',
+        webClientId: WEB_CLIENT_ID,
     });
   }
 

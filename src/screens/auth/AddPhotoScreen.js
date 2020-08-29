@@ -6,6 +6,7 @@ import {Button, Icon} from 'native-base';
 import AddPhotoComponent from '../../components/register/AddPhotoComponent';
 import ImagePicker from "react-native-customized-image-picker";
 import * as messages from '../../utils/messages';
+import {updateUserDataAction} from '../../actions/authAction';
 
 class AddPhotoScreen extends Component {
 
@@ -73,9 +74,12 @@ class AddPhotoScreen extends Component {
             if (a.photoUrl !== '')
                 getResults.push(a.data);
         });
-        if (getResults.length > 0)
-            navigation.navigate('Congratulations', {data: route.params.data, photoData: getResults});
-        else
+        if (getResults.length > 0) {
+            let data = route.params.data;
+            let uid = data.uid;
+            updateUserDataAction(uid, {stepCompleted: 9});
+            navigation.navigate('Congratulations', {data: data, photoData: getResults});
+        } else
             alert(messages.selectProfile);
     };
 

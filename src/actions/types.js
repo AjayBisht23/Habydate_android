@@ -13,5 +13,5 @@ export const CONNECTION_STATE_CHANGED = 'CONNECTION_STATE_CHANGED';
 export const HIDE_LOADER = 'HIDE_LOADER';
 export const SHOW_LOADER = 'SHOW_LOADER';
 
-// App::Contact
-export const CONTACT = 'CONTACT';
+// App::User
+export const SET_USER_DATA = 'SET_USER_DATA';

@@ -10,34 +10,38 @@ import Step5Component from '../../components/register/Step5Component';
 import Step6Component from '../../components/register/Step6Component';
 import Step7Component from '../../components/register/Step7Component';
 import Step8Component from '../../components/register/Step8Component';
-import {W_WIDTH} from '../../utils/regex';
+import {regex, W_WIDTH} from '../../utils/regex';
+import {updateUserDataAction} from '../../actions/authAction';
 
 class RegistrationStepScreen extends Component {
 
-    getData = {
-        fullName: '',
-        username: '',
-        email: '',
-        dobText: 'MM / DD / YYYY',
-        height: `0' / 00'`,
-        selectedBodyType: '',
-        selectedGender: '',
-        selectedSexuality: '',
-        selectedPersonality: '',
-        selectedEducation: '',
-        selectedMaritalStatus: '',
-        selectedLookingFor: '',
-        selectedReligion: '',
-        selectedDrinkingStatus: '',
-        selectedSmokingStatus: '',
-        selectedEatingStatus: '',
-    };
     constructor(props) {
         super(props);
         this.state = {
             currentIndex: 1,
             progressStatus: 100/8,
-        }
+        };
+
+        let params = props.route.params;
+        this.lastStepCompleted = params.stepCompleted;
+        this.getData = {
+            name: regex.isEmpty(params.name) ? '' : params.name,
+            username: regex.isEmpty(params.username) ? '' : params.username,
+            email: regex.isEmpty(params.email) ? '' : params.email,
+            DoB: regex.isEmpty(params.DoB) ? 'MM / DD / YYYY' : params.DoB,
+            height: regex.isEmpty(params.height) ? `0' / 00'` : params.height,
+            bodyType: regex.isEmpty(params.bodyType) ? '' : params.bodyType,
+            gender: regex.isEmpty(params.gender) ? '' : params.gender,
+            sexuality: regex.isEmpty(params.sexuality) ? '' : params.sexuality,
+            personality: regex.isEmpty(params.personality) ? '' : params.personality,
+            education: regex.isEmpty(params.education) ? '' : params.education,
+            maritalStatus: regex.isEmpty(params.maritalStatus) ? '' : params.maritalStatus,
+            lookingFor: regex.isEmpty(params.lookingFor) ? '' : params.lookingFor,
+            religion: regex.isEmpty(params.religion) ? '' : params.religion,
+            drinkingStatus: regex.isEmpty(params.drinkingStatus) ? '' : params.drinkingStatus,
+            smokingStatus: regex.isEmpty(params.smokingStatus) ? '' : params.smokingStatus,
+            eatingStatus: regex.isEmpty(params.eatingStatus) ? '' : params.eatingStatus,
+        };
     }
     anim = new Animated.Value(0);
 
@@ -58,14 +62,49 @@ class RegistrationStepScreen extends Component {
     onContinuesPress = (index, data) => {
         let page = index + 1;
         if (page > 8) {
-            const {navigation} = this.props;
-            this.getData = {...this.getData, ...data};
+            const {navigation, route} = this.props;
+            let params = route.params;
+
+            this.getData = {...params, ...this.getData, ...data};
+            this.storeDataInFirestore(8, data);
             navigation.navigate('AddPhoto', {data: this.getData});
             return;
         }
         this.scrollRef.scrollTo({x: (index * W_WIDTH), y: 0, animated: true});
         this.setPage(page);
         this.getData = {...this.getData, ...data};
+        this.storeDataInFirestore(index, data);
+    };
+
+    storeDataInFirestore = (index, data) => {
+        let params = this.props.route.params;
+        let uid = params.uid;
+
+        if (this.lastStepCompleted < index)
+            this.lastStepCompleted = index;
+        else
+            return;
+
+        let parameter = {};
+        if (index === 1)
+           parameter = data;
+        else if (index === 2) {
+           parameter = data;
+        } else if (index === 3) {
+            parameter = (regex.isEmpty(data)) ? {sexuality: '', personality: ''} : data;
+        } else if (index === 4) {
+            parameter = (regex.isEmpty(data)) ? {education: ''} : data;
+        } else if (index === 5) {
+            parameter = (regex.isEmpty(data)) ? {maritalStatus: ''} : data;
+        } else if (index === 6) {
+            parameter = (regex.isEmpty(data)) ? {lookingFor: ''} : data;
+        } else if (index === 7) {
+            parameter = (regex.isEmpty(data)) ? {religion: ''} : data;
+        } else if (index === 8) {
+            parameter = (regex.isEmpty(data)) ? {drinkingStatus: '', smokingStatus: '', eatingStatus: ''} : data;
+        }
+
+        updateUserDataAction(uid, {...parameter, stepCompleted: this.lastStepCompleted});
     };
 
     setPage = (page) => {
@@ -94,8 +133,9 @@ class RegistrationStepScreen extends Component {
                 <ScrollView ref={ref => this.scrollRef = ref}
                             horizontal={true}
                             pagingEnabled={true}
+                            scrollEnabled={false}
                             onMomentumScrollEnd={this.onScrollMoment}
-                            onScrollEndDrag={this.onScrollMoment}
+                            // onScrollEndDrag={this.onScrollMoment}
                 >
                     <Step1Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
                     <Step2Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>

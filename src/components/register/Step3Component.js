@@ -9,25 +9,25 @@ class Step3Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedSexuality: props.selectedSexuality,
-            selectedPersonality: props.selectedPersonality,
+            sexuality: props.sexuality,
+            personality: props.personality,
             sexualityData: sexualityData,
             personalityData: personalityData
         }
     }
 
     onSexualityPress = (item) => {
-        if (item.title === this.state.selectedSexuality)
-            this.setState({selectedSexuality: ''});
+        if (item.title === this.state.sexuality)
+            this.setState({sexuality: ''});
         else
-            this.setState({selectedSexuality: item.title});
+            this.setState({sexuality: item.title});
     };
 
     renderSexualityItem = ({ item }) => {
-        const {selectedSexuality} = this.state;
+        const {sexuality} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedSexuality === item.title)
+        if (sexuality === item.title)
             selected = true;
 
         return (
@@ -44,23 +44,23 @@ class Step3Component extends Component {
     };
 
     onPersonalityPress = (item) => {
-        const {selectedSexuality, selectedPersonality} = this.state;
+        const {sexuality, personality} = this.state;
         const {onPress} = this.props;
-        if (item.title === selectedPersonality)
-            this.setState({selectedPersonality: ''});
+        if (item.title === personality)
+            this.setState({personality: ''});
         else
-            this.setState({selectedPersonality: item.title}, () => {
-                const {selectedSexuality, selectedPersonality} = this.state;
-                if (selectedPersonality !== '' && selectedSexuality !== '')
-                    onPress(3, {selectedSexuality, selectedPersonality});
+            this.setState({personality: item.title}, () => {
+                const {sexuality, personality} = this.state;
+                if (personality !== '' && sexuality !== '')
+                    onPress(3, {sexuality, personality});
             });
     };
 
     renderPersonalityItem = ({ item }) => {
-        const {selectedPersonality} = this.state;
+        const {personality} = this.state;
         const {theme} = this.props;
         let selected = false;
-        if (selectedPersonality === item.title)
+        if (personality === item.title)
             selected = true;
 
         return (

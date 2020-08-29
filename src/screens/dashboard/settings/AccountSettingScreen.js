@@ -11,7 +11,7 @@ class AccountSettingScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fullName: '',
+            name: '',
             username: '',
             email: '',
             phone: '',
@@ -29,7 +29,7 @@ class AccountSettingScreen extends Component {
     };
 
     render() {
-        const {fullName, username, email, phone} = this.state;
+        const {name, username, email, phone} = this.state;
         const {theme} = this.props;
 
         return (
@@ -40,8 +40,8 @@ class AccountSettingScreen extends Component {
                         <CommonTextInput
                             placeholder={'Full Name'}
                             keyboardType={'default'}
-                            value={fullName}
-                            onChangeText={(fullName)=>this.setState({fullName})}
+                            value={name}
+                            onChangeText={(name)=>this.setState({name})}
                         />
                         <CommonTextInput
                             placeholder={'Username'}

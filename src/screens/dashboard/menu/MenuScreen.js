@@ -89,7 +89,7 @@ class MenuScreen extends Component {
         } else if (item.id === 9) {
             navigation.navigate('Settings');
         } else if (item.id === 10) {
-            regex.logout();
+            regex.logout(navigation);
         }
     };
 
