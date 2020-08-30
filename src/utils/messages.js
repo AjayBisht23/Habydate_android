@@ -47,6 +47,7 @@ let messages = {
   businessName: 'Please enter business name.',
   businessNumber: 'Please enter business number.',
   somethingWrong: 'Something went wrong.',
+  deleteMsg: 'Are you sure you want to delete this account?',
 };
 
 module.exports = messages;

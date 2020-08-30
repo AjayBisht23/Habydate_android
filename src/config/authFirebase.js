@@ -54,6 +54,10 @@ export const getUserDataAndUpdateInFirestore = (response) => {
                     resolve({exists: getUser.exists, user: getUser.data()});
                 } else {
                     parameter.stepCompleted = 0;
+                    parameter.notificationOn = true;
+                    parameter.matchOn = true;
+                    parameter.soundOn = true;
+                    parameter.online = true;
                     createNewUserDataAction(uid, parameter).then(() => {
                         resolve({exists: getUser.exists, user: parameter}); // New User Added
                     });
@@ -61,5 +65,21 @@ export const getUserDataAndUpdateInFirestore = (response) => {
             });
         } else
             reject('Something went wrong.')
+    });
+};
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        let user = auth().currentUser;
+        if (!regex.isEmpty(user)) {
+            let getUser = user._user;
+            let uid = getUser.uid;
+            checkUserExits(uid).then((getUser) => {
+                if (getUser.exists)
+                    resolve({user: getUser.data()});
+                else
+                    reject({user: null});
+            });
+        }
     });
 };

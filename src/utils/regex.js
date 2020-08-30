@@ -20,10 +20,11 @@ import {getStore} from '../../App';
 // import {defaultRestClient} from "./restClient";
 import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
+import {getProfilePic} from '../config/storage';
+import moment from 'moment';
 
 export const {OS} = Platform;
-export const TouchableFeedback =
-  OS === 'ios' ? TouchableWithoutFeedback : TouchableNativeFeedback;
+export const TouchableFeedback = OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
 
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
@@ -119,19 +120,6 @@ export const regex = {
     return hasNotch;
   },
 
-  checkPicture: (val) => {
-    if (!regex.isEmpty(val)) {
-      return 'https://insightfulbusinesses.com/public/images/profile-img.png';
-    } else {
-      // let pattern = /^((http|https|ftp):\/\/)/;
-      // if (!pattern.test(val)) {
-      //   return 'https://insightfulbusinesses.com/public/images/profile-img.png'
-      // } else {
-      return `https://insightfulbusinesses.com/public/uploads/profile/${val}`;
-      // }
-    }
-  },
-
   sortData: (property) => {
     let sortOrder = 1;
     if (property[0] === '-') {
@@ -160,6 +148,28 @@ export const regex = {
       StatusBar.setBackgroundColor(White, true);
 
     StatusBar.setBarStyle(type, true);
+  },
+
+  getProfilePic: (user) => {
+    let photos = user.photos;
+    if (photos !== undefined) {
+      if (photos.length > 0) {
+        getProfilePic(photos[0]).then(url => {
+          return url;
+        })
+      }
+    } else
+      return 'https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png';
+  },
+
+  getAge: (dob) => {
+    if (Boolean(dob)) {
+      let birthday = moment(dob, 'MM / DD / YYYY');
+      let age  = moment().diff(birthday, 'years');
+      return `, ${age}`;
+    } else {
+      return '';
+    }
   },
 
   setDashboard: (data) => {

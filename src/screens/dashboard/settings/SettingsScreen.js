@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, Switch} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, Switch, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import {Icon} from "native-base";
 import {White} from '../../../themes/constantColors';
-import {TouchableFeedback} from '../../../utils/regex';
+import {regex, TouchableFeedback} from '../../../utils/regex';
+import {deleteUser, getUserData, updateUserDataAction} from '../../../actions/authAction';
+import * as messages from '../../../utils/messages';
 
 class SettingsScreen extends Component {
 
     constructor(props) {
         super(props);
+        let user = props.user;
         this.state = {
-            notification: true,
-            match: true,
-            sound: true,
+            notificationOn: user.notificationOn,
+            matchOn: user.matchOn,
+            soundOn: user.soundOn,
         }
     }
 
@@ -22,20 +25,43 @@ class SettingsScreen extends Component {
         navigation.goBack();
     };
 
-    notificationSwitch = (notification) => {
-        this.setState({notification})
+    updateData = (parameter) => {
+        updateUserDataAction(this.props.user.uid, parameter).then(() => {
+            getUserData(this.props.user.uid)
+        });
     };
 
-    matchSwitch = (match) => {
-        this.setState({match})
+    notificationSwitch = (notificationOn) => {
+        this.setState({notificationOn});
+        this.updateData({notificationOn});
     };
 
-    soundSwitch = (sound) => {
-        this.setState({sound})
+    matchSwitch = (matchOn) => {
+        this.setState({matchOn});
+        this.updateData({matchOn});
+    };
+
+    soundSwitch = (soundOn) => {
+        this.setState({soundOn});
+        this.updateData({soundOn});
+    };
+
+    okClick = () => {
+        deleteUser(this.props.user.uid).then(() => {
+           regex.clearData();
+        });
+    };
+
+    onDeletePress = () => {
+        Alert.alert('Account Delete', messages.deleteMsg,
+            [{text: 'Cancel', onPress: () => {}, style: 'cancel'},
+                     {text: 'OK', onPress: this.okClick}],
+            {cancelable: false},
+        );
     };
 
     render() {
-        const {notification, match, sound} = this.state;
+        const {notificationOn, matchOn, soundOn} = this.state;
         const {theme, navigation} = this.props;
 
         return (
@@ -56,7 +82,7 @@ class SettingsScreen extends Component {
                                 thumbColor={White}
                                 ios_backgroundColor={'transparent'}
                                 onValueChange={this.notificationSwitch}
-                                value={notification}
+                                value={notificationOn}
                             />
                         </View>
                         <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
@@ -66,7 +92,7 @@ class SettingsScreen extends Component {
                                 thumbColor={White}
                                 ios_backgroundColor={'transparent'}
                                 onValueChange={this.matchSwitch}
-                                value={match}
+                                value={matchOn}
                             />
                         </View>
                         <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
@@ -76,7 +102,7 @@ class SettingsScreen extends Component {
                                 thumbColor={White}
                                 ios_backgroundColor={'transparent'}
                                 onValueChange={this.soundSwitch}
-                                value={sound}
+                                value={soundOn}
                             />
                         </View>
                         <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
@@ -87,10 +113,12 @@ class SettingsScreen extends Component {
                             <Text style={[styles.text, {color: theme.subPrimaryColor}]}>Share this App</Text>
                             <Icon type={'Feather'} name={'chevron-right'} style={{color: theme.backgroundColor}} />
                         </View>
-                        <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
-                            <Text style={[styles.text, {color: theme.pinkColor}]}>Delete Account</Text>
-                            <Icon type={'Feather'} name={'chevron-right'} style={{color: theme.backgroundColor}} />
-                        </View>
+                        <TouchableFeedback onPress={this.onDeletePress}>
+                            <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
+                                <Text style={[styles.text, {color: theme.pinkColor}]}>Delete Account</Text>
+                                <Icon type={'Feather'} name={'chevron-right'} style={{color: theme.backgroundColor}} />
+                            </View>
+                        </TouchableFeedback>
                     </ScrollView>
                 </View>
             </View>
@@ -100,6 +128,7 @@ class SettingsScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(SettingsScreen);

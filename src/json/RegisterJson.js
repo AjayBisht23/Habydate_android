@@ -1,3 +1,132 @@
+export const heightData = [
+    {
+        id: 1,
+        title: `4'9''`,
+        size: `145cm`,
+        selected: false
+    },
+    {
+        id: 2,
+        title: `4'10''`,
+        size: `147.5cm`,
+        selected: false
+    },
+    {
+        id: 3,
+        title: `4'11''`,
+        size: `150cm`,
+        selected: false
+    },
+    {
+        id: 4,
+        title: `5'0''`,
+        size: `152.5cm`,
+        selected: false
+    },
+    {
+        id: 5,
+        title: `5'1''`,
+        size: `155cm`,
+        selected: false
+    },
+    {
+        id: 6,
+        title: `5'2''`,
+        size: `157.5cm`,
+        selected: false
+    },
+    {
+        id: 7,
+        title: `5'3''`,
+        size: `160cm`,
+        selected: false
+    },
+    {
+        id: 8,
+        title: `5'4''`,
+        size: `162.5cm`,
+        selected: false
+    },
+    {
+        id: 9,
+        title: `5'5''`,
+        size: `165cm`,
+        selected: false
+    },
+    {
+        id: 10,
+        title: `5'6''`,
+        size: `167.5cm`,
+        selected: false
+    },
+    {
+        id: 11,
+        title: `5'7''`,
+        size: `170cm`,
+        selected: false
+    },
+    {
+        id: 12,
+        title: `5'8''`,
+        size: `172.5cm`,
+        selected: false
+    },
+    {
+        id: 13,
+        title: `5'9''`,
+        size: `175cm`,
+        selected: false
+    },
+    {
+        id: 14,
+        title: `5'10''`,
+        size: `177.5cm`,
+        selected: false
+    },
+    {
+        id: 15,
+        title: `5'11''`,
+        size: `180cm`,
+        selected: false
+    },
+    {
+        id: 16,
+        title: `6'0''`,
+        size: `182.5cm`,
+        selected: false
+    },
+    {
+        id: 17,
+        title: `6'1''`,
+        size: `185cm`,
+        selected: false
+    },
+    {
+        id: 18,
+        title: `6'2''`,
+        size: `187.5cm`,
+        selected: false
+    },
+    {
+        id: 19,
+        title: `6'3''`,
+        size: `190cm`,
+        selected: false
+    },
+    {
+        id: 20,
+        title: `6'4''`,
+        size: `192.5cm`,
+        selected: false
+    },
+    {
+        id: 21,
+        title: `6'5''`,
+        size: `195cm`,
+        selected: false
+    },
+];
+
 export const bodyTypeData = [
     {
         id: 1,

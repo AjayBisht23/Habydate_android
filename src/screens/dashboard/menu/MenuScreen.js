@@ -111,17 +111,16 @@ class MenuScreen extends Component {
 
     render() {
         const {data} = this.state;
-        const {theme, navigation} = this.props;
+        const {user, theme, navigation} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <ScrollView>
                     <View style={[styles.innerView]}>
                         <View style={[styles.imageView, {...shadow(5)}]}>
-                            <FastImage source={{uri: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
-                                       style={[styles.imageView]}/>
+                            <FastImage source={{uri: regex.getProfilePic(user)}} style={[styles.imageView]}/>
                         </View>
-                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>Linda Kelly, 24</Text>
+                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>{`${user.name}${regex.getAge(user.DoB)}`}</Text>
                         <CommonButton
                             theme={theme}
                             container={{marginTop: 10, marginBottom: 20, marginHorizontal: 0, width: 120}}
@@ -147,6 +146,7 @@ class MenuScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(MenuScreen);

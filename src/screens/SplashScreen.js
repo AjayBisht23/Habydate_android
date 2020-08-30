@@ -6,6 +6,7 @@ import {getStore} from '../../App';
 import {regex} from '../utils/regex';
 import {PINK} from '../themes/constantColors';
 import FastImage from 'react-native-fast-image';
+import {getCurrentUser} from '../config/authFirebase';
 
 class SplashScreen extends Component {
   constructor(props) {
@@ -23,7 +24,11 @@ class SplashScreen extends Component {
     try {
       userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
-        getStore.dispatch({type: LOGIN, payload: userToken});
+        getCurrentUser().then(user => {
+          getStore.dispatch({type: LOGIN, payload: user.user});
+        }).catch((error) => {
+          getStore.dispatch({type: LOGOUT});
+        })
       } else {
         getStore.dispatch({type: LOGOUT});
       }

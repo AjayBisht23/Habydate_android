@@ -2,15 +2,37 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {HEIGHT_RATIO, W_WIDTH} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Button, Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
+import ReadMore from 'react-native-read-more-text';
+import {getUserData, updateUserDataAction} from '../../../actions/authAction';
 
 class MyProfileScreen extends Component {
 
     constructor(props) {
         super(props);
+        let user = props.user;
+        this.state = {
+            name: user.name,
+            DoB: user.DoB,
+            photos: user.photos,
+            bio: Boolean(user.bio) ? user.bio : '',
+            height: regex.isEmpty(user.height) ? `0' / 00'` : user.height,
+            bodyType: regex.isEmpty(user.bodyType) ? '' : user.bodyType,
+            gender: regex.isEmpty(user.gender) ? '' : user.gender,
+            sexuality: regex.isEmpty(user.sexuality) ? '' : user.sexuality,
+            personality: regex.isEmpty(user.personality) ? '' : user.personality,
+            education: regex.isEmpty(user.education) ? '' : user.education,
+            maritalStatus: regex.isEmpty(user.maritalStatus) ? '' : user.maritalStatus,
+            lookingFor: regex.isEmpty(user.lookingFor) ? '' : user.lookingFor,
+            religion: regex.isEmpty(user.religion) ? '' : user.religion,
+            drinkingStatus: regex.isEmpty(user.drinkingStatus) ? '' : user.drinkingStatus,
+            smokingStatus: regex.isEmpty(user.smokingStatus) ? '' : user.smokingStatus,
+            eatingStatus: regex.isEmpty(user.eatingStatus) ? '' : user.eatingStatus,
+            isEdit: false,
+        }
     }
 
     onBackPress = () => {
@@ -18,8 +40,84 @@ class MyProfileScreen extends Component {
         navigation.goBack();
     };
 
+    onEditPress = () => {
+        let save  = !this.state.isEdit;
+        this.setState({isEdit: save});
+        if (!save) {
+          let getUpdateData = JSON.parse(JSON.stringify(this.state));
+          delete getUpdateData['name'];
+          delete getUpdateData['DoB'];
+          delete getUpdateData['photos'];
+          delete getUpdateData['isEdit'];
+          updateUserDataAction(this.props.user.uid, getUpdateData).then(() => {
+              getUserData(this.props.user.uid)
+          });
+        }
+    };
+
+    _handleTextReady = () => {
+
+    };
+
+    onItemInformationPress = ({title, value, index}) => {
+        const {navigation} = this.props;
+        const {isEdit} = this.state;
+
+        if (!isEdit)
+            return;
+
+        navigation.navigate('SelectionInformation', {title, value, index, callback: (params) => {
+                let parameter = {};
+                if (params.index === 1) {
+                    parameter.height = params.value;
+                } else if (params.index === 2) {
+                    parameter.bodyType = params.value;
+                } else if (params.index === 3) {
+                    parameter.gender = params.value;
+                } else if (params.index === 4) {
+                    parameter.sexuality = params.value;
+                } else if (params.index === 5) {
+                    parameter.personality = params.value;
+                } else if (params.index === 6) {
+                    parameter.education = params.value;
+                } else if (params.index === 7) {
+                    parameter.maritalStatus = params.value;
+                } else if (params.index === 8) {
+                    parameter.lookingFor = params.value;
+                } else if (params.index === 9) {
+                    parameter.religion = params.value;
+                } else if (params.index === 10) {
+                    parameter.drinkingStatus = params.value;
+                } else if (params.index === 11) {
+                    parameter.smokingStatus = params.value;
+                } else if (params.index === 12) {
+                    parameter.eatingStatus = params.value;
+                }
+                this.setState({...this.state, ...parameter});
+        }});
+    };
+
+    renderItemView = (title, value, index) => {
+       const {theme} = this.props;
+       const {isEdit} = this.state;
+       return (
+           <TouchableFeedback onPress={() => this.onItemInformationPress({title, value, index})}>
+               <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
+                   <Text style={[styles.commonText, {color: theme.primaryColor}]}>{title}</Text>
+                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                       <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>{value}</Text>
+                       {
+                           isEdit && <Icon type={'Feather'} name={'chevron-right'} style={{marginLeft: 10, fontSize: 25, color: theme.subPrimaryColor}} />
+                       }
+                   </View>
+               </View>
+           </TouchableFeedback>
+       )
+    };
+
     render() {
         const {theme, navigation} = this.props;
+        const {isEdit, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus} = this.state;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -45,8 +143,8 @@ class MyProfileScreen extends Component {
                                 <Button transparent onPress={this.onBackPress}>
                                     <Icon type={'Feather'} name={'camera'} style={{color: theme.backgroundColor}} />
                                 </Button>
-                                <Button transparent onPress={this.onBackPress}>
-                                    <Icon type={'Feather'} name={'edit'} style={{color: theme.backgroundColor}} />
+                                <Button transparent onPress={this.onEditPress}>
+                                    <Icon type={'Feather'} name={isEdit ? 'send' : 'edit'} style={{color: theme.backgroundColor}} />
                                 </Button>
                             </View>
                         </View>
@@ -55,7 +153,7 @@ class MyProfileScreen extends Component {
                             <View style={{alignItems: 'center', justifyContent: 'center', marginVertical: 10}}>
                                 <View style={{width: 50, height: 6, borderRadius: 3, backgroundColor: theme.subSecondaryColor}}/>
                             </View>
-                            <Text style={[styles.nameText, {color: theme.primaryColor}]}>Linda Kelly, 24</Text>
+                            <Text style={[styles.nameText, {color: theme.primaryColor}]}>{`${name}${regex.getAge(DoB)}`}</Text>
                             <CommonButton
                                 theme={theme}
                                 container={{marginVertical: 15}}
@@ -66,14 +164,24 @@ class MyProfileScreen extends Component {
                                 title={'Upgrade to Premium'}
                                 onPress={this.nextPress}
                             />
-                            <TextInput style={[styles.bioText, {color: theme.subPrimaryColor, backgroundColor: theme.textInputBackgroundColor,}]}
-                                       value={''}
-                                       placeholder="Write something about yourself..."
-                                       placeholderTextColor={theme.subPrimaryColor}
-                                       multiline={true}
-                                       numberOfLines={5}
-                                       onChangeText={(note) => this.setState({note})}
-                            />
+                            {
+                                isEdit ? <TextInput style={[styles.bioText, {color: theme.subPrimaryColor, backgroundColor: theme.textInputBackgroundColor,}]}
+                                                    value={bio}
+                                                    placeholder="Write something about yourself..."
+                                                    placeholderTextColor={theme.subPrimaryColor}
+                                                    multiline={true}
+                                                    numberOfLines={5}
+                                                    onChangeText={(bio) => this.setState({bio})}
+                                /> : <View style={{marginHorizontal: 20}}>
+                                    <ReadMore numberOfLines={3}
+                                              renderTruncatedFooter={(handlePress) => {return <Text style={[styles.readMore, {color: theme.subPrimaryColor}]} onPress={handlePress}>Read more</Text>}}
+                                              renderRevealedFooter={(handlePress) => {return <Text style={[styles.readMore, {color: theme.subPrimaryColor}]} onPress={handlePress}>Show less</Text>}}
+                                              onReady={this._handleTextReady}
+                                    >
+                                        <Text style={[styles.bioDText, {color: theme.subPrimaryColor}]}>{bio}</Text>
+                                    </ReadMore>
+                                </View>
+                            }
                             <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20}}/>
                             <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
                             <View style={[styles.addPhotoView, {backgroundColor: theme.primaryBackgroundColor, borderColor: theme.borderColor}]}>
@@ -81,40 +189,20 @@ class MyProfileScreen extends Component {
                                 <Text style={[styles.buttonAddPhotoText, {color: theme.subSecondaryColor}]}> Add Photos</Text>
                             </View>
                             <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Your Information</Text>
+                                <Text style={[styles.commonText, {fontWeight: '600', color: theme.primaryColor}]}>Your Information</Text>
                             </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Gender</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Male</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Personality</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Romantic</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Education</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Bachelor</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Marital Status</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Single Mom</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Looking for</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Friendship</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Religion</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Hindu</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Smoking</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>No-Smoker</Text>
-                            </View>
-                            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonText, {color: theme.primaryColor}]}>Drinking</Text>
-                                <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>No-Drinker</Text>
-                            </View>
+                            {this.renderItemView('Height', height, 1)}
+                            {this.renderItemView('Body Type', bodyType, 2)}
+                            {this.renderItemView('Gender', gender, 3)}
+                            {this.renderItemView('Sexuality', sexuality, 4)}
+                            {this.renderItemView('Personality', personality, 5)}
+                            {this.renderItemView('Education', education, 6)}
+                            {this.renderItemView('Marital Status', maritalStatus, 7)}
+                            {this.renderItemView('Looking for', lookingFor, 8)}
+                            {this.renderItemView('Religion', religion, 9)}
+                            {this.renderItemView('Drinking', drinkingStatus, 10)}
+                            {this.renderItemView('Smoking', smokingStatus, 11)}
+                            {this.renderItemView('Eating', eatingStatus, 12)}
                             <View style={{marginVertical: 15}}/>
                         </View>
                 </ParallaxScrollView>
@@ -125,6 +213,7 @@ class MyProfileScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(MyProfileScreen);
@@ -153,6 +242,15 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 24,
         fontWeight: '800',
+    },
+    readMore: {
+        marginTop: 5,
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    bioDText: {
+        fontSize: 14,
+        fontWeight: '400',
     },
     bioText: {
         marginHorizontal: 20,
@@ -191,7 +289,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     commonText: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '400'
     }
 });

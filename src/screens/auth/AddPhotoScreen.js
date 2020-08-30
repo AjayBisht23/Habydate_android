@@ -7,6 +7,8 @@ import AddPhotoComponent from '../../components/register/AddPhotoComponent';
 import ImagePicker from "react-native-customized-image-picker";
 import * as messages from '../../utils/messages';
 import {updateUserDataAction} from '../../actions/authAction';
+import {uploadProfilePics} from '../../config/storage';
+import moment from 'moment';
 
 class AddPhotoScreen extends Component {
 
@@ -71,14 +73,22 @@ class AddPhotoScreen extends Component {
         const {navigation, route} = this.props;
         let getResults = [];
         photoData.forEach(a => {
-            if (a.photoUrl !== '')
-                getResults.push(a.data);
+            if (a.photoUrl !== '') {
+                let data = {...a.data};
+                data.refName = `${moment.utc()}${data.filename}`;
+                getResults.push(data);
+            }
         });
         if (getResults.length > 0) {
             let data = route.params.data;
             let uid = data.uid;
-            updateUserDataAction(uid, {stepCompleted: 9});
-            navigation.navigate('Congratulations', {data: data, photoData: getResults});
+            let photos = [];
+            getResults.forEach((file) => {
+                photos.push(file.refName);
+                uploadProfilePics(file);
+            });
+            updateUserDataAction(uid, {stepCompleted: 9, photos: photos});
+            navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
         } else
             alert(messages.selectProfile);
     };

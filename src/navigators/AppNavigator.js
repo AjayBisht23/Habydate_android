@@ -35,6 +35,7 @@ import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
 import { firebase } from '@react-native-firebase/analytics';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/firebase';
+import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -67,6 +68,7 @@ function MyProfileStackScreen() {
             <Stack.Screen name="MyProfile" component={MyProfileScreen} />
             <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
             <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+            <Stack.Screen name="SelectionInformation" component={SelectInformationScreen} />
         </Stack.Navigator>
     );
 }

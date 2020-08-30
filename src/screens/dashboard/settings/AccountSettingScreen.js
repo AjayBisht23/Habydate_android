@@ -2,19 +2,21 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import CommonTextInput from '../../../components/general/CommonTextInput';
 import CommonButton from '../../../components/general/CommonButton';
-import {ASPECT_RATIO, W_WIDTH} from '../../../utils/regex';
+import {W_WIDTH} from '../../../utils/regex';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
+import {getUserData, updateUserDataAction} from '../../../actions/authAction';
 
 class AccountSettingScreen extends Component {
 
     constructor(props) {
         super(props);
+        let user = props.user;
         this.state = {
-            name: '',
-            username: '',
-            email: '',
-            phone: '',
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            // phone: user.phone,
         }
     }
 
@@ -24,8 +26,10 @@ class AccountSettingScreen extends Component {
     };
 
     nextPress = () => {
-        const {onPress} = this.props;
-        onPress(1);
+        updateUserDataAction(this.props.user.uid, this.state).then(() => {
+            getUserData(this.props.user.uid)
+        });
+        this.onBackPress();
     };
 
     render() {
@@ -55,13 +59,13 @@ class AccountSettingScreen extends Component {
                             value={email}
                             onChangeText={(email)=>this.setState({email})}
                         />
-                        <CommonTextInput
-                            placeholder={'Phone'}
-                            keyboardType={'phone-pad'}
-                            value={phone}
-                            onChangeText={(phone)=>this.setState({phone})}
-                            editable={false}
-                        />
+                        {/*<CommonTextInput*/}
+                        {/*    placeholder={'Phone'}*/}
+                        {/*    keyboardType={'phone-pad'}*/}
+                        {/*    value={phone}*/}
+                        {/*    onChangeText={(phone)=>this.setState({phone})}*/}
+                        {/*    editable={false}*/}
+                        {/*/>*/}
                         <CommonButton
                             theme={theme}
                             container={{marginTop: 45}}
@@ -80,6 +84,7 @@ class AccountSettingScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(AccountSettingScreen);
