@@ -31,6 +31,7 @@ class GetStartedScreen extends Component {
     };
 
     googlePress = () => {
+        regex.showLoader();
         getGoogleData().then(response => {
             getUserDataAndUpdateInFirestore(response).then(response => {
                 this.checkUserData(response);
@@ -39,6 +40,7 @@ class GetStartedScreen extends Component {
     };
 
     checkUserData = (response) => {
+       regex.hideLoader();
        const {navigation} = this.props;
        let user = response.user;
 

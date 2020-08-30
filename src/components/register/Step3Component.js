@@ -9,8 +9,8 @@ class Step3Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sexuality: props.sexuality,
-            personality: props.personality,
+            sexuality: props.data.sexuality,
+            personality: props.data.personality,
             sexualityData: sexualityData,
             personalityData: personalityData
         }

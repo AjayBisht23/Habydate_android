@@ -9,7 +9,7 @@ class Step6Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lookingFor: props.lookingFor,
+            lookingFor: props.data.lookingFor,
             lookingData: lookingData
         }
     }

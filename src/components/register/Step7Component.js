@@ -9,7 +9,7 @@ class Step7Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            religion: props.religion,
+            religion: props.data.religion,
             religionData: religionData
         }
     }

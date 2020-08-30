@@ -9,9 +9,9 @@ class Step8Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            drinkingStatus: props.drinkingStatus,
-            smokingStatus: props.smokingStatus,
-            eatingStatus: props.eatingStatus,
+            drinkingStatus: props.data.drinkingStatus,
+            smokingStatus: props.data.smokingStatus,
+            eatingStatus: props.data.eatingStatus,
             drinkingData: drinkingData,
             smokingData: smokingData,
             eatingData: eatingData

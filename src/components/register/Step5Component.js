@@ -9,7 +9,7 @@ class Step5Component extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            maritalStatus: props.maritalStatus,
+            maritalStatus: props.data.maritalStatus,
             maritalData: maritalData
         }
     }

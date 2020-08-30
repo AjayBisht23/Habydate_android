@@ -1,7 +1,7 @@
-import {LOGIN, LOGOUT, SET_USER_DATA, THEME} from '../actions/types';
+import {HIDE_LOADER, LOGIN, LOGOUT, SET_USER_DATA, SHOW_LOADER, THEME} from '../actions/types';
 import {THEMES} from '../themes/themes';
 
-const initialAuthState = {loading: true, user: null, theme: THEMES[0]};
+const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -16,6 +16,12 @@ function auth(state = initialAuthState, action) {
 
     case SET_USER_DATA:
       return {...state, user: action.payload};
+
+    case SHOW_LOADER:
+      return {...state, showLoader: true};
+
+    case HIDE_LOADER:
+      return {...state, showLoader: false};
 
     default:
       return state;

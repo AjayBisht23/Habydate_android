@@ -36,6 +36,7 @@ import { firebase } from '@react-native-firebase/analytics';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/firebase';
 import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
+import LoaderComponent from '../components/LoaderComponent';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -174,6 +175,7 @@ class AppNavigator extends React.PureComponent {
                   <Drawer.Screen name="Settings" component={SettingStackScreen} />
                 </Drawer.Navigator>
           }
+          <LoaderComponent loading={this.props.showLoader}/>
       </NavigationContainer>
     );
   }
@@ -183,6 +185,7 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   user: state.auth.user,
   theme: state.auth.theme,
+  showLoader: state.auth.showLoader,
 });
 
 export default connect(mapStateToProps)(AppNavigator);
