@@ -59,7 +59,8 @@ class AddPhotoScreen extends Component {
                     photoUrl: '',
                 },
             ]
-        }
+        };
+        regex.hideLoader();
     }
 
     onBackPress = () => {
@@ -74,14 +75,14 @@ class AddPhotoScreen extends Component {
         photoData.forEach(a => {
             if (a.photoUrl !== '') {
                 let data = {...a.data};
-                data.refName = `${moment.utc()}${data.filename}`;
                 getResults.push(data);
             }
         });
+
+        let data = route.params.data;
+        let uid = data.uid;
         if (getResults.length > 0) {
             regex.showLoader();
-            let data = route.params.data;
-            let uid = data.uid;
             let uploadPhotos = [];
             getResults.forEach((file) => {
                 uploadPhotos.push(cloudinaryUpload(file));
@@ -96,15 +97,15 @@ class AddPhotoScreen extends Component {
                         public_id: asset.public_id
                     });
                 });
-                updateUserDataAction(uid, {stepCompleted: 9, photos: photos}).then(() => {
-                    getUserData(this.props.user.uid)
-                });;
+                updateUserDataAction(uid, {stepCompleted: 9, photos: photos});
                 navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
             }).catch(error => {
                 regex.hideLoader();
             });
-        } else
-            alert(messages.selectProfile);
+        } else {
+            updateUserDataAction(uid, {stepCompleted: 9, photos: []});
+            navigation.navigate('Congratulations', {data: {...data, photos: []}, photoData: [{path: 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png'}]});
+        }
     };
 
     openLibrary = () => {

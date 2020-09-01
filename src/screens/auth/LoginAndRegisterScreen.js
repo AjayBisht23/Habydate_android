@@ -39,9 +39,12 @@ class LoginAndRegisterScreen extends Component {
 
             // Request to send OTP
             if (regex.validatePhoneNumber(phone)) {
+                regex.showLoader();
                 signInPhone(phone).then(confirmResult => {
+                        regex.hideLoader();
                         navigation.navigate('Verification', {type, callingCode, phone_number, confirmResult});
                     }).catch(error => {
+                        regex.hideLoader();
                         alert(error.message);
                     })
             } else

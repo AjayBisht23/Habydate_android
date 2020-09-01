@@ -28,8 +28,7 @@ class CongratulationsScreen extends Component {
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <View style={styles.iconView}>
-                    <FastImage source={{uri: photoData[0].path}}
-                               style={{width: 150, height: 150, borderRadius: 75}}/>
+                    <FastImage source={{uri: photoData[0].path}} style={{width: 150, height: 150, borderRadius: 75}}/>
                     <Text style={[styles.logoText, {color: theme.secondaryColor}]}>{data.name}</Text>
                 </View>
                 <View style={[styles.bottomView]}>

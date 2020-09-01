@@ -22,6 +22,7 @@ import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
 // import {getProfilePic} from '../config/storage';
 import moment from 'moment';
+import auth from '@react-native-firebase/auth';
 
 export const {OS} = Platform;
 export const TouchableFeedback = OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
@@ -199,6 +200,7 @@ export const regex = {
   },
 
   clearData: async () => {
+    auth().signOut().then(() => console.log('User signed out!'));
     // regex.changeStatusStyle('default');
     await AsyncStorage.clear();
     // defaultRestClient.clearAuthorization();

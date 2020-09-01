@@ -34,11 +34,16 @@ class VerificationScreen extends Component {
             let confirmResult = params.confirmResult;
 
             if (value.length === 6) {
+                regex.showLoader();
                 confirmResult.confirm(value).then(response => {
                     getUserDataAndUpdateInFirestore(response).then(response => {
+                        regex.hideLoader();
                         this.checkUserData(response);
                     });
-                }).catch(error => {alert(error.message);})
+                }).catch(error => {
+                    regex.hideLoader();
+                    alert(error.message);
+                })
             } else
                 alert('Please enter a 6 digit OTP code.');
         }

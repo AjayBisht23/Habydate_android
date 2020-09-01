@@ -59,7 +59,7 @@ export function cloudinaryUpload(photo) {
         const data = new FormData();
         let media = {
             uri: photo.path,
-            type: photo.mime,
+            type: 'image/png',
             name: new Date().valueOf().toString()+'.png',
         };
         data.append('file', media);
