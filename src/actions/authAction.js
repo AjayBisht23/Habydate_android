@@ -1,6 +1,7 @@
 import {SET_USER_DATA} from './types';
 import {usersCollection} from './../config/firestore';
 import {getStore} from '../../App';
+import {CLOUDINARY_CLOUD_NAME, CLOUDINARY_PRESENT_NAME} from '../config/config';
 
 export function createNewUserDataAction(uid, parameter) {
     return new Promise((resolve, reject) => {
@@ -50,5 +51,27 @@ export function getUserData(uid) {
             } else
                 reject({user: null});
         });
+    });
+}
+
+export function cloudinaryUpload(photo) {
+    return new Promise((resolve, reject) => {
+        const data = new FormData();
+        let media = {
+            uri: photo.path,
+            type: photo.mime,
+            name: new Date().valueOf().toString()+'.png',
+        };
+        data.append('file', media);
+        data.append('upload_preset', CLOUDINARY_PRESENT_NAME);
+        data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+        fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
+            method: 'post',
+            body: data
+        }).then(res => res.json()).then(data => {
+            resolve(data);
+        }).catch(err => {
+            reject(err);
+        })
     });
 }

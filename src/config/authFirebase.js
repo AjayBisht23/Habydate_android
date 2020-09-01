@@ -1,7 +1,7 @@
 import {AccessToken, LoginManager} from 'react-native-fbsdk';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import {checkUserExits, createNewUserDataAction, updateUserDataAction} from '../actions/authAction';
+import {checkUserExits, createNewUserDataAction} from '../actions/authAction';
 import {regex} from '../utils/regex';
 
 export const signInPhone = async (phone) => {

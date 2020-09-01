@@ -118,7 +118,7 @@ class MenuScreen extends Component {
                 <ScrollView>
                     <View style={[styles.innerView]}>
                         <View style={[styles.imageView, {...shadow(5)}]}>
-                            <FastImage source={{uri: regex.getProfilePic(user)}} style={[styles.imageView]}/>
+                            <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={[styles.imageView]}/>
                         </View>
                         <Text style={[styles.nameText, {color: theme.primaryColor}]}>{`${user.name}${regex.getAge(user.DoB)}`}</Text>
                         <CommonButton

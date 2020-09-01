@@ -34,7 +34,7 @@ import ChatScreen from '../screens/dashboard/messages/ChatScreen';
 import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
 import { firebase } from '@react-native-firebase/analytics';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import {WEB_CLIENT_ID} from '../config/firebase';
+import {WEB_CLIENT_ID} from '../config/config';
 import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
 import LoaderComponent from '../components/LoaderComponent';
 

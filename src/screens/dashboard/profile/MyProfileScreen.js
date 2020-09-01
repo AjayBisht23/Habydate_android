@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
+import {View, StyleSheet, Text, TextInput, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
@@ -7,7 +7,9 @@ import FastImage from 'react-native-fast-image';
 import {Button, Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import ReadMore from 'react-native-read-more-text';
-import {getUserData, updateUserDataAction} from '../../../actions/authAction';
+import {cloudinaryUpload, getUserData, updateUserDataAction} from '../../../actions/authAction';
+import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
+import ImagePicker from 'react-native-customized-image-picker';
 
 class MyProfileScreen extends Component {
 
@@ -32,7 +34,9 @@ class MyProfileScreen extends Component {
             smokingStatus: regex.isEmpty(user.smokingStatus) ? '' : user.smokingStatus,
             eatingStatus: regex.isEmpty(user.eatingStatus) ? '' : user.eatingStatus,
             isEdit: false,
-        }
+        };
+
+        this.lastIndex = regex.isEmpty(user.photos) ? 0 : user.photos.length;
     }
 
     onBackPress = () => {
@@ -97,6 +101,47 @@ class MyProfileScreen extends Component {
         }});
     };
 
+    uploadPhotos = (images) => {
+        regex.showLoader();
+        let uploadPhotos = [];
+        for (let i = 0; i < images.length; i++) {
+            uploadPhotos.push(cloudinaryUpload(images[i]));
+        }
+
+        Promise.all(uploadPhotos).then(response => {
+            regex.hideLoader();
+            let photos = [...this.state.photos];
+            response.forEach((asset) => {
+                photos.push({
+                    photoUrl: asset.secure_url,
+                    public_id: asset.public_id
+                });
+            });
+            this.lastIndex = photos.length;
+            this.setState({photos});
+            updateUserDataAction(this.props.user.uid, {photos: photos}).then(() => {
+                getUserData(this.props.user.uid)
+            });
+        }).catch(error => {
+            regex.hideLoader();
+        });
+    };
+
+    openLibrary = () => {
+        let selectedLength = 12 - this.lastIndex;
+        if (selectedLength < 0)
+            return;
+
+        ImagePicker.openPicker({
+            multiple: true,
+            maxSize: selectedLength,
+            compressQuality: 20
+        }).then(images => {
+            if (images.length > 0)
+                this.uploadPhotos(images);
+        });
+    };
+
     renderItemView = (title, value, index) => {
        const {theme} = this.props;
        const {isEdit} = this.state;
@@ -130,8 +175,7 @@ class MyProfileScreen extends Component {
                     backgroundSpeed={10}
                     renderBackground={() => (
                         <View style={{height: PARALLAX_HEADER_HEIGHT, flex: 1}}>
-                            <FastImage source={{uri: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
-                                       style={[styles.imageView]}/>
+                            <FastImage source={{uri: regex.getProfilePic(photos)}} style={[styles.imageView]}/>
                         </View>
                     )}
                     renderFixedHeader={() => (
@@ -140,9 +184,9 @@ class MyProfileScreen extends Component {
                                 <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 30, color: theme.backgroundColor}} />
                             </Button>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Button transparent onPress={this.onBackPress}>
-                                    <Icon type={'Feather'} name={'camera'} style={{color: theme.backgroundColor}} />
-                                </Button>
+                                {/*<Button transparent onPress={this.onBackPress}>*/}
+                                {/*    <Icon type={'Feather'} name={'camera'} style={{color: theme.backgroundColor}} />*/}
+                                {/*</Button>*/}
                                 <Button transparent onPress={this.onEditPress}>
                                     <Icon type={'Feather'} name={isEdit ? 'send' : 'edit'} style={{color: theme.backgroundColor}} />
                                 </Button>
@@ -183,11 +227,24 @@ class MyProfileScreen extends Component {
                                 </View>
                             }
                             <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20}}/>
+
                             <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
-                            <View style={[styles.addPhotoView, {backgroundColor: theme.primaryBackgroundColor, borderColor: theme.borderColor}]}>
-                                <Icon type={'Feather'} name={'plus'} style={{color: theme.subSecondaryColor}} />
-                                <Text style={[styles.buttonAddPhotoText, {color: theme.subSecondaryColor}]}> Add Photos</Text>
+                            <View style={{marginHorizontal: 20, marginTop: 10}}>
+                                <FlatList
+                                    data={photos}
+                                    extraData={photos}
+                                    renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
                             </View>
+                            <TouchableFeedback onPress={() => this.openLibrary()}>
+                                <View style={[styles.addPhotoView, {backgroundColor: theme.primaryBackgroundColor, borderColor: theme.borderColor}]}>
+                                    <Icon type={'Feather'} name={'plus'} style={{color: theme.subSecondaryColor}} />
+                                    <Text style={[styles.buttonAddPhotoText, {color: theme.subSecondaryColor}]}> Add Photos</Text>
+                                </View>
+                            </TouchableFeedback>
+
                             <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
                                 <Text style={[styles.commonText, {fontWeight: '600', color: theme.primaryColor}]}>Your Information</Text>
                             </View>

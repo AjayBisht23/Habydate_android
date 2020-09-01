@@ -6,16 +6,15 @@ import {Button, Icon} from 'native-base';
 import AddPhotoComponent from '../../components/register/AddPhotoComponent';
 import ImagePicker from "react-native-customized-image-picker";
 import * as messages from '../../utils/messages';
-import {updateUserDataAction} from '../../actions/authAction';
-import {uploadProfilePics} from '../../config/storage';
+import {cloudinaryUpload, getUserData, updateUserDataAction} from '../../actions/authAction';
 import moment from 'moment';
+import {regex} from '../../utils/regex';
 
 class AddPhotoScreen extends Component {
 
     lastIndex = 0;
     constructor(props) {
         super(props);
-        console.log(props.route.params);
         this.state = {
             profilePicUrl: '',
             photoData: [
@@ -80,27 +79,43 @@ class AddPhotoScreen extends Component {
             }
         });
         if (getResults.length > 0) {
+            regex.showLoader();
             let data = route.params.data;
             let uid = data.uid;
-            let photos = [];
+            let uploadPhotos = [];
             getResults.forEach((file) => {
-                photos.push(file.refName);
-                uploadProfilePics(file);
+                uploadPhotos.push(cloudinaryUpload(file));
             });
-            updateUserDataAction(uid, {stepCompleted: 9, photos: photos});
-            navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
+
+            Promise.all(uploadPhotos).then(response => {
+                regex.hideLoader();
+                let photos = [];
+                response.forEach((asset) => {
+                    photos.push({
+                        photoUrl: asset.secure_url,
+                        public_id: asset.public_id
+                    });
+                });
+                updateUserDataAction(uid, {stepCompleted: 9, photos: photos}).then(() => {
+                    getUserData(this.props.user.uid)
+                });;
+                navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
+            }).catch(error => {
+                regex.hideLoader();
+            });
         } else
             alert(messages.selectProfile);
     };
 
     openLibrary = () => {
-        let selectedLength = 10 - this.lastIndex;
+        let selectedLength = 12 - this.lastIndex;
         if (selectedLength < 0)
             return;
 
         ImagePicker.openPicker({
             multiple: true,
-            maxSize: selectedLength
+            maxSize: selectedLength,
+            compressQuality: 20
         }).then(images => {
             for (let i = 0; i < images.length; i++) {
                let getData = this.state.photoData[this.lastIndex + i];

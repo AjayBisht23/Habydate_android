@@ -20,7 +20,7 @@ import {getStore} from '../../App';
 // import {defaultRestClient} from "./restClient";
 import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
-import {getProfilePic} from '../config/storage';
+// import {getProfilePic} from '../config/storage';
 import moment from 'moment';
 
 export const {OS} = Platform;
@@ -150,16 +150,14 @@ export const regex = {
     StatusBar.setBarStyle(type, true);
   },
 
-  getProfilePic: (user) => {
-    let photos = user.photos;
+  getProfilePic: (photos) => {
     if (photos !== undefined) {
-      if (photos.length > 0) {
-        getProfilePic(photos[0]).then(url => {
-          return url;
-        })
-      }
+      if (photos.length > 0)
+        return photos[0].photoUrl;
+      else
+        return 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png';
     } else
-      return 'https://www.searchpng.com/wp-content/uploads/2019/02/Deafult-Profile-Pitcher.png';
+      return 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png';
   },
 
   getAge: (dob) => {
