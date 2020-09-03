@@ -18,3 +18,6 @@ export const SET_USER_DATA = 'SET_USER_DATA';
 
 // App::Location
 export const GET_LOCATION = 'GET_LOCATION';
+
+// App::People Who Liked
+export const PEOPLE_WHO_LIKED = 'PEOPLE_WHO_LIKED';

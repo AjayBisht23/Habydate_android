@@ -27,6 +27,18 @@ export function checkUserExits(uid) {
     return new Promise((resolve, reject) => {
         usersCollection.doc(uid).get().then((response) => {
             return resolve(response);
+        }).catch(error => {
+            return reject(error)
+        });
+    });
+}
+
+export function getUserDetail(data) {
+    return new Promise((resolve, reject) => {
+        usersCollection.doc(data.uid).get().then((response) => {
+            return resolve({response, data});
+        }).catch(error => {
+            return reject(error)
         });
     });
 }

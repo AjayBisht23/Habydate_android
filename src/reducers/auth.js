@@ -1,7 +1,16 @@
-import {GET_LOCATION, HIDE_LOADER, LOGIN, LOGOUT, SET_USER_DATA, SHOW_LOADER, THEME} from '../actions/types';
+import {
+  GET_LOCATION,
+  HIDE_LOADER,
+  LOGIN,
+  LOGOUT,
+  PEOPLE_WHO_LIKED,
+  SET_USER_DATA,
+  SHOW_LOADER,
+  THEME,
+} from '../actions/types';
 import {THEMES} from '../themes/themes';
 
-const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false, location: {latitude: 0.00, longitude: 0.00}};
+const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false, location: {latitude: 0.00, longitude: 0.00}, peopleWhoLiked: []};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -25,6 +34,9 @@ function auth(state = initialAuthState, action) {
 
     case GET_LOCATION:
       return {...state, location: action.payload};
+
+    case PEOPLE_WHO_LIKED:
+      return {...state, peopleWhoLiked: action.payload};
 
     default:
       return state;

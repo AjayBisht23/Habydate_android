@@ -164,7 +164,7 @@ class AppNavigator extends React.PureComponent {
                 </Stack.Navigator>
               : <Drawer.Navigator initialRouteName="Home"
                                   drawerContent={props => <MenuScreen {...props} />}
-                                  edgeWidth={W_WIDTH - 50}>
+                                  edgeWidth={0}>
                   <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
                   <Drawer.Screen name="Home" component={HomeStackScreen} />
                   <Drawer.Screen name="Payments" component={PaymentStackScreen} />

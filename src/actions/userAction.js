@@ -1,5 +1,9 @@
-import {usersCollection} from '../config/firestore';
+import {swipeCardsCollection, usersCollection} from '../config/firestore';
 import geohash from "ngeohash";
+import {getStore} from '../../App';
+import {PEOPLE_WHO_LIKED} from './types';
+import {getUserDetail} from './authAction';
+import moment from 'moment';
 
 export function distance(location, location1, unit) {
     let lat1 = location.latitude,
@@ -59,6 +63,66 @@ export function discoverUsers(uid, location, distance) {
             .onSnapshot(snapshot => {
                 if (Boolean(snapshot))
                     resolve(snapshot.docs);
+            })
+    });
+}
+
+export function checkSwipeExits(uid, other_uid) {
+    return new Promise((resolve, reject) => {
+        swipeCardsCollection
+            .where('uid', '==', uid)
+            .where('other_uid', '==', other_uid)
+            .onSnapshot(snapshot => {
+                if (Boolean(snapshot))
+                    resolve(snapshot.docs.length);
+            })
+    });
+}
+
+export function swipeCardUser(uid, other_uid, action) {
+    return new Promise((resolve, reject) => {
+        checkSwipeExits(uid, other_uid).then(data => {
+            if (data === 0) {
+                swipeCardsCollection.add({uid, other_uid, action, createdAt: moment().utc().unix()}).then(() => {
+                    console.log('User added!');
+                });
+            } else
+                console.log('User already actioned!');
+        })
+    });
+}
+
+export function getWhoLikedMe(uid) {
+    return new Promise((resolve, reject) => {
+        swipeCardsCollection
+            .where('other_uid', '==', uid)
+            .where('action', '==', 'like')
+            .onSnapshot(snapshot => {
+                if (Boolean(snapshot)) {
+                    let getUserInfo = [];
+                    for (let v in snapshot.docs) {
+                        let data = snapshot.docs[v]._data;
+                        getUserInfo.push(getUserDetail(data));
+                    }
+
+                    Promise.all(getUserInfo).then(responseData => {
+                        let response = [];
+                        for (let v in responseData) {
+                            let user = responseData[v].response._data;
+                            let data = responseData[v].data;
+                            response.push({
+                                user,
+                                ...data
+                            })
+                        }
+
+                        getStore.dispatch({
+                            type: PEOPLE_WHO_LIKED,
+                            payload: response
+                        });
+                        resolve(response);
+                    });
+                }
             })
     });
 }

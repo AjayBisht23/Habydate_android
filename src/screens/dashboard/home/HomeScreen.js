@@ -9,7 +9,7 @@ import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColor
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
 import {getCurrentLocation} from '../../../utils/location';
-import {discoverUsers, distance} from '../../../actions/userAction';
+import {discoverUsers, distance, swipeCardUser} from '../../../actions/userAction';
 import PulseLoader from '../../../components/pluseloader/PulseLoader';
 
 class HomeScreen extends Component {
@@ -85,8 +85,10 @@ class HomeScreen extends Component {
         this.setState({modalVisible: true});
     };
 
-    onSwiped = (type) => {
-
+    onSwiped = (type, index) => {
+        let uid = this.props.user.uid;
+        let other = this.state.cards[index];
+        swipeCardUser(uid, other.uid, type)
     };
 
     onSwipedAllCards = () => {
@@ -104,11 +106,11 @@ class HomeScreen extends Component {
         if (swipedAllCards)
             return;
 
-        if (type === 'left')
+        if (type === 'dislike')
             this.swiper.swipeLeft();
-        else if (type === 'right')
+        else if (type === 'like')
             this.swiper.swipeRight();
-        else if (type === 'top')
+        else if (type === 'superLike')
             this.swiper.swipeTop();
     };
 
@@ -142,9 +144,9 @@ class HomeScreen extends Component {
             {
                 cards.length > 0 && <Swiper
                     ref={swiper => {this.swiper = swiper}}
-                    onSwipedLeft={() => this.onSwiped('left')}
-                    onSwipedRight={() => this.onSwiped('right')}
-                    onSwipedTop={() => this.onSwiped('top')}
+                    onSwipedLeft={(index) => this.onSwiped('dislike', index)}
+                    onSwipedRight={(index) => this.onSwiped('like', index)}
+                    onSwipedTop={(index) => this.onSwiped('superLike', index)}
                     onTapCard={this.swipeLeft}
                     disableBottomSwipe={true}
                     cards={cards}
@@ -161,17 +163,17 @@ class HomeScreen extends Component {
                 />
             }
             <View style={[styles.bottomView]}>
-                <TouchableFeedback onPress={() => this.onButtonPress('left')}>
+                <TouchableFeedback onPress={() => this.onButtonPress('dislike')}>
                     <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
                         <Icon type={'Feather'} name={'x'} style={{color: RED, fontSize: 30}} />
                     </View>
                 </TouchableFeedback>
-                <TouchableFeedback onPress={() => this.onButtonPress('top')}>
+                <TouchableFeedback onPress={() => this.onButtonPress('superLike')}>
                     <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor, padding: 15, borderRadius: 35}]}>
                         <Icon type={'Feather'} name={'star'} style={{color: SUPERLIKE, fontSize: 30}} />
                     </View>
                 </TouchableFeedback>
-                <TouchableFeedback onPress={() => this.onButtonPress('right')}>
+                <TouchableFeedback onPress={() => this.onButtonPress('like')}>
                     <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
                         <Icon type={'Feather'} name={'heart'} style={{color: theme.pinkColor, fontSize: 30}} />
                     </View>

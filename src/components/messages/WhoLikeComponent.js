@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {regex} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {ONLINE, PINK, White} from '../../themes/constantColors';
+import moment from 'moment';
 
 class WhoLikeComponent extends Component {
 
@@ -12,15 +12,16 @@ class WhoLikeComponent extends Component {
 
     render() {
         const {theme, item} = this.props;
+        const {user} = item;
 
         return (
             <View style={[styles.container, {borderColor: theme.borderColor}]}>
-                <FastImage source={{uri: item.photoUrl}} style={{width: 56, height: 56, borderRadius: 28}}/>
+                <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{width: 56, height: 56, borderRadius: 28}}/>
                 <View style={[styles.infoView]}>
                     <View style={[styles.nameView]}>
-                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>{item.name}, {item.age}</Text>
+                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>{user.name}, {user.age}</Text>
                         <Text style={[styles.likeText, {color: theme.secondaryColor}]}>{'Liked your profile'}</Text>
-                        <Text style={[styles.timeText, {color: theme.subSecondaryColor}]}>{item.date}</Text>
+                        <Text style={[styles.timeText, {color: theme.subSecondaryColor}]}>{moment.unix(item.createdAt).local().fromNow(true)}</Text>
                     </View>
                     <FastImage source={require('./../../assets/heart.png')} style={{width: 22, height: 20}}/>
                 </View>
