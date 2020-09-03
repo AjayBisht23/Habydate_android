@@ -20,10 +20,6 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-  <key>FacebookAppID</key>
-  <string>3178930815494275</string>
-  <key>FacebookDisplayName</key>
-  <string>Epicbae</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -47,26 +43,30 @@
 			</array>
 		</dict>
 	</array>
-  <key>LSApplicationQueriesSchemes</key>
-  <array>
-    <string>fbapi</string>
-    <string>fbapi20130214</string>
-    <string>fbapi20130410</string>
-    <string>fbapi20130702</string>
-    <string>fbapi20131010</string>
-    <string>fbapi20131219</string>
-    <string>fbapi20140410</string>
-    <string>fbapi20140116</string>
-    <string>fbapi20150313</string>
-    <string>fbapi20150629</string>
-    <string>fbapi20160328</string>
-    <string>fbauth</string>
-    <string>fb-messenger-share-api</string>
-    <string>fbauth2</string>
-    <string>fbshareextension</string>
-  </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>3178930815494275</string>
+	<key>FacebookDisplayName</key>
+	<string>Epicbae</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbapi20160328</string>
+		<string>fbauth</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -83,6 +83,8 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
+	<string></string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>

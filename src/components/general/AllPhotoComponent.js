@@ -14,8 +14,7 @@ class AllPhotoComponent extends Component {
 
         return (
             <View style={[styles.container, {borderColor: theme.borderColor}]}>
-                <FastImage source={{uri: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
-                           style={[styles.imageView]}/>
+                <FastImage source={{uri: item.photoUrl}} style={[styles.imageView]}/>
             </View>
         );
     }

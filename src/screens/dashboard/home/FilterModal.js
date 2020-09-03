@@ -5,103 +5,53 @@ import {Icon} from "native-base";
 import Slider from "react-native-slider";
 import {White} from '../../../themes/constantColors';
 import CommonButton from '../../../components/general/CommonButton';
-
-let lookingData = [
-    {
-        id: 1,
-        title: 'Dating',
-        selected: false
-    },
-    {
-        id: 2,
-        title: 'Friendship',
-        selected: false
-    },
-    {
-        id: 3,
-        title: 'Chat Buddy',
-        selected: false
-    },
-    {
-        id: 4,
-        title: 'High Buddy',
-        selected: false
-    },
-    {
-        id: 5,
-        title: 'Sugar Daddy',
-        selected: false
-    },
-    {
-        id: 6,
-        title: 'Sugar Momma',
-        selected: false
-    },
-    {
-        id: 7,
-        title: 'Sugar Baby',
-        selected: false
-    },
-    {
-        id: 8,
-        title: 'Hookups',
-        selected: false
-    },
-    {
-        id: 9,
-        title: 'Friends with benefits',
-        selected: false
-    },
-];
-
-let showMeData = [
-    {
-        id: 1,
-        title: 'Straight',
-        selected: false
-    },
-    {
-        id: 2,
-        title: 'Gay',
-        selected: false
-    },
-    {
-        id: 3,
-        title: 'Lesbian',
-        selected: false
-    },
-    {
-        id: 4,
-        title: 'Bisexual',
-        selected: false
-    },
-    {
-        id: 5,
-        title: 'Trans',
-        selected: false
-    },
-    {
-        id: 6,
-        title: 'Others',
-        selected: false
-    },
-];
+import {lookingData, sexualityData} from '../../../json/RegisterJson';
 
 class FilterModal extends Component {
 
     constructor(props) {
         super(props);
+        let filterData = props.filterData;
+        const {selectedDistance, selectedAge} = filterData;
+
+        let lookData = JSON.parse(JSON.stringify(lookingData));
+        let lookingResults = lookData.map((item) => {
+            let interested = filterData.interested;
+            if (Boolean(interested))
+                item.selected = interested.includes(item.title);
+
+            return item;
+        });
+
+        let showData = JSON.parse(JSON.stringify(sexualityData));
+        let showResults = showData.map((item) => {
+            let showMe = filterData.showMe;
+            if (Boolean(showMe))
+                item.selected = showMe.includes(item.title);
+
+            return item;
+        });
         this.state = {
-            selectedLocation: 'New york',
-            selectedDistance: 30,
-            isLookingData: false,
-            lookingData: lookingData,
-            isShowMeData: false,
-            showMeData: showMeData,
-            selectedAge: 25,
-            isMatchSound: false
+            ...this.initialData(),
+            selectedDistance,
+            selectedAge,
+            lookingData: lookingResults,
+            showMeData: showResults,
         }
     }
+
+    initialData = () => {
+       return {
+           selectedLocation: 'New york',
+           selectedDistance: 30,
+           isLookingData: false,
+           lookingData: JSON.parse(JSON.stringify(lookingData)),
+           isShowMeData: false,
+           showMeData: JSON.parse(JSON.stringify(sexualityData)),
+           selectedAge: 25,
+           isMatchSound: false
+       }
+    };
 
     matchSoundSwitch = (isMatchSound) => {
         this.setState({isMatchSound})
@@ -110,6 +60,42 @@ class FilterModal extends Component {
     onLookingPress = (item) => {
       item.selected = !item.selected;
       this.setState({lookingData: this.state.lookingData});
+    };
+
+    closePress = () => {
+        const {onClose} = this.props;
+        onClose();
+    };
+
+    resetPress = () => {
+        const {onClose} = this.props;
+        this.setState({
+            ...this.initialData()
+        });
+        onClose({
+            selectedDistance: 30,
+            selectedAge: 25,
+        })
+    };
+
+    donePress = () => {
+        const {lookingData, selectedDistance, selectedAge, showMeData, isMatchSound} = this.state;
+        const {onClose} = this.props;
+
+        let filterData = {
+            selectedDistance,
+            selectedAge,
+            isMatchSound
+        };
+        let getLooking = lookingData.filter(function(o){ return o.selected === true});
+        if (getLooking.length > 0)
+           filterData.interested = getLooking.map(function (o) {return o.title;});
+
+        let getShowMe = showMeData.filter(function(o){ return o.selected === true});
+        if (getShowMe.length > 0)
+            filterData.showMe = getShowMe.map(function (o) {return o.title;});
+
+        onClose(filterData);
     };
 
     renderLookingItem = ({ item }) => {
@@ -129,25 +115,25 @@ class FilterModal extends Component {
 
     render() {
         const {selectedLocation, selectedDistance, isLookingData, lookingData, isShowMeData, showMeData, selectedAge, isMatchSound} = this.state;
-        const {theme, onClose} = this.props;
+        const {theme} = this.props;
 
         return (
             <View style={[styles.container]}>
                 <View style={[styles.innerContainer, {backgroundColor: theme.container.backgroundColor}]}>
                     <View style={[styles.commonView, styles.itemView, {marginHorizontal: 0, paddingHorizontal: 20, borderColor: theme.borderColor}]}>
-                        <Icon type={'Feather'} name={'x'} style={{fontSize: 25, color: theme.primaryColor}} onPress={()=>onClose()}/>
+                        <Icon type={'Feather'} name={'x'} style={{fontSize: 25, color: theme.primaryColor}} onPress={this.closePress}/>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Filter'}</Text>
-                        <Text style={[styles.titleText, {color: theme.subPrimaryColor}]}>{'Reset'}</Text>
+                        <Text style={[styles.titleText, {color: theme.subPrimaryColor}]} onPress={this.resetPress}>{'Reset'}</Text>
                     </View>
                     <ScrollView>
                         <View style={{paddingBottom: 20}}>
-                            <View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Location'}</Text>
-                                <View style={[styles.rightRowView]}>
-                                    <Text style={[styles.commonTitleText, {color: theme.subPrimaryColor}]}>{selectedLocation}</Text>
-                                    <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 22, color: theme.subPrimaryColor}}/>
-                                </View>
-                            </View>
+                            {/*<View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>*/}
+                            {/*    <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Location'}</Text>*/}
+                            {/*    <View style={[styles.rightRowView]}>*/}
+                            {/*        <Text style={[styles.commonTitleText, {color: theme.subPrimaryColor}]}>{selectedLocation}</Text>*/}
+                            {/*        <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 22, color: theme.subPrimaryColor}}/>*/}
+                            {/*    </View>*/}
+                            {/*</View>*/}
                             <View style={[styles.commonView, {borderColor: theme.borderColor}]}>
                                 <View style={[styles.itemView]}>
                                     <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Distance'}</Text>
@@ -226,18 +212,18 @@ class FilterModal extends Component {
                                     onValueChange={(selectedAge) => this.setState({selectedAge: Math.round(selectedAge)})}
                                 />
                             </View>
-                            <View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>
-                                <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Match Sound'}</Text>
-                                <View style={[styles.rightRowView]}>
-                                    <Switch
-                                        trackColor={{ false: theme.pinkColor, true: theme.pinkColor }}
-                                        thumbColor={White}
-                                        ios_backgroundColor={'transparent'}
-                                        onValueChange={this.matchSoundSwitch}
-                                        value={isMatchSound}
-                                    />
-                                </View>
-                            </View>
+                            {/*<View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>*/}
+                            {/*    <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Match Sound'}</Text>*/}
+                            {/*    <View style={[styles.rightRowView]}>*/}
+                            {/*        <Switch*/}
+                            {/*            trackColor={{ false: theme.pinkColor, true: theme.pinkColor }}*/}
+                            {/*            thumbColor={White}*/}
+                            {/*            ios_backgroundColor={'transparent'}*/}
+                            {/*            onValueChange={this.matchSoundSwitch}*/}
+                            {/*            value={isMatchSound}*/}
+                            {/*        />*/}
+                            {/*    </View>*/}
+                            {/*</View>*/}
                         </View>
                     </ScrollView>
                     <CommonButton
@@ -247,7 +233,7 @@ class FilterModal extends Component {
                         borderColor={theme.pinkColor}
                         textColor={theme.backgroundColor}
                         title={'Done'}
-                        onPress={this.nextPress}
+                        onPress={this.donePress}
                     />
                 </View>
             </View>

@@ -1,49 +1,24 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {HEIGHT_RATIO, W_WIDTH} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Button, Icon} from 'native-base';
 import {ONLINE} from '../../../themes/constantColors';
 import ReadMore from 'react-native-read-more-text';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
 
-const data = [
-    {
-        id: 1,
-        photoUrl: '',
-    },
-    {
-        id: 2,
-        photoUrl: '',
-    },
-    {
-        id: 3,
-        photoUrl: '',
-    },
-    {
-        id: 4,
-        photoUrl: '',
-    },
-    {
-        id: 5,
-        photoUrl: '',
-    },
-    {
-        id: 6,
-        photoUrl: '',
-    },
-];
-
 class OtherProfileScreen extends Component {
 
     constructor(props) {
         super(props);
+        let params = props.route.params;
         this.state = {
-           photoData: data,
-           instagramPhotoData: data
+            instagramPhotos: [],
+            ...params.profileData
         };
+        console.log(this.state);
     }
 
     onBackPress = () => {
@@ -55,9 +30,21 @@ class OtherProfileScreen extends Component {
 
     };
 
+    renderItemView = (title, value, index) => {
+        const {theme} = this.props;
+        return (
+            <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
+                <Text style={[styles.commonText, {color: theme.primaryColor}]}>{title}</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>{value}</Text>
+                </View>
+            </View>
+        )
+    };
+
     render() {
-        const {photoData, instagramPhotoData} = this.state;
         const {theme, navigation} = this.props;
+        const {instagramPhotos, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus} = this.state;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -70,8 +57,7 @@ class OtherProfileScreen extends Component {
                     backgroundSpeed={10}
                     renderBackground={() => (
                         <View style={{height: PARALLAX_HEADER_HEIGHT, flex: 1}}>
-                            <FastImage source={{uri: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
-                                       style={[styles.imageView]}/>
+                            <FastImage source={{uri: regex.getProfilePic(photos)}} style={[styles.imageView]}/>
                         </View>
                     )}
                     renderFixedHeader={() => (
@@ -90,8 +76,8 @@ class OtherProfileScreen extends Component {
                         <View style={[styles.userView]}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 <View style={styles.onlineView} />
-                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>Mariya</Text>
-                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>, 24</Text>
+                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>{name}</Text>
+                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>, {regex.getAge(DoB)}</Text>
                             </View>
                             <View style={[styles.locationView, {backgroundColor: theme.primaryBackgroundColor}]}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.subPrimaryColor}}/>
@@ -106,81 +92,63 @@ class OtherProfileScreen extends Component {
                                     return <Text style={[styles.readMore, {color: theme.subPrimaryColor}]} onPress={handlePress}>Show less</Text>
                                 }}
                                 onReady={this._handleTextReady}>
-                                <Text style={[styles.bioText, {color: theme.subPrimaryColor}]}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                                    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                    nisi ut aliquip ex ea commodo consequat.  Duis aute irure dolor
-                                    in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                    nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                    sunt in culpa qui officia deserunt mollit anim id est laborum
-                                </Text>
+                                <Text style={[styles.bioText, {color: theme.subPrimaryColor}]}>{bio}</Text>
                             </ReadMore>
                         </View>
                         <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20, marginBottom: 10}}/>
 
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderBottomWidth: 0}]}>
-                            <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
-                            <Text style={[styles.commonText, {color: theme.pinkColor}]} onPress={() => navigation.navigate('AllPhotos')}>See All</Text>
-                        </View>
-                        <View style={{marginHorizontal: 20}}>
-                            <FlatList
-                                data={photoData}
-                                extraData={photoData}
-                                renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
-                                numColumns={3}
-                                keyExtractor={(item, index) => index.toString()}
-                            />
-                        </View>
-                        <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20, marginHorizontal: 20, marginBottom: 10}}/>
+                        {
+                            photos.length > 0 && <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderBottomWidth: 0}]}>
+                                <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
+                                <Text style={[styles.commonText, {color: theme.pinkColor}]} onPress={() => navigation.navigate('AllPhotos', {photos})}>See All</Text>
+                            </View>
+                        }
+                        {
+                            photos.length > 0 && <View style={{marginHorizontal: 20}}>
+                                <FlatList
+                                    data={photos}
+                                    extraData={photos}
+                                    renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+                            </View>
+                        }
+                        {
+                            photos.length > 0 && <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20, marginHorizontal: 20, marginBottom: 10}}/>
+                        }
 
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderBottomWidth: 0}]}>
-                            <Text style={[styles.photoText, {color: theme.primaryColor}]}>Instagram Photos (0)</Text>
-                            <Text style={[styles.commonText, {color: theme.pinkColor}]} onPress={() => navigation.navigate('AllPhotos')}>See All</Text>
-                        </View>
-                        <View style={{marginHorizontal: 20}}>
-                            <FlatList
-                                data={photoData}
-                                extraData={photoData}
-                                renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
-                                numColumns={3}
-                                keyExtractor={(item, index) => index.toString()}
-                            />
-                        </View>
+                        {
+                            instagramPhotos.length > 0 && <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderBottomWidth: 0}]}>
+                                <Text style={[styles.photoText, {color: theme.primaryColor}]}>Instagram Photos (0)</Text>
+                                <Text style={[styles.commonText, {color: theme.pinkColor}]} onPress={() => navigation.navigate('AllPhotos')}>See All</Text>
+                            </View>
+                        }
+                        {
+                            instagramPhotos.length > 0 && <View style={{marginHorizontal: 20}}>
+                                <FlatList
+                                    data={instagramPhotos}
+                                    extraData={instagramPhotos}
+                                    renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index.toString()}
+                                />
+                            </View>
+                        }
 
 
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Gender</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Male</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Personality</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Romantic</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Education</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Bachelor</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Marital Status</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Single Mom</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Looking for</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Friendship</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Religion</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>Hindu</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Smoking</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>No-Smoker</Text>
-                        </View>
-                        <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                            <Text style={[styles.commonText, {color: theme.primaryColor}]}>Drinking</Text>
-                            <Text style={[styles.commonText, {color: theme.subPrimaryColor}]}>No-Drinker</Text>
-                        </View>
+                        {this.renderItemView('Height', height, 1)}
+                        {this.renderItemView('Body Type', bodyType, 2)}
+                        {this.renderItemView('Gender', gender, 3)}
+                        {this.renderItemView('Sexuality', sexuality, 4)}
+                        {this.renderItemView('Personality', personality, 5)}
+                        {this.renderItemView('Education', education, 6)}
+                        {this.renderItemView('Marital Status', maritalStatus, 7)}
+                        {this.renderItemView('Looking for', lookingFor, 8)}
+                        {this.renderItemView('Religion', religion, 9)}
+                        {this.renderItemView('Drinking', drinkingStatus, 10)}
+                        {this.renderItemView('Smoking', smokingStatus, 11)}
+                        {this.renderItemView('Eating', eatingStatus, 12)}
                         <View style={{marginVertical: 15}}/>
                     </View>
                 </ParallaxScrollView>

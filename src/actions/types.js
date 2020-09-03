@@ -15,3 +15,6 @@ export const SHOW_LOADER = 'SHOW_LOADER';
 
 // App::User
 export const SET_USER_DATA = 'SET_USER_DATA';
+
+// App::Location
+export const GET_LOCATION = 'GET_LOCATION';

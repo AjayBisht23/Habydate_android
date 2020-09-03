@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/google-signin": "^4.0.3",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
@@ -24,6 +25,7 @@
     "@react-navigation/stack": "^5.7.0",
     "moment": "^2.27.0",
     "native-base": "^2.13.12",
+    "ngeohash": "^0.6.3",
     "react": "16.13.1",
     "react-native": "0.63.1",
     "react-native-confirmation-code-field": "^6.5.0",

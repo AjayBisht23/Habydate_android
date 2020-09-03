@@ -4,114 +4,77 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Button, Icon} from "native-base";
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {HEIGHT_RATIO, shadow, TouchableFeedback} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
-
-const data = [
-    {
-        id: 1,
-        photoUrl: 'https://images.unsplash.com/photo-1521167318043-b2ce52398029?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Anne Garza',
-        age: '22',
-        location: 'Bolivar',
-        online: true,
-        match: 90
-    },
-    {
-        id: 2,
-        photoUrl: 'https://images.unsplash.com/photo-1563178406-4cdc2923acbc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Mariana',
-        age: '22',
-        location: 'Bolivar',
-        online: true,
-        match: 95
-    },
-    {
-        id: 3,
-        photoUrl: 'https://images.unsplash.com/photo-1518675970634-bdd3fe443f52?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Antanella',
-        age: '20',
-        location: 'Bolivar',
-        online: true,
-        match: 80
-    },
-    {
-        id: 4,
-        photoUrl: 'https://images.unsplash.com/photo-1536720298877-693b87f05655?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Lina Jessica',
-        age: '18',
-        location: 'Bolivar',
-        online: false,
-        match: 85
-    },
-    {
-        id: 5,
-        photoUrl: 'https://images.unsplash.com/photo-1510696324343-95958c75f30c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Anne Garza',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 90
-    },
-    {
-        id: 6,
-        photoUrl: 'https://images.unsplash.com/photo-1456412684996-31507d7d17b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Ana Lucia',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 85
-    },
-    {
-        id: 7,
-        photoUrl: 'https://images.unsplash.com/photo-1514315384763-ba401779410f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Maria Jose',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 80
-    },
-    {
-        id: 8,
-        photoUrl: 'https://images.unsplash.com/photo-1503185912284-5271ff81b9a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Anne Garza',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 75
-    },
-    {
-        id: 9,
-        photoUrl: 'https://images.unsplash.com/photo-1496440737103-cd596325d314?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Maria Jose',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 80
-    },
-    {
-        id: 10,
-        photoUrl: 'https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
-        name: 'Anne Garza',
-        age: '22',
-        location: 'Bolivar',
-        online: false,
-        match: 75
-    },
-];
+import {getCurrentLocation} from '../../../utils/location';
+import {discoverUsers, distance} from '../../../actions/userAction';
+import PulseLoader from '../../../components/pluseloader/PulseLoader';
 
 class HomeScreen extends Component {
 
     constructor (props) {
         super(props);
         this.state = {
-            cards: data,
+            cards: [],
             swipedAllCards: false,
             modalVisible: false,
-        }
+            loading: true,
+        };
+        this.location = null;
+        this.filterData = {
+            selectedDistance: 30,
+            selectedAge: 25,
+        };
     }
+
+    componentDidMount(): void {
+        getCurrentLocation().then(location => {
+            this.location = location.coords;
+            this.getUserData();
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    getUserData = () => {
+        this.setLoader(true);
+        discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
+            let data = [];
+            for (let a in response)
+                data.push(response[a]._data);
+
+            if (data.length > 0)
+                this.filterToData(data);
+        });
+    };
+
+    filterToData = (data) => {
+        const {selectedAge, interested, showMe} = this.filterData;
+
+        let uid = this.props.user.uid;
+        let result = data.filter(function(v, i) {
+            let query = false;
+            if (Boolean(interested) && Boolean(showMe))
+                query = v['uid'] !== uid && v['age'] <= selectedAge && interested.includes(v['lookingFor']) && showMe.includes(v['sexuality']);
+            else if (Boolean(interested))
+                query = v['uid'] !== uid && v['age'] <= selectedAge && interested.includes(v['lookingFor']);
+            else if (Boolean(showMe))
+                query = v['uid'] !== uid && v['age'] <= selectedAge && showMe.includes(v['sexuality']);
+            else
+                query = v['uid'] !== uid && v['age'] <= selectedAge;
+
+            return query;
+        });
+        this.setState({cards: [], loading: false}, () => {
+            this.setState({cards: result});
+        });
+    };
+
+    setLoader = (shown) => {
+        this.setState({loading: shown})
+    };
 
     onMenuPress = () => {
         const {navigation} = this.props;
@@ -130,9 +93,9 @@ class HomeScreen extends Component {
         this.setState({swipedAllCards: true})
     };
 
-    swipeLeft = () => {
+    swipeLeft = (index) => {
         const {navigation} = this.props;
-        navigation.navigate('OtherProfile')
+        navigation.navigate('OtherProfile', {profileData: this.state.cards[index]})
     };
 
     onButtonPress = (type) => {
@@ -149,11 +112,11 @@ class HomeScreen extends Component {
             this.swiper.swipeTop();
     };
 
-    renderCard = (item, index) => {
+    renderCardItem = (item, index) => {
         const {theme} = this.props;
         return (
             <View style={[styles.cardView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
-                <FastImage source={{uri: item.photoUrl}} style={{flex: 1, borderRadius: 20, overflow: 'hidden'}}/>
+                <FastImage source={{uri: regex.getProfilePic(item.photos)}} style={{flex: 1, borderRadius: 20, overflow: 'hidden'}}/>
                 <View style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
                     <View style={{position: 'absolute', right: 0, left: 0, bottom: 20}}>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
@@ -163,7 +126,7 @@ class HomeScreen extends Component {
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 5}}>
                             <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 16, color: theme.backgroundColor}}/>
-                            <Text style={[styles.locationText, {color: theme.backgroundColor}]}> 2 km away</Text>
+                            <Text style={[styles.locationText, {color: theme.backgroundColor, marginLeft: 5}]}>{`${distance(item.location, this.location, 'K')}`} km away</Text>
                         </View>
                     </View>
                 </View>
@@ -171,9 +134,55 @@ class HomeScreen extends Component {
         )
     };
 
+    renderCard = () => {
+        const {cards} = this.state;
+        const {theme} = this.props;
+
+        return <View style={[styles.innerView, {backgroundColor: theme.primaryBackgroundColor}]}>
+            {
+                cards.length > 0 && <Swiper
+                    ref={swiper => {this.swiper = swiper}}
+                    onSwipedLeft={() => this.onSwiped('left')}
+                    onSwipedRight={() => this.onSwiped('right')}
+                    onSwipedTop={() => this.onSwiped('top')}
+                    onTapCard={this.swipeLeft}
+                    disableBottomSwipe={true}
+                    cards={cards}
+                    renderCard={this.renderCardItem}
+                    onSwipedAll={this.onSwipedAllCards}
+                    backgroundColor={theme.primaryBackgroundColor}
+                    containerStyle={{bottom: HEIGHT_RATIO(0.15)}}
+                    stackSize={cards.length > 2 ? 3 : cards.length}
+                    stackSeparation={-30}
+                    overlayLabels={overlayLabel}
+                    animateOverlayLabelsOpacity
+                    animateCardOpacity
+                    swipeBackCard
+                />
+            }
+            <View style={[styles.bottomView]}>
+                <TouchableFeedback onPress={() => this.onButtonPress('left')}>
+                    <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
+                        <Icon type={'Feather'} name={'x'} style={{color: RED, fontSize: 30}} />
+                    </View>
+                </TouchableFeedback>
+                <TouchableFeedback onPress={() => this.onButtonPress('top')}>
+                    <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor, padding: 15, borderRadius: 35}]}>
+                        <Icon type={'Feather'} name={'star'} style={{color: SUPERLIKE, fontSize: 30}} />
+                    </View>
+                </TouchableFeedback>
+                <TouchableFeedback onPress={() => this.onButtonPress('right')}>
+                    <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
+                        <Icon type={'Feather'} name={'heart'} style={{color: theme.pinkColor, fontSize: 30}} />
+                    </View>
+                </TouchableFeedback>
+            </View>
+        </View>
+    };
+
     render () {
-        const {cards, modalVisible} = this.state;
-        const {theme, navigation} = this.props;
+        const {modalVisible, loading} = this.state;
+        const {theme, user} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -187,55 +196,23 @@ class HomeScreen extends Component {
                                          <Icon type={'Feather'} name={'filter'} style={{fontSize: 25, color: theme.primaryColor}} />
                                      </Button>
                                  </View>}/>
-                <View style={[styles.innerView, {backgroundColor: theme.primaryBackgroundColor}]}>
-                    <View style={[styles.bottomView]}>
-                        <TouchableFeedback onPress={() => this.onButtonPress('left')}>
-                            <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
-                                <Icon type={'Feather'} name={'x'} style={{color: RED, fontSize: 30}} />
-                            </View>
-                        </TouchableFeedback>
-                        <TouchableFeedback onPress={() => this.onButtonPress('top')}>
-                            <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor, padding: 15, borderRadius: 35}]}>
-                                <Icon type={'Feather'} name={'star'} style={{color: SUPERLIKE, fontSize: 30}} />
-                            </View>
-                        </TouchableFeedback>
-                        <TouchableFeedback onPress={() => this.onButtonPress('right')}>
-                            <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>
-                                <Icon type={'Feather'} name={'heart'} style={{color: theme.pinkColor, fontSize: 30}} />
-                            </View>
-                        </TouchableFeedback>
-                    </View>
-                    <Swiper
-                        ref={swiper => {this.swiper = swiper}}
-                        onSwipedLeft={() => this.onSwiped('left')}
-                        onSwipedRight={() => this.onSwiped('right')}
-                        onSwipedTop={() => this.onSwiped('top')}
-                        onTapCard={this.swipeLeft}
-                        disableBottomSwipe={true}
-                        cards={cards}
-                        renderCard={this.renderCard}
-                        onSwipedAll={this.onSwipedAllCards}
-                        backgroundColor={theme.primaryBackgroundColor}
-                        containerStyle={{bottom: HEIGHT_RATIO(0.15)}}
-                        stackSize={3}
-                        stackSeparation={-30}
-                        overlayLabels={overlayLabel}
-                        animateOverlayLabelsOpacity
-                        animateCardOpacity
-                        swipeBackCard
-                    />
-                </View>
-                <Modal
-                    animationType={'fade'}
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {}}
-                >
-                    <FilterModal theme={theme}
+                {
+                    loading
+                        ?  <View style={[styles.innerView, {backgroundColor: theme.primaryBackgroundColor}]}>
+                            <PulseLoader avatar={regex.getProfilePic(user.photos)}/>
+                        </View>
+                        :  this.renderCard()
+                }
+                <Modal animationType={'fade'} transparent={true} visible={modalVisible} onRequestClose={() => {}}>
+                    <FilterModal theme={theme} filterData={this.filterData}
                                  onClose={(data) => {
                                      let setStateData = {modalVisible: false};
-
                                      this.setState(setStateData);
+
+                                     if (data) {
+                                         this.filterData = data;
+                                         this.getUserData();
+                                     }
                                  }}
                     />
                 </Modal>
@@ -246,6 +223,7 @@ class HomeScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(HomeScreen);

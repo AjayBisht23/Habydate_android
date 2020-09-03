@@ -1,7 +1,7 @@
-import {HIDE_LOADER, LOGIN, LOGOUT, SET_USER_DATA, SHOW_LOADER, THEME} from '../actions/types';
+import {GET_LOCATION, HIDE_LOADER, LOGIN, LOGOUT, SET_USER_DATA, SHOW_LOADER, THEME} from '../actions/types';
 import {THEMES} from '../themes/themes';
 
-const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false};
+const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false, location: {latitude: 0.00, longitude: 0.00}};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -22,6 +22,9 @@ function auth(state = initialAuthState, action) {
 
     case HIDE_LOADER:
       return {...state, showLoader: false};
+
+    case GET_LOCATION:
+      return {...state, location: action.payload};
 
     default:
       return state;

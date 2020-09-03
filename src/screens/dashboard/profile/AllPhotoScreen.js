@@ -8,42 +8,9 @@ class AllPhotoScreen extends Component {
 
     constructor(props) {
         super(props);
+        let params = props.route.params;
         this.state = {
-            profilePicUrl: '',
-            photoData: [
-                {
-                    id: 1,
-                    photoUrl: '',
-                },
-                {
-                    id: 2,
-                    photoUrl: '',
-                },
-                {
-                    id: 3,
-                    photoUrl: '',
-                },
-                {
-                    id: 4,
-                    photoUrl: '',
-                },
-                {
-                    id: 5,
-                    photoUrl: '',
-                },
-                {
-                    id: 6,
-                    photoUrl: '',
-                },
-                {
-                    id: 7,
-                    photoUrl: '',
-                },
-                {
-                    id: 8,
-                    photoUrl: '',
-                },
-            ]
+            photoData: params.photos
         }
     }
 
