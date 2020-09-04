@@ -23,10 +23,13 @@ class GetStartedScreen extends Component {
     };
 
     facebookPress = () => {
+        regex.showLoader();
         getFacebookData().then(response => {
             getUserDataAndUpdateInFirestore(response).then(response => {
                 this.checkUserData(response);
             });
+        }).catch(error => {
+            regex.hideLoader();
         });
     };
 
@@ -36,6 +39,8 @@ class GetStartedScreen extends Component {
             getUserDataAndUpdateInFirestore(response).then(response => {
                 this.checkUserData(response);
             });
+        }).catch(error => {
+            regex.hideLoader();
         });
     };
 

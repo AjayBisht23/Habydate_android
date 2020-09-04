@@ -1,8 +1,9 @@
 import {
+  CONVERSATIONS,
   GET_LOCATION,
   HIDE_LOADER,
   LOGIN,
-  LOGOUT,
+  LOGOUT, MATCHES,
   PEOPLE_WHO_LIKED,
   SET_USER_DATA,
   SHOW_LOADER,
@@ -10,7 +11,9 @@ import {
 } from '../actions/types';
 import {THEMES} from '../themes/themes';
 
-const initialAuthState = {loading: true, user: null, theme: THEMES[0], showLoader: false, location: {latitude: 0.00, longitude: 0.00}, peopleWhoLiked: []};
+const initialAuthState = {loading: true, user: null, theme: THEMES[0],
+  showLoader: false, location: {latitude: 0.00, longitude: 0.00},
+  peopleWhoLiked: [], matches: [], conversations: []};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -37,6 +40,12 @@ function auth(state = initialAuthState, action) {
 
     case PEOPLE_WHO_LIKED:
       return {...state, peopleWhoLiked: action.payload};
+
+    case MATCHES:
+      return {...state, matches: action.payload};
+
+    case CONVERSATIONS:
+      return {...state, conversations: action.payload};
 
     default:
       return state;

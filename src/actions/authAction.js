@@ -33,9 +33,9 @@ export function checkUserExits(uid) {
     });
 }
 
-export function getUserDetail(data) {
+export function getUserDetail(uid, data) {
     return new Promise((resolve, reject) => {
-        usersCollection.doc(data.uid).get().then((response) => {
+        usersCollection.doc(uid).get().then((response) => {
             return resolve({response, data});
         }).catch(error => {
             return reject(error)

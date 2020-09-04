@@ -1,9 +1,10 @@
-import {swipeCardsCollection, usersCollection} from '../config/firestore';
+import {conversationsCollection, matchesCollection, swipeCardsCollection, usersCollection} from '../config/firestore';
 import geohash from "ngeohash";
 import {getStore} from '../../App';
-import {PEOPLE_WHO_LIKED} from './types';
+import {CONVERSATIONS, MATCHES, PEOPLE_WHO_LIKED} from './types';
 import {getUserDetail} from './authAction';
 import moment from 'moment';
+import {regex} from '../utils/regex';
 
 export function distance(location, location1, unit) {
     let lat1 = location.latitude,
@@ -67,28 +68,29 @@ export function discoverUsers(uid, location, distance) {
     });
 }
 
-export function checkSwipeExits(uid, other_uid) {
+export function checkOtherUserSwipeExits(uid, other_uid) {
     return new Promise((resolve, reject) => {
         swipeCardsCollection
-            .where('uid', '==', uid)
-            .where('other_uid', '==', other_uid)
+            .where('uid', '==', other_uid)
+            .where('other_uid', '==', uid)
+            .where('action', 'in', ['like', 'superLike'])
             .onSnapshot(snapshot => {
                 if (Boolean(snapshot))
-                    resolve(snapshot.docs.length);
+                    resolve(snapshot.docs);
             })
     });
 }
 
 export function swipeCardUser(uid, other_uid, action) {
     return new Promise((resolve, reject) => {
-        checkSwipeExits(uid, other_uid).then(data => {
-            if (data === 0) {
-                swipeCardsCollection.add({uid, other_uid, action, createdAt: moment().utc().unix()}).then(() => {
-                    console.log('User added!');
-                });
-            } else
-                console.log('User already actioned!');
-        })
+        swipeCardsCollection.doc(`${uid}${other_uid}`).set({uid, other_uid, action, createdAt: moment().utc().unix()}).then(() => {
+            checkOtherUserSwipeExits(uid, other_uid).then(responseData => {
+                if (responseData.length > 0 && [action === 'like' || action === 'superLike']) {
+                    addSwipeMatch(uid, other_uid).then(response => resolve(response));
+                } else
+                    resolve(false)
+            });
+        });
     });
 }
 
@@ -102,7 +104,7 @@ export function getWhoLikedMe(uid) {
                     let getUserInfo = [];
                     for (let v in snapshot.docs) {
                         let data = snapshot.docs[v]._data;
-                        getUserInfo.push(getUserDetail(data));
+                        getUserInfo.push(getUserDetail(data.uid, data));
                     }
 
                     Promise.all(getUserInfo).then(responseData => {
@@ -123,6 +125,214 @@ export function getWhoLikedMe(uid) {
                         resolve(response);
                     });
                 }
+            })
+    });
+}
+
+export function checkSwipeMatchExits(uid, other_uid) {
+    return new Promise((resolve, reject) => {
+        matchesCollection
+            .where('members', 'in', [[uid, other_uid], [other_uid, uid]])
+            .onSnapshot(snapshot => {
+                if (Boolean(snapshot))
+                    resolve(snapshot.docs);
+            })
+    });
+}
+
+export function addSwipeMatch(uid, other_uid) {
+    return new Promise((resolve, reject) => {
+        checkSwipeMatchExits(uid, other_uid).then(response => {
+            if (response.length === 0) {
+                let customId = `${uid}${other_uid}`;
+                matchesCollection.doc(customId)
+                    .set({
+                        customId,
+                        uid,
+                        other_uid,
+                        last_swipe_by: uid,
+                        members: [uid, other_uid],
+                        createdAt: moment().utc().unix()})
+                    .then(() => {
+                        addConversation(customId, [uid, other_uid]);
+                        resolve(true)
+                    }).catch(error => {
+                        reject(false)
+                    });
+            } else
+                resolve(true)
+        });
+    });
+}
+
+function getUserMatch(data) {
+    return new Promise((resolve, reject) => {
+        matchesCollection
+            .where(data.key, '==', data.value)
+            .onSnapshot(snapshot => {
+                if (Boolean(snapshot))
+                    resolve(snapshot.docs);
+            })
+    });
+}
+
+
+export function getAllMatches(uid, isGetConversation) {
+    return new Promise((resolve, reject) => {
+       let add = [];
+       add.push(getUserMatch({key: 'uid', value: uid}));
+       add.push(getUserMatch({key: 'other_uid', value: uid}));
+
+       Promise.all(add).then(response => {
+           let getUserInfo = [];
+           for (let a in response) {
+               let data = response[a];
+               for (let v in data) {
+                   let snapData = data[v]._data;
+                   let getUID = snapData.uid === uid ? snapData.other_uid : snapData.uid;
+                   getUserInfo.push(getUserDetail(getUID, snapData));
+               }
+           }
+
+           Promise.all(getUserInfo).then(responseData => {
+               let response = [];
+               for (let v in responseData) {
+                   let user = responseData[v].response._data;
+                   let data = responseData[v].data;
+                   response.push({
+                       user,
+                       ...data
+                   })
+               }
+
+               getStore.dispatch({
+                  type: MATCHES,
+                  payload: response
+               });
+
+               if (isGetConversation)
+                getAllConversation(uid);
+
+               resolve(response);
+           });
+
+       })
+    })
+}
+
+export function addConversation(id, members) {
+    return new Promise((resolve, reject) => {
+        conversationsCollection.doc(id).set({
+            matches_id: id,
+            members,
+            latestMessage: {
+                text: ``,
+                createdAt: moment().utc().unix()
+            }
+        }).then(() => {
+
+        }).catch(error => {
+
+        });
+    });
+}
+
+export function getAllConversation(uid) {
+    return new Promise((resolve, reject) => {
+        getAllMatches(uid).then(response => {
+            if (response.length > 0) {
+                let getConversations = response.map(function (o) {return o.customId;});
+
+                conversationsCollection
+                    .where('matches_id', 'in', getConversations)
+                    .onSnapshot(snapshot => {
+                        if (Boolean(snapshot)) {
+                            let docs = snapshot.docs;
+                            let conversations = [];
+                            for (let v in docs) {
+                                let data = {
+                                    ...docs[v]._data
+                                };
+                                let obj = response.find(o => o.customId === data.matches_id);
+                                data.user = obj.user;
+                                conversations.push(data);
+                            }
+
+                            getStore.dispatch({
+                                type: CONVERSATIONS,
+                                payload: conversations
+                            });
+                            resolve(conversations);
+                        }
+                    })
+            }
+        });
+    });
+}
+
+export function updateLatestMessageInConversation(id, parameter) {
+    return new Promise((resolve, reject) => {
+        conversationsCollection
+            .doc(id)
+            .set({
+                latestMessage: {
+                    text: parameter.text,
+                    createdAt: moment().utc().unix(),
+                }},
+                { merge: true}).then(response => {
+
+        })
+    });
+}
+
+export function addMessageInConversation(id, parameter) {
+    return new Promise((resolve, reject) => {
+        conversationsCollection
+            .doc(id)
+            .collection('Messages')
+            .add({
+                text: parameter.text,
+                createdAt: moment().utc().unix(),
+                user: parameter.user
+            }).then(response => {
+
+        })
+    });
+}
+
+export function getAllMessages(conversationId, otherUser) {
+    return new Promise((resolve, reject) => {
+        let currentUser = getStore.getState().auth.user;
+        conversationsCollection
+            .doc(conversationId)
+            .collection('Messages')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(snapshot => {
+                const messages = snapshot.docs.map(doc => {
+                    const firebaseData = doc.data();
+
+                    const data = {
+                        _id: doc.id,
+                        ...firebaseData,
+                        createdAt: moment.unix(firebaseData.createdAt).local()
+                    };
+
+                    if (!firebaseData.system)
+                    {
+                        data.user = firebaseData.user._id === currentUser.uid ? {
+                            ...firebaseData.user,
+                            name: currentUser.name,
+                            avatar: regex.getProfilePic(currentUser.photos)
+                        } : {
+                            ...firebaseData.user,
+                            name: otherUser.name,
+                            avatar: regex.getProfilePic(otherUser.photos)
+                        };
+                    }
+
+                    return data;
+                });
+                resolve(messages);
             })
     });
 }

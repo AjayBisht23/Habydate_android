@@ -21,3 +21,9 @@ export const GET_LOCATION = 'GET_LOCATION';
 
 // App::People Who Liked
 export const PEOPLE_WHO_LIKED = 'PEOPLE_WHO_LIKED';
+
+// App::Matches
+export const MATCHES = 'MATCHES';
+
+// App::Conversation
+export const CONVERSATIONS = 'CONVERSATIONS';

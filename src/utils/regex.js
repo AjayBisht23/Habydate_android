@@ -165,7 +165,10 @@ export const regex = {
     if (Boolean(dob)) {
       let birthday = moment(dob, 'MM / DD / YYYY');
       let age  = moment().diff(birthday, 'years');
-      return `, ${age}`;
+      if (age > 0)
+        return `, ${age}`;
+      else
+        return '';
     } else {
       return '';
     }

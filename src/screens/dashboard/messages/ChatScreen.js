@@ -8,58 +8,7 @@ import {regex} from '../../../utils/regex';
 import MessageItem from '../../../components/messages/MessageItem';
 import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';
-
-const messages = [
-    {
-        _id: 1,
-        text: 'This is a system message',
-        createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
-        system: true,
-    },
-    {
-        _id: 2,
-        text: 'Hello developer',
-        createdAt: new Date(Date.UTC(2016, 5, 12, 17, 20, 0)),
-        user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-        },
-    },
-    {
-        _id: 3,
-        createdAt: new Date(Date.UTC(2016, 5, 13, 17, 20, 0)),
-        user: {
-            _id: 1,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-        },
-        image: 'https://placeimg.com/960/540/any',
-    },
-    {
-        _id: 6,
-        text: 'Come on!',
-        createdAt: new Date(Date.UTC(2016, 5, 15, 18, 20, 0)),
-        user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-        },
-    },
-    {
-        _id: 7,
-        text: `Hello this is an example of the ParsedText, links like http://www.google.com or http://www.facebook.com are clickable and phone number 444-555-6666 can call too.
-        But you can also do more with this package, for example Bob will change style and David too. foo@gmail.com
-        And the magic number is 42!
-        #react #react-native`,
-        createdAt: new Date(Date.UTC(2016, 5, 13, 17, 20, 0)),
-        user: {
-            _id: 1,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-        },
-    },
-];
+import {addMessageInConversation, getAllMessages, updateLatestMessageInConversation} from '../../../actions/userAction';
 
 class ChatScreen extends React.Component {
 
@@ -73,16 +22,30 @@ class ChatScreen extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            messages: messages
-        })
+        this.getData();
     }
 
+    getData = () => {
+        const {matches_id, user} = this.getConversationData();
+        getAllMessages(matches_id, user).then(messages => {
+            this.setState({messages})
+        });
+    };
+
     onSend(messages = []) {
-        this.setState(previousState => ({
-            messages: GiftedChat.append(previousState.messages, messages),
-        }))
+        const {matches_id} = this.getConversationData();
+        if (messages.length > 0) {
+            let parameter = messages[0];
+            updateLatestMessageInConversation(matches_id, parameter);
+            addMessageInConversation(matches_id, parameter)
+        }
     }
+
+    getConversationData = () => {
+        const {route} = this.props;
+        let params = route.params;
+        return params.conversation;
+    };
 
     userTyping(text)
     {
@@ -100,7 +63,8 @@ class ChatScreen extends React.Component {
     };
 
     renderNavHeader = () => {
-        const {theme, navigation} = this.props;
+        const {theme} = this.props;
+        const {user} = this.getConversationData();
 
         return (
             <Header transparent>
@@ -112,22 +76,22 @@ class ChatScreen extends React.Component {
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.profilePress}>
-                            <FastImage style={{width: 40, height: 40, borderRadius: 20}} source={{uri: 'https://images.unsplash.com/photo-1504703395950-b89145a5425b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}/>
+                            <FastImage style={{width: 40, height: 40, borderRadius: 20}} source={{uri: regex.getProfilePic(user.photos)}}/>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.profilePress}>
                             <View>
-                                <Text style={[{marginLeft: 10,fontSize: 14, fontWeight: '800', color: theme.primaryColor}]}>{`Elizabeth`}</Text>
-                                <Text style={[{marginLeft: 10,fontSize: 12, fontWeight: '400', color: theme.subPrimaryColor}]}>{`Active Now`}</Text>
+                                <Text style={[{marginLeft: 10,fontSize: 14, fontWeight: '800', color: theme.primaryColor}]}>{user.name}</Text>
+                                <Text style={[{marginLeft: 10,fontSize: 12, fontWeight: '400', color: theme.subPrimaryColor}]}>{user.online ? 'Active Now' : ''}</Text>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
                     <Right>
-                        <Button transparent onPress={this.searchPress}>
-                            <Icon type={'Feather'} name="phone" style={{color: theme.primaryColor, fontSize: 20}} />
-                        </Button>
-                        <Button transparent onPress={this.optionPress}>
-                            <Icon type={'Feather'} name="video" style={{color: theme.primaryColor, fontSize: 24}} />
-                        </Button>
+                        {/*<Button transparent onPress={this.searchPress}>*/}
+                        {/*    <Icon type={'Feather'} name="phone" style={{color: theme.primaryColor, fontSize: 20}} />*/}
+                        {/*</Button>*/}
+                        {/*<Button transparent onPress={this.optionPress}>*/}
+                        {/*    <Icon type={'Feather'} name="video" style={{color: theme.primaryColor, fontSize: 24}} />*/}
+                        {/*</Button>*/}
                     </Right>
                 </View>
             </Header>
@@ -211,7 +175,7 @@ class ChatScreen extends React.Component {
     }
 
     render() {
-        const {theme} = this.props;
+        const {theme, user} = this.props;
         const {messages, replyItem} = this.state;
         let minInputToolbarHeight = regex.isEmpty(replyItem) ? 30 : 50;
 
@@ -239,7 +203,7 @@ class ChatScreen extends React.Component {
                     onSend={messages => this.onSend(messages)}
 
                     messages={messages}
-                    user={{_id: 1}}
+                    user={{_id: user.uid}}
                 />
             </View>
         )
@@ -248,6 +212,7 @@ class ChatScreen extends React.Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(ChatScreen)

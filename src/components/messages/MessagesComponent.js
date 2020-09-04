@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {ASPECT_RATIO, regex, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE, PINK, White} from '../../themes/constantColors';
+import moment from 'moment';
 
 class MessagesComponent extends Component {
 
@@ -12,22 +13,24 @@ class MessagesComponent extends Component {
 
     render() {
         const {theme, item, navigation} = this.props;
+        const {user, latestMessage} = item;
+        const {text, createdAt} = latestMessage;
 
         return (
-            <TouchableFeedback onPress={() => navigation.navigate('ChatScreen')}>
+            <TouchableFeedback onPress={() => navigation.navigate('ChatScreen', {conversation: item})}>
                 <View style={[styles.container]}>
                     <View style={styles.rowView}>
                         <View style={styles.profileView}>
-                            <FastImage source={{uri: item.photoUrl}} style={{width: 46, height: 46, borderRadius: 23}}/>
+                            <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{width: 46, height: 46, borderRadius: 23}}/>
                             <View style={[styles.onlineView, {backgroundColor: item.online ? ONLINE : theme.subSecondaryColor}]} />
                         </View>
                         <View style={[styles.textView, {borderColor: theme.borderColor}]}>
                             <View style={[styles.innerRowView]}>
-                                <Text style={[styles.nameText, {color: theme.secondaryColor}]}>{item.name}</Text>
-                                <Text style={[styles.timeText, {color: theme.secondaryColor}]}>{item.date}</Text>
+                                <Text style={[styles.nameText, {color: theme.secondaryColor}]}>{user.name}</Text>
+                                <Text style={[styles.timeText, {color: theme.secondaryColor}]}>{moment.unix(createdAt).local().fromNow(true)}</Text>
                             </View>
                             <View style={[styles.innerRowView, {marginTop: 5}]}>
-                                <Text style={[styles.messageText, {color: theme.primaryColor}]}>{item.massage}</Text>
+                                <Text style={[styles.messageText, {color: theme.primaryColor}]}>{text}</Text>
                                 {item.read && <View style={styles.readView}/>}
                             </View>
                         </View>

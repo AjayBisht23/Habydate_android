@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {ASPECT_RATIO, regex, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE} from '../../themes/constantColors';
 
@@ -12,24 +12,25 @@ class MatchComponent extends Component {
 
     render() {
         const {theme, item} = this.props;
+        const {user} = item;
 
         return (
             <View style={[styles.container]}>
                 <View style={[styles.innerView, {backgroundColor: theme.textInputBackgroundColor}]}>
-                    <FastImage source={{uri: item.photoUrl}} style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}/>
+                    <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}/>
                     <FastImage source={require('./../../assets/blur_effect.png')} style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 89}}/>
                     <View style={styles.topView}>
-                        <View style={styles.matchView}>
-                            <Text style={[styles.matchText, {color: theme.backgroundColor}]}>{item.match}%</Text>
-                        </View>
+                        {/*<View style={styles.matchView}>*/}
+                        {/*    <Text style={[styles.matchText, {color: theme.backgroundColor}]}>{item.match}%</Text>*/}
+                        {/*</View>*/}
                     </View>
                     <View style={styles.bottomView}>
                         <View style={[styles.bottomNameView]}>
                             {item.online && <View style={styles.onlineView} />}
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}</Text>
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>, {item.age}</Text>
+                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{user.name}</Text>
+                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(user.DoB)}</Text>
                         </View>
-                        <Text style={[styles.locationText, {color: theme.backgroundColor}]}>{item.location}</Text>
+                        {/*<Text style={[styles.locationText, {color: theme.backgroundColor}]}>{user.locationName}</Text>*/}
                     </View>
                 </View>
             </View>
