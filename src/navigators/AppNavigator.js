@@ -17,7 +17,7 @@ import {W_WIDTH} from '../utils/regex';
 import MatchesScreen from '../screens/dashboard/matches/MatchesScreen';
 import MessagesScreen from '../screens/dashboard/messages/MessagesScreen';
 import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMeScreen';
-import SeekerRequestScreen from '../screens/dashboard/messages/SeekerRequestScreen';
+import SeekerRequestScreen from '../screens/dashboard/seekers/SeekerRequestScreen';
 import PaymentPackagesScreen from '../screens/dashboard/payment/PaymentPackagesScreen';
 import PaymentMethodScreen from '../screens/dashboard/payment/PaymentMethodScreen';
 import NotificationsScreen from '../screens/dashboard/notifications/NotificationsScreen';
@@ -37,6 +37,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/config';
 import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
 import LoaderComponent from '../components/LoaderComponent';
+import SendMySeekerRequestScreen from '../screens/dashboard/seekers/SendMySeekerRequestScreen';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -98,6 +99,7 @@ function MessagesStackScreen() {
         <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
         <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
       </Stack.Navigator>
   );
 }
@@ -114,9 +116,10 @@ function NotificationStackScreen() {
 function SeekerStackScreen() {
     return (
         <Stack.Navigator screenOptions={navigationOption()}>
-            {/*<Stack.Screen name="SeekerList" component={SeekerListsScreen} />*/}
+            <Stack.Screen name="SeekerList" component={SeekerListsScreen} />
             <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
             <Stack.Screen name="SeekerSendRequest" component={SeekerSendRequestScreen} />
+            <Stack.Screen name="SendMySeekerRequest" component={SendMySeekerRequestScreen} />
         </Stack.Navigator>
     );
 }

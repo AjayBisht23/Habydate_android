@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, TextInput} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, TextInput, Switch} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {ASPECT_RATIO, HEIGHT_RATIO} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
+import moment from 'moment';
+import TimePicker from "react-native-navybits-date-time-picker";
+import {Black, White} from '../../../themes/constantColors';
+import * as messages from '../../../utils/messages';
+import {distance, sendSeekerRequest} from '../../../actions/userAction';
 
 class SeekerSendRequestScreen extends Component {
 
@@ -13,8 +18,10 @@ class SeekerSendRequestScreen extends Component {
         super(props);
         this.state = {
            selectedCategory: 'Choose a category',
-           dateTime: 'Select date & time',
+           dateTime: '',
+           address: '',
            note: '',
+           isChat: true,
         }
     }
 
@@ -27,88 +34,131 @@ class SeekerSendRequestScreen extends Component {
 
     };
 
-    openDatePress = () => {
+    _handleDatePicked = (date) => {
+        this.setState({
+            dateTime: date,
+        });
+    };
 
+    _hideDateTimePicker = () => {
+        console.log("canceled");
+    };
+
+    chatSwitch = (isChat) => {
+        this.setState({isChat})
     };
 
     postPress = () => {
+        const {dateTime, note, address, isChat} = this.state;
+        const {navigation, route} = this.props;
+        let {seeker, user} = route.params;
 
+        if (!Boolean(dateTime))
+            alert(messages.seekerDate);
+        else if (!Boolean(address))
+            alert(messages.seekerAddress);
+        else {
+            regex.showLoader();
+            let parameter = {
+                request_to: user.uid,
+                request_by: this.props.user.uid,
+                date: moment(dateTime).unix(),
+                address,
+                note,
+                isChat,
+                seekerKey: seeker.key,
+                status: 'active',
+                request_status: '',
+            };
+            sendSeekerRequest(parameter).then(() => {
+                regex.hideLoader();
+                navigation.popToTop();
+            })
+        }
     };
 
     render() {
-        const {selectedCategory, dateTime, note} = this.state;
-        const {theme, navigation} = this.props;
+        const {selectedCategory, dateTime, note, address, isChat} = this.state;
+        const {theme, navigation, route, location} = this.props;
+        let {seeker, user} = route.params;
+        const {title} = seeker;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <HeaderComponent theme={theme} onLeftPress={this.onBackPress}/>
+                <HeaderComponent title={title} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.innerView]}>
                     <ScrollView>
                         <View style={[styles.innerView, {padding: 20}]}>
                             <View style={[styles.userView, {backgroundColor: theme.secondaryColor}]}>
-                                <FastImage source={{uri: 'https://images.unsplash.com/photo-1521167318043-b2ce52398029?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}}
+                                <FastImage source={{uri: regex.getProfilePic(user.photos)}}
                                            style={{width: null, height: HEIGHT_RATIO(.45)}}/>
                                 <FastImage source={require('./../../../assets/seekerphotogradient.png')}
                                            style={{width: null, height: HEIGHT_RATIO(.45), position: 'absolute', bottom: 0, left: 0, right: 0}}/>
                                 <View style={{position: 'absolute', bottom: 0, left: 0, right: 0, marginHorizontal: 20, marginBottom: 20}}>
-                                    <Text style={{fontSize: 24, color: theme.backgroundColor, fontWeight: '800'}}>Brice, 24</Text>
+                                    <Text style={{fontSize: 24, color: theme.backgroundColor, fontWeight: '800'}}>{`${user.name}${regex.getAge(user.DoB)}`}</Text>
                                     <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 5}}>
                                         <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.backgroundColor}}/>
-                                        <Text style={[styles.timeText, {color: theme.backgroundColor}]}> Colombia</Text>
+                                        <Text style={[styles.timeText, {color: theme.backgroundColor, marginLeft: 5}]}>{`${distance(user.location, location, 'K')}`} km away</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
-                                <Icon type={'Feather'} name={'list'} style={{fontSize: 16, color: theme.subPrimaryColor}}/>
-                                <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Category: </Text>
-                            </View>
-                            <CommonButton
-                                theme={theme}
-                                container={{marginTop: 5, marginHorizontal: 0}}
-                                backgroundColor={theme.textInputBackgroundColor}
-                                borderColor={theme.textInputBackgroundColor}
-                                textColor={theme.subPrimaryColor}
-                                title={selectedCategory}
-                                onPress={this.openCategoryPress}
-                                dropDownArrow={true}
-                                arrowColor={theme.subPrimaryColor}
-                            />
+                            {/*<View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>*/}
+                            {/*    <Icon type={'Feather'} name={'list'} style={{fontSize: 16, color: theme.subPrimaryColor}}/>*/}
+                            {/*    <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Category: </Text>*/}
+                            {/*</View>*/}
+                            {/*<CommonButton*/}
+                            {/*    theme={theme}*/}
+                            {/*    container={{marginTop: 5, marginHorizontal: 0}}*/}
+                            {/*    backgroundColor={theme.textInputBackgroundColor}*/}
+                            {/*    borderColor={theme.textInputBackgroundColor}*/}
+                            {/*    textColor={theme.subPrimaryColor}*/}
+                            {/*    title={selectedCategory}*/}
+                            {/*    onPress={this.openCategoryPress}*/}
+                            {/*    dropDownArrow={true}*/}
+                            {/*    arrowColor={theme.subPrimaryColor}*/}
+                            {/*/>*/}
                             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
                                 <Icon type={'Feather'} name={'calendar'} style={{fontSize: 16, color: theme.subPrimaryColor}}/>
                                 <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Date & Time: </Text>
                             </View>
-                            <CommonButton
-                                theme={theme}
-                                container={{marginTop: 5, marginHorizontal: 0}}
-                                backgroundColor={theme.textInputBackgroundColor}
-                                borderColor={theme.textInputBackgroundColor}
-                                textColor={theme.subPrimaryColor}
-                                title={dateTime}
-                                onPress={this.openDatePress}
-                                dropDownArrow={true}
-                                arrowColor={theme.subPrimaryColor}
-                            />
+                            <View style={{alignItems: 'center'}}>
+                                <TimePicker
+                                    accentColor={White}
+                                    okColor={Black}
+                                    cancelColor={Black}
+                                    style={[styles.dateInputView, {backgroundColor: theme.textInputBackgroundColor}]}
+                                    customStyles={{dateInput: {borderWidth: 0}, dateText: {color: theme.subPrimaryColor}}}
+                                    okText={'Done'}
+                                    cancelText={'Cancel'}
+                                    mode={'datetime'}
+                                    placeholder={'Select date & time'}
+                                    is24Hour={false}
+                                    onConfirm={this._handleDatePicked}
+                                    onCancel={this._hideDateTimePicker}
+                                    format={'ddd h:mm a, DD MMM YYYY'}
+                                    minDate={new Date()}
+                                    date={dateTime}
+                                    ref="TimePicker"
+                                />
+                            </View>
                             <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 16, color: theme.subPrimaryColor}}/>
                                 <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Location: </Text>
                             </View>
-                            <FastImage source={{uri: 'https://www.google.com/maps/d/u/0/thumbnail?mid=1hITxlm0XfcDq8ZJjefioOG_Q3YY'}}
-                                       style={{width: null, height: HEIGHT_RATIO(.15), borderRadius: 10, marginTop: 5}}/>
+                            <TextInput style={[styles.addressTextInput, {color: theme.subPrimaryColor, backgroundColor: theme.textInputBackgroundColor,}]}
+                                       value={address}
+                                       placeholder="Enter full address"
+                                       placeholderTextColor={theme.subPrimaryColor}
+                                       multiline={true}
+                                       numberOfLines={3}
+                                       onChangeText={(address) => this.setState({address})}
+                            />
                             <View style={{marginVertical: 15}}>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
                                     <Icon type={'Feather'} name={'file-text'} style={{fontSize: 16, color: theme.subPrimaryColor}}/>
                                     <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Note: </Text>
                                 </View>
-                                <TextInput style={{
-                                        flex: 1,
-                                        color: theme.subPrimaryColor,
-                                        backgroundColor: theme.textInputBackgroundColor,
-                                        height: 100,
-                                        padding: 15,
-                                        paddingTop: 15,
-                                        borderRadius: 15,
-                                        marginTop: 5
-                                    }}
+                                <TextInput style={[styles.bioTextInput, {color: theme.subPrimaryColor, backgroundColor: theme.textInputBackgroundColor,}]}
                                     value={note}
                                     placeholder="Type something here..."
                                     placeholderTextColor={theme.subPrimaryColor}
@@ -116,6 +166,18 @@ class SeekerSendRequestScreen extends Component {
                                     numberOfLines={5}
                                     onChangeText={(note) => this.setState({note})}
                                 />
+                            </View>
+                            <View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>
+                                <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'You need to chat?'}</Text>
+                                <View style={[styles.rightRowView]}>
+                                    <Switch
+                                        trackColor={{ false: theme.pinkColor, true: theme.pinkColor }}
+                                        thumbColor={White}
+                                        ios_backgroundColor={'transparent'}
+                                        onValueChange={this.chatSwitch}
+                                        value={isChat}
+                                    />
+                                </View>
                             </View>
                             <CommonButton
                                 theme={theme}
@@ -136,6 +198,8 @@ class SeekerSendRequestScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
+    location: state.auth.location,
 });
 
 export default connect(mapStateToProps)(SeekerSendRequestScreen);
@@ -152,4 +216,49 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         overflow: 'hidden',
     },
+    dateInputView: {
+        width: W_WIDTH-40,
+        marginTop: 10,
+        paddingVertical: 10,
+        borderRadius: 10
+    },
+    timeText: {
+        fontSize: 14,
+        fontWeight: '400'
+    },
+    addressTextInput: {
+        flex: 1,
+        height: 70,
+        padding: 15,
+        paddingTop: 15,
+        borderRadius: 15,
+        marginTop: 10
+    },
+    bioTextInput: {
+        flex: 1,
+        height: 100,
+        padding: 15,
+        paddingTop: 15,
+        borderRadius: 15,
+        marginTop: 10
+    },
+    itemView: {
+        marginVertical: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    commonTitleText: {
+        fontSize: 16,
+        fontWeight: '600',
+        textAlign: 'center'
+    },
+    rightRowView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 });
+
+const customStyle = {
+
+};

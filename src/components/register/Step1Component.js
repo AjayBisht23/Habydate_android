@@ -24,6 +24,8 @@ class Step1Component extends Component {
             alert(messages.enterFullName);
         else if (regex.isEmpty(username))
             alert(messages.enterUserName);
+        else if (regex.validateUsername(username))
+            alert(messages.enterValidUserName);
         else if (regex.isEmpty(email))
             alert(messages.enterEmail);
         else if (!regex.validateEmail(email))

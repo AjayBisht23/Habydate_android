@@ -22,6 +22,10 @@ export const GET_LOCATION = 'GET_LOCATION';
 // App::People Who Liked
 export const PEOPLE_WHO_LIKED = 'PEOPLE_WHO_LIKED';
 
+// App::Seeker
+export const MY_SEND_SEEKER_REQUESTS = 'MY_SEND_SEEKER_REQUESTS';
+export const SEEKER_REQUESTS = 'SEEKER_REQUESTS';
+
 // App::Matches
 export const MATCHES = 'MATCHES';
 

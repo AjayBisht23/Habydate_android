@@ -20,7 +20,6 @@ import {getStore} from '../../App';
 // import {defaultRestClient} from "./restClient";
 import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
-// import {getProfilePic} from '../config/storage';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 
@@ -100,6 +99,10 @@ export const regex = {
 
   validatePassword: (val) => {
     return /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9!@#$%^&*_]\S{5,16}$/.test(val);
+  },
+
+  validateUsername: (val) => {
+    return /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(val)
   },
 
   matchPassword: (val1, val2) => {

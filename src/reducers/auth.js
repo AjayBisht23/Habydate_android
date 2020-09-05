@@ -3,8 +3,8 @@ import {
   GET_LOCATION,
   HIDE_LOADER,
   LOGIN,
-  LOGOUT, MATCHES,
-  PEOPLE_WHO_LIKED,
+  LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS,
+  PEOPLE_WHO_LIKED, SEEKER_REQUESTS,
   SET_USER_DATA,
   SHOW_LOADER,
   THEME,
@@ -13,7 +13,8 @@ import {THEMES} from '../themes/themes';
 
 const initialAuthState = {loading: true, user: null, theme: THEMES[0],
   showLoader: false, location: {latitude: 0.00, longitude: 0.00},
-  peopleWhoLiked: [], matches: [], conversations: []};
+  peopleWhoLiked: [], seekerRequests: [], mySendSeekerRequests: [],
+  matches: [], conversations: []};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -40,6 +41,12 @@ function auth(state = initialAuthState, action) {
 
     case PEOPLE_WHO_LIKED:
       return {...state, peopleWhoLiked: action.payload};
+
+    case MY_SEND_SEEKER_REQUESTS:
+      return {...state, mySendSeekerRequests: action.payload};
+
+    case SEEKER_REQUESTS:
+      return {...state, seekerRequests: action.payload};
 
     case MATCHES:
       return {...state, matches: action.payload};

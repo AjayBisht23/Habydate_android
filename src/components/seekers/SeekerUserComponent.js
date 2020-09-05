@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {regex, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE} from '../../themes/constantColors';
 import {Icon} from "native-base";
+import {distance} from '../../actions/userAction';
 
 class SeekerUserComponent extends Component {
 
@@ -12,22 +13,23 @@ class SeekerUserComponent extends Component {
     }
 
     render() {
-        const {theme, item, navigation} = this.props;
+        const {theme, item, navigation, route, location} = this.props;
+        let params = route.params;
 
         return (
-            <TouchableFeedback onPress={() => navigation.navigate('SeekerSendRequest')}>
+            <TouchableFeedback onPress={() => navigation.navigate('SeekerSendRequest', {seeker: params.seeker, user: item})}>
                 <View style={[styles.container]}>
                     <View style={[styles.innerView, {backgroundColor: theme.textInputBackgroundColor}]}>
-                        <FastImage source={{uri: item.photoUrl}} style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}/>
+                        <FastImage source={{uri: regex.getProfilePic(item.photos)}} style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}/>
                         <FastImage source={require('./../../assets/blur_effect.png')} style={{position: 'absolute', bottom: 0, left: 0, right: 0, top: 0}}/>
                         <View style={styles.bottomView}>
                             <View style={[styles.bottomNameView]}>
                                 <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}</Text>
-                                <Text style={[styles.nameText, {color: theme.backgroundColor}]}>, {item.age}</Text>
+                                <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(item.DoB)}</Text>
                             </View>
                             <View style={[styles.bottomNameView]}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.backgroundColor}}/>
-                                <Text style={[styles.locationText, {color: theme.backgroundColor}]}> 4km away</Text>
+                                <Text style={[styles.locationText, {color: theme.backgroundColor, marginLeft: 5}]}>{`${distance(item.location, location, 'K')}`} km away</Text>
                             </View>
                         </View>
                     </View>
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     bottomNameView: {
+        marginTop: 5,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -77,7 +80,6 @@ const styles = StyleSheet.create({
         fontWeight: '600'
     },
     locationText: {
-        marginTop: 5,
         fontSize: 14,
         fontWeight: '400'
     }

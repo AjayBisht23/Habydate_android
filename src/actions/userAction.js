@@ -1,7 +1,13 @@
-import {conversationsCollection, matchesCollection, swipeCardsCollection, usersCollection} from '../config/firestore';
+import {
+    conversationsCollection,
+    matchesCollection,
+    seekerRequestCollection,
+    swipeCardsCollection,
+    usersCollection,
+} from '../config/firestore';
 import geohash from "ngeohash";
 import {getStore} from '../../App';
-import {CONVERSATIONS, MATCHES, PEOPLE_WHO_LIKED} from './types';
+import {CONVERSATIONS, MATCHES, MY_SEND_SEEKER_REQUESTS, PEOPLE_WHO_LIKED, SEEKER_REQUESTS} from './types';
 import {getUserDetail} from './authAction';
 import moment from 'moment';
 import {regex} from '../utils/regex';
@@ -28,7 +34,7 @@ export function distance(location, location1, unit) {
         dist = dist * 60 * 1.1515;
         if (unit === "K") { dist = dist * 1.609344 }
         if (unit === "N") { dist = dist * 0.8684 }
-        return dist;
+        return Math.round(dist);
     }
 }
 
@@ -83,7 +89,7 @@ export function checkOtherUserSwipeExits(uid, other_uid) {
 
 export function swipeCardUser(uid, other_uid, action) {
     return new Promise((resolve, reject) => {
-        swipeCardsCollection.doc(`${uid}${other_uid}`).set({uid, other_uid, action, createdAt: moment().utc().unix()}).then(() => {
+        swipeCardsCollection.doc(`${uid}${other_uid}`).set({uid, other_uid, action, createdAt: moment().utc().unix()}, { merge: true}).then(() => {
             checkOtherUserSwipeExits(uid, other_uid).then(responseData => {
                 if (responseData.length > 0 && [action === 'like' || action === 'superLike']) {
                     addSwipeMatch(uid, other_uid).then(response => resolve(response));
@@ -152,7 +158,7 @@ export function addSwipeMatch(uid, other_uid) {
                         other_uid,
                         last_swipe_by: uid,
                         members: [uid, other_uid],
-                        createdAt: moment().utc().unix()})
+                        createdAt: moment().utc().unix()}, { merge: true})
                     .then(() => {
                         addConversation(customId, [uid, other_uid]);
                         resolve(true)
@@ -230,9 +236,9 @@ export function addConversation(id, members) {
                 createdAt: moment().utc().unix()
             }
         }).then(() => {
-
+            resolve(true);
         }).catch(error => {
-
+            reject(false)
         });
     });
 }
@@ -335,4 +341,105 @@ export function getAllMessages(conversationId, otherUser) {
                 resolve(messages);
             })
     });
+}
+
+export function sendSeekerRequest(parameter) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .add({
+                ...parameter,
+                createdAt: moment().utc().unix(),
+            }).then(response => {
+              resolve(true)
+        })
+    })
+}
+
+export function getSeekerRequest(id) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .where( 'request_to', '==', id)
+            .where( 'request_status', 'in', ['', 'accepted'])
+            .onSnapshot(snapshot => {
+                const getUserInfo = snapshot.docs.map(doc => {
+                    const firebaseData = {
+                        seeker_id: doc.id,
+                        ...doc.data()
+                    };
+                    return getUserDetail(firebaseData.request_by, firebaseData);
+                });
+
+                Promise.all(getUserInfo).then(responseData => {
+                    let response = [];
+                    for (let v in responseData) {
+                        let user = responseData[v].response._data;
+                        let data = responseData[v].data;
+                        response.push({
+                            user,
+                            ...data
+                        })
+                    }
+                    getStore.dispatch({
+                        type: SEEKER_REQUESTS,
+                        payload: response
+                    });
+                    resolve(response);
+                });
+            })
+    })
+}
+
+export function getMySeekerRequest(id) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .where('request_by', '==', id)
+            .onSnapshot(snapshot => {
+                const getUserInfo = snapshot.docs.map(doc => {
+                    const firebaseData = {
+                        seeker_id: doc.id,
+                        ...doc.data()
+                    };
+                    return getUserDetail(firebaseData.request_to, firebaseData);
+                });
+
+                Promise.all(getUserInfo).then(responseData => {
+                    let response = [];
+                    for (let v in responseData) {
+                        let user = responseData[v].response._data;
+                        let data = responseData[v].data;
+                        response.push({
+                            user,
+                            ...data
+                        })
+                    }
+                    getStore.dispatch({
+                        type: MY_SEND_SEEKER_REQUESTS,
+                        payload: response
+                    });
+                    resolve(response);
+                });
+            })
+    })
+}
+
+export function updateSeekerRequestStatus(id, request_status) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .doc(id)
+            .set({request_status: request_status}, { merge: true})
+            .then(() => {
+                resolve(true)
+        })
+    })
+}
+
+export function deleteSeekerRequest(id) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .doc(id)
+            .delete()
+            .then(() => {
+                resolve(true)
+            });
+    })
 }
