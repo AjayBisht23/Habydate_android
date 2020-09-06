@@ -34,16 +34,16 @@ class MessagesScreen extends Component {
     renderHeader = () => {
         const {theme, navigation} = this.props;
         return <View>
-            <View style={[styles.rowView, {borderRadius: 15, paddingVertical: 15, borderBottomWidth: 0, backgroundColor: '#FD353920', paddingHorizontal: 25}]}>
-                <Text style={[styles.headText, {color: theme.primaryColor}]}>Available for video call</Text>
-                <Switch
-                    trackColor={{ false: theme.subPrimaryColor, true: theme.pinkColor }}
-                    thumbColor={White}
-                    ios_backgroundColor={'transparent'}
-                    onValueChange={this.toggleSwitch}
-                    value={true}
-                />
-            </View>
+            {/*<View style={[styles.rowView, {borderRadius: 15, paddingVertical: 15, borderBottomWidth: 0, backgroundColor: '#FD353920', paddingHorizontal: 25}]}>*/}
+            {/*    <Text style={[styles.headText, {color: theme.primaryColor}]}>Available for video call</Text>*/}
+            {/*    <Switch*/}
+            {/*        trackColor={{ false: theme.subPrimaryColor, true: theme.pinkColor }}*/}
+            {/*        thumbColor={White}*/}
+            {/*        ios_backgroundColor={'transparent'}*/}
+            {/*        onValueChange={this.toggleSwitch}*/}
+            {/*        value={true}*/}
+            {/*    />*/}
+            {/*</View>*/}
             <TouchableFeedback onPress={() => navigation.navigate('SeekerRequest')}>
                 <View style={[styles.rowView, {borderColor: theme.borderColor}]}>
                     <Text style={[styles.headText, {color: theme.primaryColor}]}>Seekers Requests</Text>
@@ -75,10 +75,10 @@ class MessagesScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <HeaderComponent theme={theme}
-                                 rightView={<Button transparent onPress={this.onRightPress}>
-                                     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
-                                 </Button>}
+                <HeaderComponent title={'Messages'} theme={theme}
+                                 // rightView={<Button transparent onPress={this.onRightPress}>
+                                 //     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
+                                 // </Button>}
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList

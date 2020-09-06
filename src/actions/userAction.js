@@ -94,7 +94,7 @@ export function swipeCardUser(uid, other_uid, action) {
                 if (responseData.length > 0 && [action === 'like' || action === 'superLike']) {
                     addSwipeMatch(uid, other_uid).then(response => resolve(response));
                 } else
-                    resolve(false)
+                    reject(false)
             });
         });
     });
@@ -282,7 +282,7 @@ export function updateLatestMessageInConversation(id, parameter) {
             .doc(id)
             .set({
                 latestMessage: {
-                    text: parameter.text,
+                    ...parameter,
                     createdAt: moment().utc().unix(),
                 }},
                 { merge: true}).then(response => {
@@ -297,11 +297,10 @@ export function addMessageInConversation(id, parameter) {
             .doc(id)
             .collection('Messages')
             .add({
-                text: parameter.text,
+                ...parameter,
                 createdAt: moment().utc().unix(),
-                user: parameter.user
             }).then(response => {
-
+                resolve(true)
         })
     });
 }
@@ -313,33 +312,33 @@ export function getAllMessages(conversationId, otherUser) {
             .doc(conversationId)
             .collection('Messages')
             .orderBy('createdAt', 'desc')
-            .onSnapshot(snapshot => {
-                const messages = snapshot.docs.map(doc => {
-                    const firebaseData = doc.data();
+            .get().then((response) => {
+            const messages = response.docs.map(doc => {
+                const firebaseData = doc.data();
 
-                    const data = {
-                        _id: doc.id,
-                        ...firebaseData,
-                        createdAt: moment.unix(firebaseData.createdAt).local()
+                const data = {
+                    _id: doc.id,
+                    ...firebaseData,
+                    createdAt: moment.unix(firebaseData.createdAt).local()
+                };
+
+                if (!firebaseData.system)
+                {
+                    data.user = firebaseData.user._id === currentUser.uid ? {
+                        ...firebaseData.user,
+                        name: currentUser.name,
+                        avatar: regex.getProfilePic(currentUser.photos)
+                    } : {
+                        ...firebaseData.user,
+                        name: otherUser.name,
+                        avatar: regex.getProfilePic(otherUser.photos)
                     };
+                }
 
-                    if (!firebaseData.system)
-                    {
-                        data.user = firebaseData.user._id === currentUser.uid ? {
-                            ...firebaseData.user,
-                            name: currentUser.name,
-                            avatar: regex.getProfilePic(currentUser.photos)
-                        } : {
-                            ...firebaseData.user,
-                            name: otherUser.name,
-                            avatar: regex.getProfilePic(otherUser.photos)
-                        };
-                    }
-
-                    return data;
-                });
-                resolve(messages);
-            })
+                return data;
+            });
+            resolve(messages);
+        })
     });
 }
 
@@ -442,4 +441,70 @@ export function deleteSeekerRequest(id) {
                 resolve(true)
             });
     })
+}
+
+export function updateLatestMessageInSeeker(id, parameter) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .doc(id)
+            .set({
+                    latestMessage: {
+                        ...parameter,
+                        createdAt: moment().utc().unix(),
+                    }},
+                { merge: true}).then(response => {
+
+        })
+    });
+}
+
+export function addMessageInSeeker(id, parameter) {
+    return new Promise((resolve, reject) => {
+        seekerRequestCollection
+            .doc(id)
+            .collection('Messages')
+            .add({
+                ...parameter,
+                createdAt: moment().utc().unix(),
+            }).then(response => {
+               resolve(true)
+        })
+    });
+}
+
+export function getAllMessagesFromSeeker(seekerId, otherUser) {
+    return  new Promise((resolve, reject) => {
+        let currentUser = getStore.getState().auth.user;
+        seekerRequestCollection
+            .doc(seekerId)
+            .collection('Messages')
+            .orderBy('createdAt', 'desc')
+            .get().then(response => {
+            const getMessages = response.docs.map(doc => {
+                const firebaseData = doc.data();
+
+                const data = {
+                    _id: doc.id,
+                    ...firebaseData,
+                    createdAt: moment.unix(firebaseData.createdAt).local()
+                };
+
+                if (!firebaseData.system)
+                {
+                    data.user = firebaseData.user._id === currentUser.uid ? {
+                        ...firebaseData.user,
+                        name: currentUser.name,
+                        avatar: regex.getProfilePic(currentUser.photos)
+                    } : {
+                        ...firebaseData.user,
+                        name: otherUser.name,
+                        avatar: regex.getProfilePic(otherUser.photos)
+                    };
+                }
+
+                return data;
+            });
+            resolve(getMessages);
+        })
+    });
 }

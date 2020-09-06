@@ -8,6 +8,7 @@ import {Button, Icon} from 'native-base';
 import {ONLINE} from '../../../themes/constantColors';
 import ReadMore from 'react-native-read-more-text';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
+import {distance} from '../../../actions/userAction';
 
 class OtherProfileScreen extends Component {
 
@@ -44,7 +45,7 @@ class OtherProfileScreen extends Component {
 
     render() {
         const {theme, navigation} = this.props;
-        const {instagramPhotos, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus} = this.state;
+        const {instagramPhotos, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus, location} = this.state;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -81,7 +82,7 @@ class OtherProfileScreen extends Component {
                             </View>
                             <View style={[styles.locationView, {backgroundColor: theme.primaryBackgroundColor}]}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.subPrimaryColor}}/>
-                                <Text style={[styles.timeText, {color: theme.subPrimaryColor}]}> Colombia</Text>
+                                <Text style={[styles.timeText, {color: theme.subPrimaryColor, marginLeft: 5}]}>{`${distance(location, this.props.location, 'K')}`} km away</Text>
                             </View>
                             <ReadMore
                                 numberOfLines={3}
@@ -159,6 +160,7 @@ class OtherProfileScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    location: state.auth.location,
 });
 
 export default connect(mapStateToProps)(OtherProfileScreen);

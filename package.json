@@ -28,6 +28,7 @@
     "ngeohash": "^0.6.3",
     "react": "16.13.1",
     "react-native": "0.63.1",
+    "react-native-actionsheet": "^2.4.2",
     "react-native-confirmation-code-field": "^6.5.0",
     "react-native-country-picker-modal": "^1.11.0",
     "react-native-customized-image-picker": "^0.2.0",

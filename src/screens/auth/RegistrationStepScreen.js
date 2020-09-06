@@ -91,7 +91,7 @@ class RegistrationStepScreen extends Component {
         else if (index === 2) {
            parameter = data;
            if (Boolean(data.DoB))
-              parameter.age = regex.getAge(data.DoB);
+              parameter.age = regex.getAge(data.DoB).replace(', ', '');
         } else if (index === 3) {
             parameter = (regex.isEmpty(data)) ? {sexuality: '', personality: ''} : data;
         } else if (index === 4) {

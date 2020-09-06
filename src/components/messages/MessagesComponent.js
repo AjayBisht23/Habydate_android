@@ -17,7 +17,7 @@ class MessagesComponent extends Component {
         const {text, createdAt} = latestMessage;
 
         return (
-            <TouchableFeedback onPress={() => navigation.navigate('ChatScreen', {conversation: item})}>
+            <TouchableFeedback onPress={() => navigation.navigate('ChatScreen', {conversation: item, type: 'messages'})}>
                 <View style={[styles.container]}>
                     <View style={styles.rowView}>
                         <View style={styles.profileView}>

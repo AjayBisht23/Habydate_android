@@ -25,7 +25,8 @@ class SeekerRequestComponent extends Component {
     };
 
     onChat = () => {
-
+        const {item, navigation, type} = this.props;
+        navigation.navigate('ChatScreen', {conversation: item, type: 'seeker'});
     };
 
     onCardPress = () => {

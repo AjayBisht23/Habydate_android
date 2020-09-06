@@ -11,7 +11,7 @@ import {
 
 class HeaderComponent extends React.PureComponent {
     render() {
-        const {theme, title, leftView, rightView, onLeftPress, type, currentIndex} = this.props;
+        const {theme, title, titleStyle, leftView, rightView, onLeftPress, type, currentIndex} = this.props;
 
         if (type === 1) { // Register Step Header
             let getIndex = currentIndex;
@@ -58,7 +58,7 @@ class HeaderComponent extends React.PureComponent {
                 </Left>
                 <Body>
                     {
-                        title && <Text style={{fontSize: 22, fontWeight: '500', color: theme.primaryColor}}>{title}</Text>
+                        title && <Text style={{fontSize: 20, fontWeight: '600', color: theme.primaryColor, ...titleStyle}}>{title}</Text>
                     }
                 </Body>
                 <Right>

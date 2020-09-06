@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, ScrollView, Switch} from 'react-native';
+import {StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
 import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from './../../../utils/regex';
 import {Icon} from "native-base";
 import Slider from "react-native-slider";
-import {White} from '../../../themes/constantColors';
 import CommonButton from '../../../components/general/CommonButton';
 import {lookingData, sexualityData} from '../../../json/RegisterJson';
 

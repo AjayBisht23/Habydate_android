@@ -105,7 +105,7 @@ class MyProfileScreen extends Component {
         regex.showLoader();
         let uploadPhotos = [];
         for (let i = 0; i < images.length; i++) {
-            uploadPhotos.push(cloudinaryUpload(images[i]));
+            uploadPhotos.push(cloudinaryUpload(images[i]), false);
         }
 
         Promise.all(uploadPhotos).then(response => {

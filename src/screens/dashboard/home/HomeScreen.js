@@ -11,6 +11,7 @@ import FilterModal from './FilterModal';
 import {getCurrentLocation} from '../../../utils/location';
 import {discoverUsers, distance, swipeCardUser} from '../../../actions/userAction';
 import PulseLoader from '../../../components/pluseloader/PulseLoader';
+import CongraMatchModal from './CongraMatchModal';
 
 class HomeScreen extends Component {
 
@@ -21,6 +22,8 @@ class HomeScreen extends Component {
             swipedAllCards: false,
             modalVisible: false,
             loading: true,
+            congoModalVisible: false,
+            matchUser: null
         };
         this.location = null;
         this.filterData = {
@@ -88,7 +91,10 @@ class HomeScreen extends Component {
     onSwiped = (type, index) => {
         let uid = this.props.user.uid;
         let other = this.state.cards[index];
-        swipeCardUser(uid, other.uid, type)
+        swipeCardUser(uid, other.uid, type).then(response => {
+            if (response)
+                this.setState({matchUser: other, congoModalVisible: true});
+        })
     };
 
     onSwipedAllCards = () => {
@@ -117,14 +123,15 @@ class HomeScreen extends Component {
     renderCardItem = (item, index) => {
         const {theme} = this.props;
         return (
-            <View style={[styles.cardView, {backgroundColor: theme.backgroundColor, borderColor: theme.borderColor}]}>
+            <View style={[styles.cardView, {backgroundColor: theme.backgroundColor, borderColor: theme.subSecondaryColor}]}>
                 <FastImage source={{uri: regex.getProfilePic(item.photos)}} style={{flex: 1, borderRadius: 20, overflow: 'hidden'}}/>
+                <FastImage source={require('./../../../assets/blur_effect.png')} style={{position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, borderRadius: 20, overflow: 'hidden'}}/>
                 <View style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
                     <View style={{position: 'absolute', right: 0, left: 0, bottom: 20}}>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             {item.online && <View style={styles.onlineView} />}
                             <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}</Text>
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>, {item.age}</Text>
+                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(item.DoB)}</Text>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 5}}>
                             <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 16, color: theme.backgroundColor}}/>
@@ -183,7 +190,7 @@ class HomeScreen extends Component {
     };
 
     render () {
-        const {modalVisible, loading} = this.state;
+        const {modalVisible, loading, congoModalVisible, matchUser} = this.state;
         const {theme, user} = this.props;
 
         return (
@@ -215,8 +222,13 @@ class HomeScreen extends Component {
                                          this.filterData = data;
                                          this.getUserData();
                                      }
-                                 }}
-                    />
+                                 }}/>
+                </Modal>
+                <Modal animationType={'fade'} transparent={true} visible={congoModalVisible} onRequestClose={() => {}}>
+                    <CongraMatchModal theme={theme} data={matchUser} location={this.location} onClose={(data) => {
+                        let setStateData = {congoModalVisible: false};
+                        this.setState(setStateData);
+                    }}/>
                 </Modal>
             </View>
         )

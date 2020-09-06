@@ -57,9 +57,9 @@ class SeekerUsersScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={title}
                                  theme={theme}
-                                 rightView={<Button transparent onPress={this.onRightPress}>
-                                     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
-                                 </Button>}
+                                 // rightView={<Button transparent onPress={this.onRightPress}>
+                                 //     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
+                                 // </Button>}
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList

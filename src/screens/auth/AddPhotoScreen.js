@@ -85,7 +85,7 @@ class AddPhotoScreen extends Component {
             regex.showLoader();
             let uploadPhotos = [];
             getResults.forEach((file) => {
-                uploadPhotos.push(cloudinaryUpload(file));
+                uploadPhotos.push(cloudinaryUpload(file, false));
             });
 
             Promise.all(uploadPhotos).then(response => {

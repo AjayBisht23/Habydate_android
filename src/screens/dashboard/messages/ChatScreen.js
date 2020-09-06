@@ -8,7 +8,17 @@ import {regex} from '../../../utils/regex';
 import MessageItem from '../../../components/messages/MessageItem';
 import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';
-import {addMessageInConversation, getAllMessages, updateLatestMessageInConversation} from '../../../actions/userAction';
+import {
+    addMessageInConversation,
+    addMessageInSeeker,
+    getAllMessages,
+    getAllMessagesFromSeeker,
+    updateLatestMessageInConversation,
+    updateLatestMessageInSeeker,
+} from '../../../actions/userAction';
+import ActionSheet from 'react-native-actionsheet'
+import ImagePicker from "react-native-customized-image-picker";
+import {cloudinaryUpload} from '../../../actions/authAction';
 
 class ChatScreen extends React.Component {
 
@@ -25,21 +35,124 @@ class ChatScreen extends React.Component {
         this.getData();
     }
 
-    getData = () => {
+    getDataFromSeeker = () => {
+        const {seeker_id, user} = this.getConversationData();
+        getAllMessagesFromSeeker(seeker_id, user).then(messages => {
+            this.setState({messages})
+        });
+    };
+
+    getDataFromConversation = () => {
         const {matches_id, user} = this.getConversationData();
         getAllMessages(matches_id, user).then(messages => {
             this.setState({messages})
         });
     };
 
+    getData = () => {
+        if (this.getType() === 'seeker')
+            this.getDataFromSeeker();
+        else
+            this.getDataFromConversation();
+    };
+
     onSend(messages = []) {
-        const {matches_id} = this.getConversationData();
-        if (messages.length > 0) {
-            let parameter = messages[0];
-            updateLatestMessageInConversation(matches_id, parameter);
-            addMessageInConversation(matches_id, parameter)
+        this.setState(previousState => ({
+            messages: GiftedChat.append(previousState.messages, messages),
+        }));
+        if (this.getType() === 'seeker') {
+            const {seeker_id} = this.getConversationData();
+            if (messages.length > 0) {
+                let parameter = messages[0];
+                parameter.messageType = 'text';
+                this.uploadDataInFirestore(seeker_id, parameter);
+            }
+        } else  {
+            const {matches_id} = this.getConversationData();
+            if (messages.length > 0) {
+                let parameter = messages[0];
+                parameter.messageType = 'text';
+                this.uploadDataInFirestore(matches_id, parameter);
+            }
         }
     }
+
+    uploadImage = (media) => {
+        let uploadPhotos = [];
+        media.forEach((file) => {
+            uploadPhotos.push(cloudinaryUpload(file, true));
+        });
+
+        Promise.all(uploadPhotos).then(response => {
+            response.forEach(({data, photo}) => {
+                let parameter = {
+                    media_id: data.public_id,
+                    user: {
+                        _id: this.props.user.uid
+                    }
+                };
+                if (photo.mime.includes('image')) {
+                    parameter.messageType = 'image';
+                    parameter.image = data.secure_url;
+                } else {
+                    parameter.messageType = 'video';
+                    parameter.video = data.secure_url;
+                }
+                if (this.getType() === 'seeker') {
+                    const {seeker_id} = this.getConversationData();
+                    this.uploadDataInFirestore(seeker_id, parameter);
+                } else {
+                    const {matches_id} = this.getConversationData();
+                    this.uploadDataInFirestore(matches_id, parameter);
+                }
+            });
+        })
+    };
+
+    uploadDataInFirestore = (id, parameter) => {
+        if (this.getType() === 'seeker') {
+            updateLatestMessageInSeeker(id, parameter);
+            addMessageInSeeker(id, parameter).then(response => {
+                this.getDataFromSeeker();
+            })
+        } else  {
+            updateLatestMessageInConversation(id, parameter);
+            addMessageInConversation(id, parameter).then(response => {
+                this.getDataFromConversation();
+            })
+        }
+    };
+
+    onAttachmentPress = () => {
+        this.ActionSheet.show()
+    };
+
+    openGallery = () => {
+        ImagePicker.openPicker({}).then(image => {
+            this.uploadImage([image]);
+        });
+    };
+
+    openCamera = () => {
+        ImagePicker.openCamera({
+            cropping: true
+        }).then(image => {
+            this.uploadImage([image]);
+        });
+    };
+
+    onActionIndexPress = (index) => {
+        if (index === 0)
+            this.openGallery();
+        else if (index === 1)
+            this.openCamera();
+    };
+
+    getType = () => {
+        const {route} = this.props;
+        let params = route.params;
+        return params.type;
+    };
 
     getConversationData = () => {
         const {route} = this.props;
@@ -122,7 +235,7 @@ class ChatScreen extends React.Component {
 
         return (
             <View style={{height: 45, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableWithoutFeedback onPress={()=> {}}>
+                <TouchableWithoutFeedback onPress={this.onAttachmentPress}>
                     <View style={{width: 40, height: 45, alignItems: 'center', justifyContent: 'center'}}>
                         <Icon type={'Feather'} name={'paperclip'} style={{color: theme.primaryColor, fontSize: 22}}/>
                     </View>
@@ -204,6 +317,13 @@ class ChatScreen extends React.Component {
 
                     messages={messages}
                     user={{_id: user.uid}}
+                />
+                <ActionSheet
+                    ref={o => this.ActionSheet = o}
+                    title={'Share Picture'}
+                    options={['Gallery', 'Camera', 'cancel']}
+                    cancelButtonIndex={2}
+                    onPress={this.onActionIndexPress}
                 />
             </View>
         )

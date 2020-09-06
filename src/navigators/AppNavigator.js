@@ -54,12 +54,25 @@ const navigationOption = () => {
 
 let appNav = null;
 
+function CommonView() {
+    return (
+        <>
+            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
+            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+            <Stack.Screen name="ChatScreen" component={ChatScreen} />
+            <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
+            <Stack.Screen name="SelectionInformation" component={SelectInformationScreen} />
+            <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
+            <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
+        </>
+    )
+}
+
 function HomeStackScreen() {
     return (
         <Stack.Navigator screenOptions={navigationOption()}>
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
-            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+            {CommonView()}
         </Stack.Navigator>
     );
 }
@@ -68,9 +81,7 @@ function MyProfileStackScreen() {
     return (
         <Stack.Navigator screenOptions={navigationOption()}>
             <Stack.Screen name="MyProfile" component={MyProfileScreen} />
-            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
-            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
-            <Stack.Screen name="SelectionInformation" component={SelectInformationScreen} />
+            {CommonView()}
         </Stack.Navigator>
     );
 }
@@ -85,30 +96,28 @@ function PaymentStackScreen() {
 }
 
 function MatchesStackScreen() {
-  return (
-      <Stack.Navigator screenOptions={navigationOption()}>
-        <Stack.Screen name="Matches" component={MatchesScreen} />
-      </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="Matches" component={MatchesScreen} />
+            {CommonView()}
+        </Stack.Navigator>
+    );
 }
 
 function MessagesStackScreen() {
-  return (
-      <Stack.Navigator screenOptions={navigationOption()}>
-        <Stack.Screen name="Messages" component={MessagesScreen} />
-        <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
-        <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
-      </Stack.Navigator>
-  );
+    return (
+        <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="Messages" component={MessagesScreen} />
+            {CommonView()}
+        </Stack.Navigator>
+    );
 }
 
 function NotificationStackScreen() {
     return (
         <Stack.Navigator screenOptions={navigationOption()}>
             <Stack.Screen name="Notification" component={NotificationsScreen} />
-            <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
+            {CommonView()}
         </Stack.Navigator>
     );
 }

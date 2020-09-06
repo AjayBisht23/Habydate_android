@@ -19,7 +19,7 @@ class WhoLikeComponent extends Component {
                 <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{width: 56, height: 56, borderRadius: 28}}/>
                 <View style={[styles.infoView]}>
                     <View style={[styles.nameView]}>
-                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>{user.name}, {user.age}</Text>
+                        <Text style={[styles.nameText, {color: theme.primaryColor}]}>{user.name}{regex.getAge(user.DoB)}</Text>
                         <Text style={[styles.likeText, {color: theme.secondaryColor}]}>{'Liked your profile'}</Text>
                         <Text style={[styles.timeText, {color: theme.subSecondaryColor}]}>{moment.unix(item.createdAt).local().fromNow(true)}</Text>
                     </View>
