@@ -2,8 +2,8 @@ import {conversationsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getStore} from '../../App';
 import {CONVERSATIONS} from './types';
-import {regex} from '../utils/regex';
 import {getAllMatchesLists} from './matchesAction';
+import {setFormatAsPerGiftedChatArray} from './generalAction';
 
 export function createNewConversation(id, members) {
     return new Promise((resolve, reject) => {
@@ -86,37 +86,12 @@ export function addMessageInConversation(id, parameter) {
 
 export function getAllMessageListsFromConversation(conversationId, otherUser) {
     return new Promise((resolve, reject) => {
-        let currentUser = getStore.getState().auth.user;
         conversationsCollection
             .doc(conversationId)
             .collection('Messages')
             .orderBy('createdAt', 'desc')
             .get().then((response) => {
-            const messages = response.docs.map(doc => {
-                const firebaseData = doc.data();
-
-                const data = {
-                    _id: doc.id,
-                    ...firebaseData,
-                    createdAt: moment.unix(firebaseData.createdAt).local()
-                };
-
-                if (!firebaseData.system)
-                {
-                    data.user = firebaseData.user._id === currentUser.uid ? {
-                        ...firebaseData.user,
-                        name: currentUser.name,
-                        avatar: regex.getProfilePic(currentUser.photos)
-                    } : {
-                        ...firebaseData.user,
-                        name: otherUser.name,
-                        avatar: regex.getProfilePic(otherUser.photos)
-                    };
-                }
-
-                return data;
-            });
-            resolve(messages);
+            resolve(setFormatAsPerGiftedChatArray(response, otherUser));
         })
     });
 }

@@ -4,6 +4,7 @@ import {getUserDetail} from './userAction';
 import {getStore} from '../../App';
 import {MATCHES} from './types';
 import {createNewConversation, getAllConversationLists} from './conversationsAction';
+import {createNewNotification} from './notificationsAction';
 
 export function checkMatchExits(uid, other_uid) {
     return new Promise((resolve, reject) => {
@@ -30,13 +31,19 @@ export function addSwipeMatch(uid, other_uid) {
                         members: [uid, other_uid],
                         createdAt: moment().utc().unix()}, { merge: true})
                     .then(() => {
+                        createNewNotification({
+                            relationship_id: customId,
+                            notification_type: 'matches',
+                            to_user: other_uid,
+                            from_user: uid,
+                        });
                         createNewConversation(customId, [uid, other_uid]);
                         resolve(true)
                     }).catch(error => {
                     reject(false)
                 });
             } else
-                resolve(true)
+                resolve(false)
         });
     });
 }

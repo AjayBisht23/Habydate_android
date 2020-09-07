@@ -7,9 +7,10 @@ import FastImage from 'react-native-fast-image';
 import {Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
 import moment from 'moment';
-import {seekerData} from '../../../json/seekerData';
 import {updateSeekerRequestStatus} from '../../../actions/seekerAction';
 import {distance} from '../../../utils/location';
+import {getSeekerTitle} from '../../../actions/generalAction';
+import {getAndUpdateNotificationItem} from '../../../actions/notificationsAction';
 
 class SeekerDetailScreen extends Component {
 
@@ -22,15 +23,12 @@ class SeekerDetailScreen extends Component {
         navigation.goBack();
     };
 
-    getSeekerTitle = (key) => {
-       return seekerData.find(function (o) {return o.key === key });
-    };
-
     onRequestStatusPress = (status) => {
         const {navigation, route} = this.props;
         let params = route.params;
         const { seeker_id } = params.item;
         updateSeekerRequestStatus(seeker_id, status);
+        getAndUpdateNotificationItem(seeker_id, status);
         if (status === 'declined')
             navigation.goBack();
     };
@@ -39,7 +37,7 @@ class SeekerDetailScreen extends Component {
         const {theme, navigation, route, location} = this.props;
         let params = route.params;
         const { user, date, address, note, seekerKey, request_status } = params.item;
-        const {title} = this.getSeekerTitle(seekerKey);
+        const {title} = getSeekerTitle(seekerKey);
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>

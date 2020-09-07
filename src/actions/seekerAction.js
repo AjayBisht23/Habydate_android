@@ -3,7 +3,8 @@ import {getStore} from '../../App';
 import {MY_SEND_SEEKER_REQUESTS, SEEKER_REQUESTS} from './types';
 import {getUserDetail} from './userAction';
 import moment from 'moment';
-import {regex} from '../utils/regex';
+import {createNewNotification} from './notificationsAction';
+import {setFormatAsPerGiftedChatArray} from './generalAction';
 
 export function sendSeekerRequest(parameter) {
     return new Promise((resolve, reject) => {
@@ -12,6 +13,24 @@ export function sendSeekerRequest(parameter) {
                 ...parameter,
                 createdAt: moment().utc().unix(),
             }).then(response => {
+            if (Boolean(response._documentPath)) {
+                if (Boolean(response._documentPath._parts)) {
+                   let parts = response._documentPath._parts;
+                   if (parts.length > 1) {
+                      let seeker_id = parts[1];
+                      createNewNotification({
+                          relationship_id: seeker_id,
+                          notification_type: 'seeker',
+                          to_user: parameter.request_to,
+                          from_user: parameter.request_by,
+                          seekerDate: parameter.date,
+                          address: parameter.address,
+                          seekerKey: parameter.seekerKey,
+                          request_status: parameter.request_status,
+                      })
+                   }
+                }
+            }
             resolve(true)
         })
     })
@@ -137,37 +156,12 @@ export function addMessageInSeeker(id, parameter) {
 
 export function getAllMessagesFromSeeker(seekerId, otherUser) {
     return  new Promise((resolve, reject) => {
-        let currentUser = getStore.getState().auth.user;
         seekerRequestCollection
             .doc(seekerId)
             .collection('Messages')
             .orderBy('createdAt', 'desc')
             .get().then(response => {
-            const getMessages = response.docs.map(doc => {
-                const firebaseData = doc.data();
-
-                const data = {
-                    _id: doc.id,
-                    ...firebaseData,
-                    createdAt: moment.unix(firebaseData.createdAt).local()
-                };
-
-                if (!firebaseData.system)
-                {
-                    data.user = firebaseData.user._id === currentUser.uid ? {
-                        ...firebaseData.user,
-                        name: currentUser.name,
-                        avatar: regex.getProfilePic(currentUser.photos)
-                    } : {
-                        ...firebaseData.user,
-                        name: otherUser.name,
-                        avatar: regex.getProfilePic(otherUser.photos)
-                    };
-                }
-
-                return data;
-            });
-            resolve(getMessages);
+            resolve(setFormatAsPerGiftedChatArray(response, otherUser));
         })
     });
 }

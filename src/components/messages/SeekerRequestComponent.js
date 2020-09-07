@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import {ONLINE, PINK, White} from '../../themes/constantColors';
 import CommonButton from '../general/CommonButton';
 import {deleteSeekerRequest, updateSeekerRequestStatus} from '../../actions/seekerAction';
+import {getAndUpdateNotificationItem} from '../../actions/notificationsAction';
 
 class SeekerRequestComponent extends Component {
 
@@ -16,6 +17,7 @@ class SeekerRequestComponent extends Component {
         const {item} = this.props;
         const {seeker_id} = item;
         updateSeekerRequestStatus(seeker_id, status);
+        getAndUpdateNotificationItem(seeker_id, status);
     };
 
     onCancelPress = () => {
@@ -71,7 +73,7 @@ class SeekerRequestComponent extends Component {
                                             borderColor={theme.pinkColor}
                                             textColor={theme.backgroundColor}
                                             title={'Accept'}
-                                            onPress={() => this.onRequestStatusPress('declined')}
+                                            onPress={() => this.onRequestStatusPress('accepted')}
                                         />
                                     </View>
                                     : request_status === 'accepted' && type === 'others'
