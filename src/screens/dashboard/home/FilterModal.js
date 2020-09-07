@@ -4,7 +4,7 @@ import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from './../../../utils/regex';
 import {Icon} from "native-base";
 import Slider from "react-native-slider";
 import CommonButton from '../../../components/general/CommonButton';
-import {lookingData, sexualityData} from '../../../json/RegisterJson';
+import {lookingData, sexualityData} from '../../../json/generalCatogeryData';
 
 class FilterModal extends Component {
 

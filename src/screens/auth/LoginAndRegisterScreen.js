@@ -8,7 +8,7 @@ import CountryPicker from 'react-native-country-picker-modal';
 import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
-import {signInPhone} from '../../config/authFirebase';
+import {signInPhone} from '../../actions/socialLogin';
 
 class LoginAndRegisterScreen extends Component {
 

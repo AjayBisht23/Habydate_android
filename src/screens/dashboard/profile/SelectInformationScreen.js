@@ -8,7 +8,7 @@ import {
     lookingData, maritalData,
     personalityData, religionData,
     sexualityData, smokingData,
-} from '../../../json/RegisterJson';
+} from '../../../json/generalCatogeryData';
 import CommonButton from '../../../components/general/CommonButton';
 import {connect} from 'react-redux';
 import {Button, Icon} from 'native-base';

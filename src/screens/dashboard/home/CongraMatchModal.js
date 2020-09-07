@@ -5,8 +5,8 @@ import {Button, Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
 import FastImage from 'react-native-fast-image';
 import {regex, shadow} from '../../../utils/regex';
-import {distance} from '../../../actions/userAction';
 import {ONLINE} from '../../../themes/constantColors';
+import {distance} from '../../../utils/location';
 
 class CongraMatchModal extends Component {
 

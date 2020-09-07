@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
-import {religionData} from '../../json/RegisterJson';
+import {religionData} from '../../json/generalCatogeryData';
 
 class Step7Component extends Component {
 

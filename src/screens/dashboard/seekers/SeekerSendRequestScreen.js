@@ -10,7 +10,8 @@ import moment from 'moment';
 import TimePicker from "react-native-navybits-date-time-picker";
 import {Black, White} from '../../../themes/constantColors';
 import * as messages from '../../../utils/messages';
-import {distance, sendSeekerRequest} from '../../../actions/userAction';
+import {sendSeekerRequest} from '../../../actions/seekerAction';
+import {distance} from '../../../utils/location';
 
 class SeekerSendRequestScreen extends Component {
 

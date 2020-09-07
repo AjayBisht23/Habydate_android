@@ -5,7 +5,7 @@ import HeaderComponent from '../../../components/general/HeaderComponent';
 import {Icon} from "native-base";
 import {White} from '../../../themes/constantColors';
 import {regex, TouchableFeedback} from '../../../utils/regex';
-import {deleteUser, getUserData, updateUserDataAction} from '../../../actions/authAction';
+import {deleteUser, updateUserAction} from '../../../actions/userAction';
 import * as messages from '../../../utils/messages';
 
 class SettingsScreen extends Component {
@@ -26,9 +26,7 @@ class SettingsScreen extends Component {
     };
 
     updateData = (parameter) => {
-        updateUserDataAction(this.props.user.uid, parameter).then(() => {
-            getUserData(this.props.user.uid)
-        });
+        updateUserAction(this.props.user.uid, parameter);
     };
 
     notificationSwitch = (notificationOn) => {

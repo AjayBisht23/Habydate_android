@@ -5,10 +5,9 @@ import HeaderComponent from '../../components/general/HeaderComponent';
 import {Button, Icon} from 'native-base';
 import AddPhotoComponent from '../../components/register/AddPhotoComponent';
 import ImagePicker from "react-native-customized-image-picker";
-import * as messages from '../../utils/messages';
-import {cloudinaryUpload, getUserData, updateUserDataAction} from '../../actions/authAction';
-import moment from 'moment';
+import {updateUserAction} from '../../actions/userAction';
 import {regex} from '../../utils/regex';
+import {assetUploadInCloudinaryServer} from '../../actions/cloudinaryStorageAction';
 
 class AddPhotoScreen extends Component {
 
@@ -85,7 +84,7 @@ class AddPhotoScreen extends Component {
             regex.showLoader();
             let uploadPhotos = [];
             getResults.forEach((file) => {
-                uploadPhotos.push(cloudinaryUpload(file, false));
+                uploadPhotos.push(assetUploadInCloudinaryServer(file, false));
             });
 
             Promise.all(uploadPhotos).then(response => {
@@ -97,13 +96,13 @@ class AddPhotoScreen extends Component {
                         public_id: asset.public_id
                     });
                 });
-                updateUserDataAction(uid, {stepCompleted: 9, photos: photos});
+                updateUserAction(uid, {stepCompleted: 9, photos: photos});
                 navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
             }).catch(error => {
                 regex.hideLoader();
             });
         } else {
-            updateUserDataAction(uid, {stepCompleted: 9, photos: []});
+            updateUserAction(uid, {stepCompleted: 9, photos: []});
             navigation.navigate('Congratulations', {data: {...data, photos: []}, photoData: [{path: 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png'}]});
         }
     };

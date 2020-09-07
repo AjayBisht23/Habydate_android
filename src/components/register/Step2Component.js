@@ -5,7 +5,7 @@ import {ASPECT_RATIO, regex, W_WIDTH} from '../../utils/regex';
 import HeightModal from './HeightModal';
 import { DatePickerDialog } from 'react-native-datepicker-dialog'
 import moment from 'moment';
-import {bodyTypeData, genderData} from '../../json/RegisterJson';
+import {bodyTypeData, genderData} from '../../json/generalCatogeryData';
 import * as messages from '../../utils/messages';
 
 class Step2Component extends Component {

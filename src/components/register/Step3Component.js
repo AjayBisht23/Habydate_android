@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {W_WIDTH} from '../../utils/regex';
-import {personalityData, sexualityData} from '../../json/RegisterJson';
+import {personalityData, sexualityData} from '../../json/generalCatogeryData';
 
 class Step3Component extends Component {
 

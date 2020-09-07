@@ -6,7 +6,7 @@ import HeaderComponent from '../../../components/general/HeaderComponent';
 import MessagesComponent from '../../../components/messages/MessagesComponent';
 import {PINK, White} from '../../../themes/constantColors';
 import {TouchableFeedback} from '../../../utils/regex';
-import {getAllConversation} from '../../../actions/userAction';
+import {getAllConversationLists} from '../../../actions/conversationsAction';
 
 class MessagesScreen extends Component {
 
@@ -15,7 +15,7 @@ class MessagesScreen extends Component {
     }
 
     componentDidMount(): void {
-        getAllConversation(this.props.user.uid)
+        getAllConversationLists(this.props.user.uid)
     }
 
     onBackPress = () => {

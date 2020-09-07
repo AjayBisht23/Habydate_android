@@ -7,8 +7,9 @@ import FastImage from 'react-native-fast-image';
 import {Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
 import moment from 'moment';
-import {seekerData} from '../../../json/SeekerJson';
-import {distance, updateSeekerRequestStatus} from '../../../actions/userAction';
+import {seekerData} from '../../../json/seekerData';
+import {updateSeekerRequestStatus} from '../../../actions/seekerAction';
+import {distance} from '../../../utils/location';
 
 class SeekerDetailScreen extends Component {
 

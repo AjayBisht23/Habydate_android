@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import {Icon} from "native-base";
-import {heightData} from '../../json/RegisterJson';
+import {heightData} from '../../json/generalCatogeryData';
 
 class HeightModal extends Component {
 

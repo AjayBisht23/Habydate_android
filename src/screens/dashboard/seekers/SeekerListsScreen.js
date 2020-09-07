@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
-import {seekerData} from '../../../json/SeekerJson';
+import {seekerData} from '../../../json/seekerData';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerItemComponent from '../../../components/seekers/SeekerItemComponent';
 import {Button, Icon} from 'native-base';

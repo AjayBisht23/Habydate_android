@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
-import {getMySeekerRequest} from '../../../actions/userAction';
+import {getMySeekerRequestLists} from '../../../actions/seekerAction';
 
 class SendMySeekerRequestScreen extends Component {
 
@@ -12,7 +12,7 @@ class SendMySeekerRequestScreen extends Component {
     }
 
     componentDidMount(): void {
-        getMySeekerRequest(this.props.user.uid)
+        getMySeekerRequestLists(this.props.user.uid)
     }
 
     onBackPress = () => {

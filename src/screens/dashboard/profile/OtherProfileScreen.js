@@ -8,7 +8,7 @@ import {Button, Icon} from 'native-base';
 import {ONLINE} from '../../../themes/constantColors';
 import ReadMore from 'react-native-read-more-text';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
-import {distance} from '../../../actions/userAction';
+import {distance} from '../../../utils/location';
 
 class OtherProfileScreen extends Component {
 

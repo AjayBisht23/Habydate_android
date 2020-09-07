@@ -4,7 +4,7 @@ import {ASPECT_RATIO, regex, shadow, TouchableFeedback, W_WIDTH} from '../../uti
 import FastImage from 'react-native-fast-image';
 import {ONLINE, PINK, White} from '../../themes/constantColors';
 import CommonButton from '../general/CommonButton';
-import {deleteSeekerRequest, updateSeekerRequestStatus} from '../../actions/userAction';
+import {deleteSeekerRequest, updateSeekerRequestStatus} from '../../actions/seekerAction';
 
 class SeekerRequestComponent extends Component {
 

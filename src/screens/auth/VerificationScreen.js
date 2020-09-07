@@ -4,10 +4,10 @@ import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import {Black, White} from '../../themes/constantColors';
-import {ASPECT_RATIO, regex, shadow, W_WIDTH} from '../../utils/regex';
+import {regex, shadow, W_WIDTH} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
-import {getUserDataAndUpdateInFirestore} from '../../config/authFirebase';
+import {getUserDataAndUpdateInFirestore} from '../../actions/userAction';
 
 class VerificationScreen extends Component {
 

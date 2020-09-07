@@ -9,16 +9,18 @@ import MessageItem from '../../../components/messages/MessageItem';
 import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';
 import {
-    addMessageInConversation,
     addMessageInSeeker,
-    getAllMessages,
     getAllMessagesFromSeeker,
-    updateLatestMessageInConversation,
     updateLatestMessageInSeeker,
-} from '../../../actions/userAction';
+} from '../../../actions/seekerAction';
 import ActionSheet from 'react-native-actionsheet'
 import ImagePicker from "react-native-customized-image-picker";
-import {cloudinaryUpload} from '../../../actions/authAction';
+import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
+import {
+    addMessageInConversation,
+    getAllMessageListsFromConversation,
+    updateLatestMessageInConversation,
+} from '../../../actions/conversationsAction';
 
 class ChatScreen extends React.Component {
 
@@ -44,7 +46,7 @@ class ChatScreen extends React.Component {
 
     getDataFromConversation = () => {
         const {matches_id, user} = this.getConversationData();
-        getAllMessages(matches_id, user).then(messages => {
+        getAllMessageListsFromConversation(matches_id, user).then(messages => {
             this.setState({messages})
         });
     };
@@ -80,7 +82,7 @@ class ChatScreen extends React.Component {
     uploadImage = (media) => {
         let uploadPhotos = [];
         media.forEach((file) => {
-            uploadPhotos.push(cloudinaryUpload(file, true));
+            uploadPhotos.push(assetUploadInCloudinaryServer(file, true));
         });
 
         Promise.all(uploadPhotos).then(response => {

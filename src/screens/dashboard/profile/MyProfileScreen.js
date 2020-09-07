@@ -7,9 +7,10 @@ import FastImage from 'react-native-fast-image';
 import {Button, Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import ReadMore from 'react-native-read-more-text';
-import {cloudinaryUpload, getUserData, updateUserDataAction} from '../../../actions/authAction';
+import {updateUserAction} from '../../../actions/userAction';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
 import ImagePicker from 'react-native-customized-image-picker';
+import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
 
 class MyProfileScreen extends Component {
 
@@ -53,9 +54,7 @@ class MyProfileScreen extends Component {
           delete getUpdateData['DoB'];
           delete getUpdateData['photos'];
           delete getUpdateData['isEdit'];
-          updateUserDataAction(this.props.user.uid, getUpdateData).then(() => {
-              getUserData(this.props.user.uid)
-          });
+          updateUserAction(this.props.user.uid, getUpdateData);
         }
     };
 
@@ -105,7 +104,7 @@ class MyProfileScreen extends Component {
         regex.showLoader();
         let uploadPhotos = [];
         for (let i = 0; i < images.length; i++) {
-            uploadPhotos.push(cloudinaryUpload(images[i]), false);
+            uploadPhotos.push(assetUploadInCloudinaryServer(images[i]), false);
         }
 
         Promise.all(uploadPhotos).then(response => {
@@ -119,9 +118,7 @@ class MyProfileScreen extends Component {
             });
             this.lastIndex = photos.length;
             this.setState({photos});
-            updateUserDataAction(this.props.user.uid, {photos: photos}).then(() => {
-                getUserData(this.props.user.uid)
-            });
+            updateUserAction(this.props.user.uid, {photos: photos});
         }).catch(error => {
             regex.hideLoader();
         });

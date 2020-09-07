@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
-import {Button, Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import MatchComponent from '../../../components/matches/MatchComponent';
-import {getAllMatches} from '../../../actions/userAction';
+import {getAllMatchesLists} from '../../../actions/matchesAction';
 
 class MatchesScreen extends Component {
 
@@ -13,7 +12,7 @@ class MatchesScreen extends Component {
     }
 
     componentDidMount(): void {
-        getAllMatches(this.props.user.uid, true)
+        getAllMatchesLists(this.props.user.uid, true)
     }
 
     onBackPress = () => {

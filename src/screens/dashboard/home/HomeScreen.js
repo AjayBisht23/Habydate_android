@@ -8,10 +8,11 @@ import {HEIGHT_RATIO, regex, shadow, TouchableFeedback} from '../../../utils/reg
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
-import {getCurrentLocation} from '../../../utils/location';
-import {discoverUsers, distance, swipeCardUser} from '../../../actions/userAction';
+import {distance, getCurrentLocation} from '../../../utils/location';
 import PulseLoader from '../../../components/pluseloader/PulseLoader';
 import CongraMatchModal from './CongraMatchModal';
+import {discoverUsers} from '../../../actions/userAction';
+import {swipeCardUser} from '../../../actions/swipeCardAction';
 
 class HomeScreen extends Component {
 
@@ -35,13 +36,13 @@ class HomeScreen extends Component {
     componentDidMount(): void {
         getCurrentLocation().then(location => {
             this.location = location.coords;
-            this.getUserData();
+            this.getNearByUserData();
         }).catch(error => {
             console.log(error);
         })
     }
 
-    getUserData = () => {
+    getNearByUserData = () => {
         this.setLoader(true);
         discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
             let data = [];
@@ -220,7 +221,7 @@ class HomeScreen extends Component {
 
                                      if (data) {
                                          this.filterData = data;
-                                         this.getUserData();
+                                         this.getNearByUserData();
                                      }
                                  }}/>
                 </Modal>

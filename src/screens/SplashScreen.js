@@ -6,7 +6,7 @@ import {getStore} from '../../App';
 import {regex} from '../utils/regex';
 import {PINK} from '../themes/constantColors';
 import FastImage from 'react-native-fast-image';
-import {getCurrentUser} from '../config/authFirebase';
+import {getCurrentUser} from '../actions/userAction';
 
 class SplashScreen extends Component {
   constructor(props) {

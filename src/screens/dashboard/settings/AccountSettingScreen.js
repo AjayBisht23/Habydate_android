@@ -5,7 +5,7 @@ import CommonButton from '../../../components/general/CommonButton';
 import {regex, W_WIDTH} from '../../../utils/regex';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {getUserData, updateUserDataAction} from '../../../actions/authAction';
+import {updateUserAction} from '../../../actions/userAction';
 import * as messages from '../../../utils/messages';
 
 class AccountSettingScreen extends Component {
@@ -40,9 +40,7 @@ class AccountSettingScreen extends Component {
         else if (!regex.validateEmail(email))
             alert(messages.enterValidEmail);
         else {
-            updateUserDataAction(this.props.user.uid, this.state).then(() => {
-                getUserData(this.props.user.uid)
-            });
+            updateUserAction(this.props.user.uid, this.state);
             this.onBackPress();
         }
     };

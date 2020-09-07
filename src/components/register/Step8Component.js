@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, W_WIDTH} from '../../utils/regex';
-import {drinkingData, eatingData, smokingData} from '../../json/RegisterJson';
+import {drinkingData, eatingData, smokingData} from '../../json/generalCatogeryData';
 
 class Step8Component extends Component {
 

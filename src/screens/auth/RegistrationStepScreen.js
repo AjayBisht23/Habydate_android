@@ -11,7 +11,7 @@ import Step6Component from '../../components/register/Step6Component';
 import Step7Component from '../../components/register/Step7Component';
 import Step8Component from '../../components/register/Step8Component';
 import {regex, W_WIDTH} from '../../utils/regex';
-import {updateUserDataAction} from '../../actions/authAction';
+import {updateUserAction} from '../../actions/userAction';
 
 class RegistrationStepScreen extends Component {
 
@@ -106,7 +106,7 @@ class RegistrationStepScreen extends Component {
             parameter = (regex.isEmpty(data)) ? {drinkingStatus: '', smokingStatus: '', eatingStatus: ''} : data;
         }
 
-        updateUserDataAction(uid, {...parameter, stepCompleted: this.lastStepCompleted});
+        updateUserAction(uid, {...parameter, stepCompleted: this.lastStepCompleted});
     };
 
     setPage = (page) => {

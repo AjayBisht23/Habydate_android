@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
 import FastImage from 'react-native-fast-image';
-import {getSeekerRequest} from '../../../actions/userAction';
+import {getSeekerRequestLists} from '../../../actions/seekerAction';
 
 class SeekerRequestScreen extends Component {
 
@@ -13,7 +13,7 @@ class SeekerRequestScreen extends Component {
     }
 
     componentDidMount(): void {
-        getSeekerRequest(this.props.user.uid)
+        getSeekerRequestLists(this.props.user.uid)
     }
 
     onBackPress = () => {

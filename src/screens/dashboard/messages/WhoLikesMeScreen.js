@@ -3,7 +3,7 @@ import {View, StyleSheet, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import WhoLikeComponent from '../../../components/messages/WhoLikeComponent';
-import {getWhoLikedMe} from '../../../actions/userAction';
+import {getWhoLikedMeLists} from '../../../actions/swipeCardAction';
 
 class MessagesScreen extends Component {
 
@@ -12,7 +12,7 @@ class MessagesScreen extends Component {
     }
 
     componentDidMount(): void {
-        getWhoLikedMe(this.props.user.uid)
+        getWhoLikedMeLists(this.props.user.uid)
     }
 
     onBackPress = () => {

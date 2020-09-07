@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {connect} from 'react-redux';
-import {Button, Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerUserComponent from '../../../components/seekers/SeekerUserComponent';
 import {discoverUsers} from '../../../actions/userAction';
@@ -16,10 +15,10 @@ class SeekerUsersScreen extends Component {
     }
 
     componentDidMount(): void {
-        this.getUserData();
+        this.getNearByUserData();
     }
 
-    getUserData = () => {
+    getNearByUserData = () => {
         discoverUsers(this.props.user.uid, this.props.location, 30).then(response => {
             let data = [];
             for (let a in response)

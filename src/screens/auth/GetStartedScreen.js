@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import {ASPECT_RATIO, regex, shadow, TouchableFeedback} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
-import {getFacebookData, getGoogleData, getUserDataAndUpdateInFirestore} from '../../config/authFirebase';
+import {getFacebookData, getGoogleData} from '../../actions/socialLogin';
+import {getUserDataAndUpdateInFirestore} from '../../actions/userAction';
 
 class GetStartedScreen extends Component {
 
