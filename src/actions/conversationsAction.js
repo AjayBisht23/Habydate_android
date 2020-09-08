@@ -55,16 +55,30 @@ export function getAllConversationLists(uid) {
     });
 }
 
-export function updateLatestMessageInConversation(id, parameter) {
+export function updateLatestMessageInConversation(id, data) {
     return new Promise((resolve, reject) => {
+        let parameter = {};
+        let createdAt = moment().utc().unix();
+        parameter[data.user._id] = createdAt;
+        parameter['latestMessage'] = {
+            ...data,
+            createdAt,
+        };
         conversationsCollection
             .doc(id)
-            .set({
-                    latestMessage: {
-                        ...parameter,
-                        createdAt: moment().utc().unix(),
-                    }},
-                { merge: true}).then(response => {
+            .set(parameter, {merge: true}).then(response => {
+
+        })
+    });
+}
+
+export function readMessageInConversation(id, uid) {
+    return new Promise((resolve, reject) => {
+        let parameter = {};
+        parameter[uid] = moment().utc().unix();
+        conversationsCollection
+            .doc(id)
+            .set(parameter, {merge: true}).then(response => {
 
         })
     });

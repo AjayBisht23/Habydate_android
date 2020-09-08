@@ -22,7 +22,8 @@ function auth(state = initialAuthState, action) {
       return {...state, user: action.payload, loading: false};
 
     case LOGOUT:
-      return {...state, user: null, loading: false};
+      return {...state, user: null, loading: false, peopleWhoLiked: [], seekerRequests: [], mySendSeekerRequests: [],
+        matches: [], conversations: []};
 
     case THEME:
       return {...state, theme: action.payload};

@@ -12,17 +12,18 @@ class MessagesComponent extends Component {
     }
 
     render() {
-        const {theme, item, navigation} = this.props;
+        const {theme, item, navigation, uid} = this.props;
         const {user, latestMessage} = item;
         const {text, createdAt} = latestMessage;
 
+        let checkRead = Boolean(item[uid]) ? (item[uid] < createdAt) : true;
         return (
             <TouchableFeedback onPress={() => navigation.navigate('ChatScreen', {conversation: item, type: 'messages'})}>
                 <View style={[styles.container]}>
                     <View style={styles.rowView}>
                         <View style={styles.profileView}>
                             <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{width: 46, height: 46, borderRadius: 23}}/>
-                            <View style={[styles.onlineView, {backgroundColor: item.online ? ONLINE : theme.subSecondaryColor}]} />
+                            <View style={[styles.onlineView, {backgroundColor: user.online ? ONLINE : theme.subSecondaryColor}]} />
                         </View>
                         <View style={[styles.textView, {borderColor: theme.borderColor}]}>
                             <View style={[styles.innerRowView]}>
@@ -30,8 +31,8 @@ class MessagesComponent extends Component {
                                 <Text style={[styles.timeText, {color: theme.secondaryColor}]}>{moment.unix(createdAt).local().fromNow(true)}</Text>
                             </View>
                             <View style={[styles.innerRowView, {marginTop: 5}]}>
-                                <Text style={[styles.messageText, {color: theme.primaryColor}]}>{text}</Text>
-                                {item.read && <View style={styles.readView}/>}
+                                <Text style={[styles.messageText, {fontWeight: checkRead ? '500' : '400', color: theme.primaryColor}]}>{text}</Text>
+                                {checkRead && <View style={styles.readView}/>}
                             </View>
                         </View>
                     </View>
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
     },
     messageText: {
         fontSize: 16,
-        fontWeight: '500'
     },
     timeText: {
         fontSize: 14,

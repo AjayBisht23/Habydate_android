@@ -71,7 +71,7 @@ class MessagesScreen extends Component {
     };
 
     render() {
-        const {theme, navigation, conversations} = this.props;
+        const {theme, navigation, conversations, user} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -87,7 +87,7 @@ class MessagesScreen extends Component {
                         data={conversations}
                         extraData={conversations}
                         ListHeaderComponent={this.renderHeader}
-                        renderItem={({item}) => <MessagesComponent theme={theme} item={item} navigation={navigation}/> }
+                        renderItem={({item}) => <MessagesComponent uid={user.uid} theme={theme} item={item} navigation={navigation}/> }
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </View>

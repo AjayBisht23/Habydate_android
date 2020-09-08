@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native'
 import {Composer, GiftedChat, Send} from 'react-native-gifted-chat';
 import {connect} from 'react-redux';
 import MessageInputToolBar from '../../../components/messages/MessageInputToolBar';
-import {Button, Header, Icon, Right} from 'native-base';
+import {Header, Icon, Right} from 'native-base';
 import {regex} from '../../../utils/regex';
 import MessageItem from '../../../components/messages/MessageItem';
 import FastImage from 'react-native-fast-image';
@@ -19,8 +19,10 @@ import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageA
 import {
     addMessageInConversation,
     getAllMessageListsFromConversation,
+    readMessageInConversation,
     updateLatestMessageInConversation,
 } from '../../../actions/conversationsAction';
+import Video from 'react-native-video';
 
 class ChatScreen extends React.Component {
 
@@ -35,6 +37,7 @@ class ChatScreen extends React.Component {
 
     componentDidMount() {
         this.getData();
+        this.readConversation();
     }
 
     getDataFromSeeker = () => {
@@ -56,6 +59,15 @@ class ChatScreen extends React.Component {
             this.getDataFromSeeker();
         else
             this.getDataFromConversation();
+    };
+
+    readConversation = () => {
+        if (this.getType() === 'seeker') {
+
+        } else {
+            const {matches_id} = this.getConversationData();
+            readMessageInConversation(matches_id, this.props.user.uid);
+        }
     };
 
     onSend(messages = []) {
@@ -289,6 +301,21 @@ class ChatScreen extends React.Component {
         return (<MessageItem theme={theme} {...props} />);
     }
 
+    renderMessageVideo(props) {
+        let currentMessage = props.currentMessage;
+
+        return <View style={{backgroundColor: props.theme.pinkColor, borderRadius: 15}}>
+            <Video
+                ref={r => {this.player = r;}}
+                source={{uri: currentMessage.video}}
+                style={{width: 200, height: 200, borderTopRightRadius: 15, borderTopLeftRadius: 15}}
+                resizeMode={'cover'}
+                paused={true}
+                controls={true}
+            />
+        </View>
+    };
+
     render() {
         const {theme, user} = this.props;
         const {messages, replyItem} = this.state;
@@ -311,6 +338,7 @@ class ChatScreen extends React.Component {
                     minInputToolbarHeight={minInputToolbarHeight}
                     // Message Component
                     renderMessage={this.renderMessage.bind(this)}
+                    renderMessageVideo={this.renderMessageVideo.bind(this)}
 
                     // Others
                     placeholder={'Write something...'}
