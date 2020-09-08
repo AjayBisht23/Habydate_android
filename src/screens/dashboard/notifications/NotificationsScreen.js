@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import NotificationComponent from '../../../components/notifcations/NotificationComponent';
@@ -37,7 +37,9 @@ class NotificationsScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Notifications'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.innerView]}>
-                    <FlatList data={notificationData}
+                    <FlatList showsVerticalScrollIndicator={false}
+                              showsHorizontalScrollIndicator={false}
+                              data={notificationData}
                               extraData={notificationData}
                               renderItem={({item}) => <NotificationComponent refreshData={this.getData} theme={theme} item={item} navigation={navigation}/> }
                               keyExtractor={item => item.id.toString()}

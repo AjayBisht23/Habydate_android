@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import WhoLikeComponent from '../../../components/messages/WhoLikeComponent';
@@ -28,6 +28,8 @@ class MessagesScreen extends Component {
                 <HeaderComponent title={'People who liked you'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={peopleWhoLiked}
                         extraData={peopleWhoLiked}
                         renderItem={({item}) => <WhoLikeComponent theme={theme} item={item}/> }

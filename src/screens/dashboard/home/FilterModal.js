@@ -124,7 +124,8 @@ class FilterModal extends Component {
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Filter'}</Text>
                         <Text style={[styles.titleText, {color: theme.subPrimaryColor}]} onPress={this.resetPress}>{'Reset'}</Text>
                     </View>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}>
                         <View style={{paddingBottom: 20}}>
                             {/*<View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>*/}
                             {/*    <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Location'}</Text>*/}
@@ -164,6 +165,8 @@ class FilterModal extends Component {
                                 {
                                     isLookingData && <View style={{marginTop: 10}}>
                                         <FlatList
+                                            showsVerticalScrollIndicator={false}
+                                            showsHorizontalScrollIndicator={false}
                                             data={lookingData}
                                             extraData={lookingData}
                                             renderItem={this.renderLookingItem}
@@ -184,6 +187,8 @@ class FilterModal extends Component {
                                 {
                                     isShowMeData && <View style={{marginTop: 10}}>
                                         <FlatList
+                                            showsVerticalScrollIndicator={false}
+                                            showsHorizontalScrollIndicator={false}
                                             data={showMeData}
                                             extraData={showMeData}
                                             renderItem={this.renderLookingItem}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {HEIGHT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
@@ -45,11 +45,13 @@ class OtherProfileScreen extends Component {
 
     render() {
         const {theme, navigation} = this.props;
-        const {instagramPhotos, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus, location} = this.state;
+        const {instagramPhotos, online, name, DoB, bio, photos, height, bodyType, gender, sexuality, personality, education, maritalStatus, lookingFor, religion, drinkingStatus, smokingStatus, eatingStatus, location} = this.state;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <ParallaxScrollView
+                    showsVerticalScrollIndicator={false}
+                    showsHorizontalScrollIndicator={false}
                     backgroundColor={theme.container.backgroundColor}
                     headerBackgroundColor={'transparent'}
                     contentContainerStyle={{borderTopLeftRadius: 25, borderTopRightRadius: 25, marginTop: -25}}
@@ -76,7 +78,7 @@ class OtherProfileScreen extends Component {
                     <View style={{borderTopLeftRadius: 20, borderTopRightRadius: 20}}>
                         <View style={[styles.userView]}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <View style={styles.onlineView} />
+                                {online && <View style={styles.onlineView} />}
                                 <Text style={[styles.nameText, {color: theme.primaryColor}]}>{name}</Text>
                                 <Text style={[styles.nameText, {color: theme.primaryColor}]}>{regex.getAge(DoB)}</Text>
                             </View>
@@ -107,6 +109,8 @@ class OtherProfileScreen extends Component {
                         {
                             photos.length > 0 && <View style={{marginHorizontal: 20}}>
                                 <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
                                     data={photos}
                                     extraData={photos}
                                     renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
@@ -128,6 +132,8 @@ class OtherProfileScreen extends Component {
                         {
                             instagramPhotos.length > 0 && <View style={{marginHorizontal: 20}}>
                                 <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
                                     data={instagramPhotos}
                                     extraData={instagramPhotos}
                                     renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }

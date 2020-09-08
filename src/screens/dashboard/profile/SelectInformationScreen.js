@@ -117,6 +117,8 @@ class SelectInformationScreen extends Component {
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {paddingTop: 20, backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={lookingData}
                         renderItem={this.renderLookingForItem}
                         keyExtractor={item => item.id.toString()}

@@ -52,10 +52,13 @@ class Step6Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`I'm Looking for`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={lookingData}
                             renderItem={this.renderLookingForItem}
                             keyExtractor={item => item.id.toString()}

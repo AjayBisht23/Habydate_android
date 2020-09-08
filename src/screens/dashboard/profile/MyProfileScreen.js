@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, FlatList} from 'react-native';
+import {View, StyleSheet, Text, TextInput, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {ASPECT_RATIO, HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Button, Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
@@ -54,7 +54,7 @@ class MyProfileScreen extends Component {
           delete getUpdateData['DoB'];
           delete getUpdateData['photos'];
           delete getUpdateData['isEdit'];
-          updateUserAction(this.props.user.uid, getUpdateData);
+          updateUserAction(this.props.user.uid, getUpdateData, 'profile');
         }
     };
 
@@ -118,7 +118,7 @@ class MyProfileScreen extends Component {
             });
             this.lastIndex = photos.length;
             this.setState({photos});
-            updateUserAction(this.props.user.uid, {photos: photos});
+            updateUserAction(this.props.user.uid, {photos: photos}, 'profile');
         }).catch(error => {
             regex.hideLoader();
         });
@@ -195,16 +195,14 @@ class MyProfileScreen extends Component {
                                 <View style={{width: 50, height: 6, borderRadius: 3, backgroundColor: theme.subSecondaryColor}}/>
                             </View>
                             <Text style={[styles.nameText, {color: theme.primaryColor}]}>{`${name}${regex.getAge(DoB)}`}</Text>
-                            <CommonButton
-                                theme={theme}
-                                container={{marginVertical: 15}}
-                                innerContainer={{paddingVertical: 30, borderRadius: 15}}
-                                backgroundColor={theme.pinkColor}
-                                borderColor={theme.pinkColor}
-                                textColor={theme.backgroundColor}
-                                title={'Upgrade to Premium'}
-                                onPress={this.nextPress}
-                            />
+                            <TouchableFeedback onPress={() => navigation.navigate('Payments')}>
+                                <View style={[styles.premiumView]}>
+                                    <View style={[styles.premiumInnerView, {backgroundColor: theme.pinkColor}]}>
+                                        <Icon type={'MaterialCommunityIcons'} name={'crown'} style={{color: theme.backgroundColor}} />
+                                        <Text style={[styles.premiumText, {color: theme.backgroundColor}]}>Upgrade to Premium</Text>
+                                    </View>
+                                </View>
+                            </TouchableFeedback>
                             {
                                 isEdit ? <TextInput style={[styles.bioText, {color: theme.subPrimaryColor, backgroundColor: theme.textInputBackgroundColor,}]}
                                                     value={bio}
@@ -228,6 +226,8 @@ class MyProfileScreen extends Component {
                             <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
                             <View style={{marginHorizontal: 20, marginTop: 10}}>
                                 <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    showsHorizontalScrollIndicator={false}
                                     data={photos}
                                     extraData={photos}
                                     renderItem={({item}) => <SquarePhotoComponent theme={theme} item={item}/> }
@@ -282,6 +282,22 @@ const styles = StyleSheet.create({
     imageView: {
         width: W_WIDTH,
         height: PARALLAX_HEADER_HEIGHT,
+    },
+    premiumView: {
+        marginHorizontal: 20,
+        marginVertical: 15,
+    },
+    premiumInnerView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 30,
+        borderRadius: 15
+    },
+    premiumText: {
+        marginLeft: 8,
+        fontSize: ASPECT_RATIO(16),
+        fontWeight: '500',
     },
     fixedSection: {
         flexDirection: 'row',

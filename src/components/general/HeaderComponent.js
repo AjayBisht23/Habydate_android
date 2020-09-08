@@ -28,7 +28,7 @@ class HeaderComponent extends React.PureComponent {
                                 </Button>
                         }
                     </Left>
-                    <Body>
+                    <Body style={{flex: 3}}>
                         <View style={{flexDirection: 'row'}}>
                             <Text style={{fontSize: 16, fontWeight: '600', color: theme.primaryColor}}>{getIndex}</Text>
                             <Text style={{fontSize: 16, fontWeight: '600', color: theme.subSecondaryColor}}>/8</Text>
@@ -56,7 +56,7 @@ class HeaderComponent extends React.PureComponent {
                             </Button>
                     }
                 </Left>
-                <Body>
+                <Body style={{flex: 3}}>
                     {
                         title && <Text style={{fontSize: 20, fontWeight: '600', color: theme.primaryColor, ...titleStyle}}>{title}</Text>
                     }

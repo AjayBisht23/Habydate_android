@@ -106,7 +106,7 @@ class RegistrationStepScreen extends Component {
             parameter = (regex.isEmpty(data)) ? {drinkingStatus: '', smokingStatus: '', eatingStatus: ''} : data;
         }
 
-        updateUserAction(uid, {...parameter, stepCompleted: this.lastStepCompleted});
+        updateUserAction(uid, {...parameter, stepCompleted: this.lastStepCompleted}, 'register');
     };
 
     setPage = (page) => {
@@ -136,9 +136,9 @@ class RegistrationStepScreen extends Component {
                             horizontal={true}
                             pagingEnabled={true}
                             scrollEnabled={false}
-                            onMomentumScrollEnd={this.onScrollMoment}
-                            // onScrollEndDrag={this.onScrollMoment}
-                >
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                            onMomentumScrollEnd={this.onScrollMoment}>
                     <Step1Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
                     <Step2Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>
                     <Step3Component theme={theme} onPress={this.onContinuesPress} data={this.getData}/>

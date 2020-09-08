@@ -88,7 +88,8 @@ class SeekerSendRequestScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={title} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.innerView]}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}>
                         <View style={[styles.innerView, {padding: 20}]}>
                             <View style={[styles.userView, {backgroundColor: theme.secondaryColor}]}>
                                 <FastImage source={{uri: regex.getProfilePic(user.photos)}}

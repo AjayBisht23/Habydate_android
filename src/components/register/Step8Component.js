@@ -111,22 +111,29 @@ class Step8Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Drinking`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={drinkingData}
                             renderItem={this.renderDrinkingItem}
                             keyExtractor={item => item.id.toString()}
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Smoking`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={smokingData}
                             renderItem={this.renderSmokingItem}
                             keyExtractor={item => item.id.toString()}
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Eating`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={eatingData}
                             renderItem={this.renderEatingItem}
                             keyExtractor={item => item.id.toString()}

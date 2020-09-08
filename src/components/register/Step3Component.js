@@ -82,16 +82,21 @@ class Step3Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Sexuality'}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={sexualityData}
                             renderItem={this.renderSexualityItem}
                             keyExtractor={item => item.id.toString()}
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Personality'}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={personalityData}
                             renderItem={this.renderPersonalityItem}
                             keyExtractor={item => item.id.toString()}

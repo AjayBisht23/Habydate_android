@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {Button, Icon} from 'native-base';
@@ -96,13 +96,13 @@ class AddPhotoScreen extends Component {
                         public_id: asset.public_id
                     });
                 });
-                updateUserAction(uid, {stepCompleted: 9, photos: photos});
+                updateUserAction(uid, {stepCompleted: 9, photos: photos}, 'register');
                 navigation.navigate('Congratulations', {data: {...data, photos: photos}, photoData: getResults});
             }).catch(error => {
                 regex.hideLoader();
             });
         } else {
-            updateUserAction(uid, {stepCompleted: 9, photos: []});
+            updateUserAction(uid, {stepCompleted: 9, photos: []}, 'register');
             navigation.navigate('Congratulations', {data: {...data, photos: []}, photoData: [{path: 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png'}]});
         }
     };
@@ -166,6 +166,8 @@ class AddPhotoScreen extends Component {
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={photoData}
                         extraData={photoData}
                         renderItem={({item, index}) => <AddPhotoComponent theme={theme} item={item} index={index} openLibrary={this.openLibrary} removePhoto={this.removePhoto}/> }

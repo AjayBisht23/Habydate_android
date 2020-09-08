@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Text} from 'react-native';
+import {View, StyleSheet, FlatList, Text, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
@@ -35,6 +35,8 @@ class SendMySeekerRequestScreen extends Component {
                                 <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>No data found</Text>
                             </View>
                             : <FlatList
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
                                 data={mySendSeekerRequests}
                                 extraData={mySendSeekerRequests}
                                 renderItem={({item}) => <SeekerRequestComponent type={'my'} theme={theme} navigation={navigation} item={item}/> }

@@ -52,10 +52,13 @@ class Step4Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`What's Your Education?`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={educationData}
                             renderItem={this.renderEducationItem}
                             keyExtractor={item => item.id.toString()}

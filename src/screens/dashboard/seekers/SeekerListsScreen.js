@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {seekerData} from '../../../json/seekerData';
 import HeaderComponent from '../../../components/general/HeaderComponent';
@@ -39,6 +39,8 @@ class SeekerListsScreen extends Component {
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor, paddingHorizontal: 10}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={seekerData}
                         extraData={seekerData}
                         renderItem={({item}) => <SeekerItemComponent theme={theme} navigation={navigation} item={item}/> }

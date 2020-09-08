@@ -11,7 +11,7 @@ import FilterModal from './FilterModal';
 import {distance, getCurrentLocation} from '../../../utils/location';
 import PulseLoader from '../../../components/pluseloader/PulseLoader';
 import CongraMatchModal from './CongraMatchModal';
-import {discoverUsers} from '../../../actions/userAction';
+import {discoverUsers, updateUserAction} from '../../../actions/userAction';
 import {swipeCardUser} from '../../../actions/swipeCardAction';
 
 class HomeScreen extends Component {
@@ -34,6 +34,7 @@ class HomeScreen extends Component {
     }
 
     componentDidMount(): void {
+        this.updateOnlineStatus();
         getCurrentLocation().then(location => {
             this.location = location.coords;
             this.getNearByUserData();
@@ -42,15 +43,20 @@ class HomeScreen extends Component {
         })
     }
 
-    getNearByUserData = () => {
-        this.setLoader(true);
-        discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
-            let data = [];
-            for (let a in response)
-                data.push(response[a]._data);
+    updateOnlineStatus = () => {
+        updateUserAction(this.props.user.uid, {online: true}, 'home');
+    };
 
-            if (data.length > 0)
-                this.filterToData(data);
+    getNearByUserData = () => {
+        this.setLoader(true, () => {
+            discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
+                let data = [];
+                for (let a in response)
+                    data.push(response[a]._data);
+
+                if (data.length > 0)
+                    this.filterToData(data);
+            });
         });
     };
 
@@ -76,8 +82,8 @@ class HomeScreen extends Component {
         });
     };
 
-    setLoader = (shown) => {
-        this.setState({loading: shown})
+    setLoader = (shown, callback) => {
+        this.setState({loading: shown}, callback);
     };
 
     onMenuPress = () => {
@@ -148,28 +154,34 @@ class HomeScreen extends Component {
         const {cards} = this.state;
         const {theme} = this.props;
 
+        if (cards.length === 0) {
+           return <View style={[styles.innerView, {alignItems: 'center', justifyContent: 'center', backgroundColor: theme.primaryBackgroundColor}]}>
+                <Text style={{fontSize: 18, padding: 30, textAlign: 'center'}}>
+                    {'Nearby not available. You can apply filter.'}
+                </Text>
+           </View>
+        }
+
         return <View style={[styles.innerView, {backgroundColor: theme.primaryBackgroundColor}]}>
-            {
-                cards.length > 0 && <Swiper
-                    ref={swiper => {this.swiper = swiper}}
-                    onSwipedLeft={(index) => this.onSwiped('dislike', index)}
-                    onSwipedRight={(index) => this.onSwiped('like', index)}
-                    onSwipedTop={(index) => this.onSwiped('superLike', index)}
-                    onTapCard={this.swipeLeft}
-                    disableBottomSwipe={true}
-                    cards={cards}
-                    renderCard={this.renderCardItem}
-                    onSwipedAll={this.onSwipedAllCards}
-                    backgroundColor={theme.primaryBackgroundColor}
-                    containerStyle={{bottom: HEIGHT_RATIO(0.15)}}
-                    stackSize={cards.length > 2 ? 3 : cards.length}
-                    stackSeparation={-30}
-                    overlayLabels={overlayLabel}
-                    animateOverlayLabelsOpacity
-                    animateCardOpacity
-                    swipeBackCard
-                />
-            }
+            <Swiper
+                ref={swiper => {this.swiper = swiper}}
+                onSwipedLeft={(index) => this.onSwiped('dislike', index)}
+                onSwipedRight={(index) => this.onSwiped('like', index)}
+                onSwipedTop={(index) => this.onSwiped('superLike', index)}
+                onTapCard={this.swipeLeft}
+                disableBottomSwipe={true}
+                cards={cards}
+                renderCard={this.renderCardItem}
+                onSwipedAll={this.onSwipedAllCards}
+                backgroundColor={theme.primaryBackgroundColor}
+                containerStyle={{bottom: HEIGHT_RATIO(0.15)}}
+                stackSize={cards.length > 2 ? 3 : cards.length}
+                stackSeparation={-30}
+                overlayLabels={overlayLabel}
+                animateOverlayLabelsOpacity
+                animateCardOpacity
+                swipeBackCard
+            />
             <View style={[styles.bottomView]}>
                 <TouchableFeedback onPress={() => this.onButtonPress('dislike')}>
                     <View style={[styles.commonLike, {backgroundColor: theme.backgroundColor}]}>

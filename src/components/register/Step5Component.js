@@ -52,10 +52,13 @@ class Step5Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View>
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{`Marital Status`}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={maritalData}
                             renderItem={this.renderMaritalItem}
                             keyExtractor={item => item.id.toString()}

@@ -69,7 +69,7 @@ export function getCurrentLocation() {
                 const latitude = coords.latitude;
                 const longitude = coords.longitude;
                 const geoHash = geohash.encode(latitude, longitude);
-                updateUserAction(auth().currentUser._user.uid, {location: {latitude, longitude, geoHash}});
+                updateUserAction(auth().currentUser._user.uid, {location: {latitude, longitude, geoHash}}, 'location');
             }
             resolve(position)
         }, error => {

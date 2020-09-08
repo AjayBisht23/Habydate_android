@@ -22,6 +22,7 @@ import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
+import {updateUserAction} from '../actions/userAction';
 
 export const {OS} = Platform;
 export const TouchableFeedback = OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
@@ -102,7 +103,7 @@ export const regex = {
   },
 
   validateUsername: (val) => {
-    return /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/.test(val)
+    return /^[A-Za-z0-9_]{3,20}$/.test(val)
   },
 
   matchPassword: (val1, val2) => {
@@ -187,6 +188,19 @@ export const regex = {
     });
   },
 
+  checkPremiumUser: (packageEndDate) => {
+     return Boolean(packageEndDate);
+  },
+
+  getDayLeft: (packageEndDate) => {
+     if (regex.checkPremiumUser(packageEndDate)) {
+       let endDate = moment.unix(packageEndDate).local();
+       let startData = moment();
+       return endDate.diff(startData, 'days');
+     } else
+       return 0;
+  },
+
   logout: async (navigation) => {
     Alert.alert(
       'Logout',
@@ -205,8 +219,16 @@ export const regex = {
     );
   },
 
-  clearData: async () => {
+  authSignOut: () => {
+    let user = auth().currentUser;
+    let getUser = user._user;
+    let uid = getUser.uid;
+    updateUserAction(uid, {online: false}, 'register');
     auth().signOut().then(() => console.log('User signed out!'));
+  },
+
+  clearData: async () => {
+    regex.authSignOut();
     // regex.changeStatusStyle('default');
     await AsyncStorage.clear();
     // defaultRestClient.clearAuthorization();

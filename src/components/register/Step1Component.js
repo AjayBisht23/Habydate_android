@@ -4,6 +4,7 @@ import CommonTextInput from '../general/CommonTextInput';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, regex, W_WIDTH} from '../../utils/regex';
 import * as messages from '../../utils/messages';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 class Step1Component extends Component {
 
@@ -24,7 +25,7 @@ class Step1Component extends Component {
             alert(messages.enterFullName);
         else if (regex.isEmpty(username))
             alert(messages.enterUserName);
-        else if (regex.validateUsername(username))
+        else if (!regex.validateUsername(username))
             alert(messages.enterValidUserName);
         else if (regex.isEmpty(email))
             alert(messages.enterEmail);
@@ -35,43 +36,49 @@ class Step1Component extends Component {
     };
 
     render() {
-        const {name, username, email} = this.state;
+        const {name, username, email, socialType} = this.state;
         const {theme} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
-                    <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Basic Info'}</Text>
+                <KeyboardAwareScrollView>
                     <View>
-                        <CommonTextInput
-                            placeholder={'Full Name'}
-                            keyboardType={'default'}
-                            value={name}
-                            onChangeText={(name)=>this.setState({name})}
-                        />
-                        <CommonTextInput
-                            placeholder={'Username'}
-                            keyboardType={'default'}
-                            value={username}
-                            onChangeText={(username)=>this.setState({username})}
-                        />
-                        <CommonTextInput
-                            placeholder={'Email'}
-                            keyboardType={'email-address'}
-                            value={email}
-                            onChangeText={(email)=>this.setState({email})}
-                        />
-                        <CommonButton
-                            theme={theme}
-                            container={{marginTop: ASPECT_RATIO(123)}}
-                            backgroundColor={theme.pinkColor}
-                            borderColor={theme.pinkColor}
-                            textColor={theme.backgroundColor}
-                            title={'Continue'}
-                            onPress={this.nextPress}
-                        />
+                        <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Basic Info'}</Text>
+                        <View>
+                            <CommonTextInput
+                                autoCompleteType={'name'}
+                                placeholder={'Full Name'}
+                                keyboardType={'default'}
+                                value={name}
+                                onChangeText={(name)=>this.setState({name})}
+                            />
+                            <CommonTextInput
+                                autoCompleteType={'username'}
+                                placeholder={'Username'}
+                                keyboardType={'default'}
+                                value={username}
+                                onChangeText={(username)=>this.setState({username})}
+                            />
+                            <CommonTextInput
+                                autoCompleteType={'email'}
+                                placeholder={'Email'}
+                                keyboardType={'email-address'}
+                                editable={socialType === 'phone'}
+                                value={email}
+                                onChangeText={(email)=>this.setState({email})}
+                            />
+                            <CommonButton
+                                theme={theme}
+                                container={{marginTop: ASPECT_RATIO(123)}}
+                                backgroundColor={theme.pinkColor}
+                                borderColor={theme.pinkColor}
+                                textColor={theme.backgroundColor}
+                                title={'Continue'}
+                                onPress={this.nextPress}
+                            />
+                        </View>
                     </View>
-                </ScrollView>
+                </KeyboardAwareScrollView>
             </View>
         );
     }

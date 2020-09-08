@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import AllPhotoComponent from '../../../components/general/AllPhotoComponent';
@@ -28,6 +28,8 @@ class AllPhotoScreen extends Component {
                 <HeaderComponent title={'All Photos'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor, paddingHorizontal: 10}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={photoData}
                         extraData={photoData}
                         renderItem={({item}) => <AllPhotoComponent theme={theme} item={item}/> }

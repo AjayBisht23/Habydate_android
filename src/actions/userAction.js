@@ -15,17 +15,20 @@ export function createNewUserAction(uid, parameter) {
     });
 }
 
-export function updateUserAction(uid, parameter) {
+export function updateUserAction(uid, parameter, callFrom) {
     return new Promise((resolve, reject) => {
         usersCollection.doc(uid).update(parameter).then(() => {
-            getUserDetail(uid, parameter).then(data => {
-                let response = data.response._data;
-                getStore.dispatch({
-                    type: SET_USER_DATA,
-                    payload: response
+            if (callFrom !== 'register') {
+                getUserDetail(uid, parameter).then(data => {
+                    let response = data.response._data;
+                    getStore.dispatch({
+                        type: SET_USER_DATA,
+                        payload: response
+                    });
+                    return resolve(response)
                 });
-                return resolve(response)
-            });
+            } else
+                resolve(true);
         }).catch(error => {
             return reject(error)
         });
@@ -45,6 +48,7 @@ export function getUserDetail(uid, data) {
 export const getUserDataAndUpdateInFirestore = (response) => {
     return new Promise((resolve, reject) => {
         let user = response.user;
+        let providerId = response.additionalUserInfo.providerId;
         let getUser = user._user;
         if (getUser) {
             let uid = getUser.uid;
@@ -53,6 +57,7 @@ export const getUserDataAndUpdateInFirestore = (response) => {
                 name: regex.isEmpty(getUser.displayName) ? '' : getUser.displayName,
                 email: regex.isEmpty(getUser.email) ? '' : getUser.email,
                 profilePic: regex.isEmpty(getUser.photoURL) ? '' : getUser.photoURL,
+                socialType: providerId === 'facebook.com' ? 'facebook' : (providerId === 'google.com' ? 'google' : 'phone')
             };
             getUserDetail(uid, user).then(data => {
                 let getUser = data.response;

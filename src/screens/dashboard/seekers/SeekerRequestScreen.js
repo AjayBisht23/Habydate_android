@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, Switch} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Switch, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
@@ -37,6 +37,8 @@ class SeekerRequestScreen extends Component {
                                 <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who sent you requests with Epicbae Premium</Text>
                             </View>
                             : <FlatList
+                                showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}
                                 data={seekerRequests}
                                 extraData={seekerRequests}
                                 renderItem={({item}) => <SeekerRequestComponent type={'others'} theme={theme} navigation={navigation} item={item}/> }

@@ -3,11 +3,9 @@ import {View, StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import {Icon} from "native-base";
-import FastImage from 'react-native-fast-image';
-import stripe from 'tipsi-stripe'
-import {STRIPE_PUBLIC_KEY} from '../../../config/config';
 import {TouchableFeedback} from '../../../utils/regex';
-import {paymentUsingCard} from '../../../actions/paymentAction';
+import {openCardModal, setUpStripe} from '../../../actions/paymentAction';
+import moment from 'moment';
 
 class PaymentMethodScreen extends Component {
 
@@ -16,9 +14,7 @@ class PaymentMethodScreen extends Component {
     }
 
     componentDidMount(): void {
-        stripe.setOptions({
-            publishableKey: STRIPE_PUBLIC_KEY
-        })
+        setUpStripe();
     }
 
     onBackPress = () => {
@@ -27,35 +23,17 @@ class PaymentMethodScreen extends Component {
     };
 
     openCardDetail = async () => {
-        const token = await stripe.paymentRequestWithCardForm({
-            // Only iOS support this options
-            smsAutofillDisabled: true,
-            requiredBillingAddressFields: 'full',
-            prefilledInformation: {
-                billingAddress: {
-                    name: '',
-                    line1: '',
-                    line2: '',
-                    city: '',
-                    state: '',
-                    country: '',
-                    postalCode: '',
-                    email: '',
-                },
-            },
-        });
-        let tokenId = token.tokenId;
-        if (Boolean(tokenId)) {
-           paymentUsingCard({
-               amount: 100,
-               currency: "usd",
-               token: tokenId
-           })
-        }
+        const { user, route } = this.props;
+        let params = route.params;
+        let type = params.isMonth ? 'M' : 'y';
+        let packageEndDate = moment().add(1, type).unix();
+        let amount = params.isMonth ? 25 : 250;
+
+        openCardModal(user, amount, packageEndDate);
     };
 
     render() {
-        const {theme, navigation} = this.props;
+        const {theme} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -70,24 +48,24 @@ class PaymentMethodScreen extends Component {
                             <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>
                         </View>
                     </TouchableFeedback>
-                    <View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>
-                       <View style={{flex: 1}}>
-                           <FastImage source={require('./../../../assets/paypal.png')} style={{width: 81, height: 20}}/>
-                       </View>
-                       <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>
-                    </View>
-                    <View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>
-                        <View style={{flex: 1}}>
-                            <FastImage source={require('./../../../assets/gpay.png')} style={{width: 49, height: 20}}/>
-                        </View>
-                        <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>
-                    </View>
-                    <View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>
-                        <View style={{flex: 1}}>
-                            <FastImage source={require('./../../../assets/applepay.png')} style={{width: 43, height: 20}}/>
-                        </View>
-                        <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>
-                    </View>
+                    {/*<View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>*/}
+                    {/*   <View style={{flex: 1}}>*/}
+                    {/*       <FastImage source={require('./../../../assets/paypal.png')} style={{width: 81, height: 20}}/>*/}
+                    {/*   </View>*/}
+                    {/*   <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>*/}
+                    {/*</View>*/}
+                    {/*<View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>*/}
+                    {/*    <View style={{flex: 1}}>*/}
+                    {/*        <FastImage source={require('./../../../assets/gpay.png')} style={{width: 49, height: 20}}/>*/}
+                    {/*    </View>*/}
+                    {/*    <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>*/}
+                    {/*</View>*/}
+                    {/*<View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>*/}
+                    {/*    <View style={{flex: 1}}>*/}
+                    {/*        <FastImage source={require('./../../../assets/applepay.png')} style={{width: 43, height: 20}}/>*/}
+                    {/*    </View>*/}
+                    {/*    <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 30, color: theme.subPrimaryColor}}/>*/}
+                    {/*</View>*/}
                 </View>
             </View>
         );
@@ -96,6 +74,7 @@ class PaymentMethodScreen extends Component {
 
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps)(PaymentMethodScreen);

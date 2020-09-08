@@ -14,6 +14,7 @@ class AccountSettingScreen extends Component {
         super(props);
         let user = props.user;
         this.state = {
+            socialType: user.socialType,
             name: user.name,
             username: user.username,
             email: user.email,
@@ -33,42 +34,51 @@ class AccountSettingScreen extends Component {
             alert(messages.enterFullName);
         else if (regex.isEmpty(username))
             alert(messages.enterUserName);
-        else if (regex.validateUsername(username))
+        else if (!regex.validateUsername(username))
             alert(messages.enterValidUserName);
         else if (regex.isEmpty(email))
             alert(messages.enterEmail);
         else if (!regex.validateEmail(email))
             alert(messages.enterValidEmail);
         else {
-            updateUserAction(this.props.user.uid, this.state);
-            this.onBackPress();
+            regex.showLoader();
+            updateUserAction(this.props.user.uid, this.state, 'account_setting').then(() => {
+                regex.hideLoader();
+                this.onBackPress();
+            });
         }
     };
 
     render() {
-        const {name, username, email, phone} = this.state;
+        const {name, username, email, phone, socialType} = this.state;
         const {theme} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Account Setting'} theme={theme} onLeftPress={this.onBackPress}/>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
+                >
                     <View>
                         <CommonTextInput
+                            autoCompleteType={'name'}
                             placeholder={'Full Name'}
                             keyboardType={'default'}
                             value={name}
                             onChangeText={(name)=>this.setState({name})}
                         />
                         <CommonTextInput
+                            autoCompleteType={'username'}
                             placeholder={'Username'}
                             keyboardType={'default'}
                             value={username}
                             onChangeText={(username)=>this.setState({username})}
                         />
                         <CommonTextInput
+                            autoCompleteType={'email'}
                             placeholder={'Email'}
                             keyboardType={'email-address'}
+                            editable={socialType === 'phone'}
                             value={email}
                             onChangeText={(email)=>this.setState({email})}
                         />

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, Switch} from 'react-native';
+import {View, StyleSheet, Text, FlatList, Switch, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
 import {Button, Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
@@ -82,6 +82,8 @@ class MessagesScreen extends Component {
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={conversations}
                         extraData={conversations}
                         ListHeaderComponent={this.renderHeader}

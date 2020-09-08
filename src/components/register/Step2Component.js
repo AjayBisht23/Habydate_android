@@ -128,7 +128,8 @@ class Step2Component extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'My Birthday is'}</Text>
                     <View>
                         <Text style={[styles.titleTextInput, {color: theme.subPrimaryColor}]}>Date of Birth*</Text>
@@ -156,6 +157,8 @@ class Step2Component extends Component {
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Body Type'}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             scrollEnabled={false}
                             data={bodyTypeData}
                             renderItem={this.renderBodyTypeItem}
@@ -163,6 +166,8 @@ class Step2Component extends Component {
                         />
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Gender'}</Text>
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             scrollEnabled={false}
                             data={genderData}
                             renderItem={this.renderGenderItem}
@@ -180,7 +185,7 @@ class Step2Component extends Component {
                     </View>
                 </ScrollView>
                 <Modal animationType={'fade'} transparent={true} visible={modalVisible} onRequestClose={() => {}}>
-                    <HeightModal theme={theme}
+                    <HeightModal theme={theme} selectedHeightStatus={height}
                                  onClose={(height) => {
                                      let setStateData = {modalVisible: false};
                                      if (height)

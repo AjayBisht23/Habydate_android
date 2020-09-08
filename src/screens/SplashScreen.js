@@ -25,7 +25,13 @@ class SplashScreen extends Component {
       userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
         getCurrentUser().then(user => {
-          getStore.dispatch({type: LOGIN, payload: user.user});
+          let stepCompleted = user.user.stepCompleted;
+          if (stepCompleted > 8)
+            getStore.dispatch({type: LOGIN, payload: user.user});
+          else {
+            regex.authSignOut();
+            getStore.dispatch({type: LOGOUT});
+          }
         }).catch((error) => {
           getStore.dispatch({type: LOGOUT});
         })

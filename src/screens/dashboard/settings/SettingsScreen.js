@@ -26,7 +26,7 @@ class SettingsScreen extends Component {
     };
 
     updateData = (parameter) => {
-        updateUserAction(this.props.user.uid, parameter);
+        updateUserAction(this.props.user.uid, parameter, 'settings');
     };
 
     notificationSwitch = (notificationOn) => {
@@ -45,7 +45,9 @@ class SettingsScreen extends Component {
     };
 
     okClick = () => {
+        regex.showLoader();
         deleteUser(this.props.user.uid).then(() => {
+           regex.hideLoader();
            regex.clearData();
         });
     };
@@ -66,7 +68,8 @@ class SettingsScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Settings'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.primaryBackgroundColor}]}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={false}>
                         <TouchableFeedback onPress={() => navigation.navigate('AccountSetting')}>
                             <View style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
                                 <Text style={[styles.text, {color: theme.subPrimaryColor}]}>Account Settings</Text>

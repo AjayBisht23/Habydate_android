@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, ScrollView} from 'react-native';
 import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import {Icon} from "native-base";
 import {heightData} from '../../json/generalCatogeryData';
@@ -9,7 +9,7 @@ class HeightModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedHeightStatus: '',
+            selectedHeightStatus: props.selectedHeightStatus,
             maritalData: heightData
         }
     }
@@ -58,6 +58,8 @@ class HeightModal extends Component {
                         <Text style={[styles.titleText, {color: theme.pinkColor}]}>{'cm'}</Text>
                     </View>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
+                        showsHorizontalScrollIndicator={false}
                         data={maritalData}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id.toString()}

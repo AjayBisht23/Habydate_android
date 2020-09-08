@@ -81,7 +81,9 @@ class VerificationScreen extends Component {
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent theme onLeftPress={this.onBackPress}/>
-                <ScrollView contentContainerStyle={styles.container}>
+                <ScrollView contentContainerStyle={styles.container}
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View style={styles.container}>
                         <View style={{flex: 1}}>
                             <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Enter verification code'}</Text>

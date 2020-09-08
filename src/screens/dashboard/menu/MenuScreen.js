@@ -14,7 +14,7 @@ class MenuScreen extends Component {
                 {
                     id: 1,
                     title: 'My Membership',
-                    count: 12,
+                    count: regex.getDayLeft(props.user.packageEndDate),
                 },
                 {
                     id: 2,
@@ -115,7 +115,8 @@ class MenuScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}>
                     <View style={[styles.innerView]}>
                         <View style={[styles.imageView, {...shadow(5)}]}>
                             <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={[styles.imageView]}/>
@@ -132,6 +133,8 @@ class MenuScreen extends Component {
                             onPress={() => navigation.navigate('MyProfile')}
                         />
                         <FlatList
+                            showsVerticalScrollIndicator={false}
+                            showsHorizontalScrollIndicator={false}
                             data={data}
                             extraData={data}
                             renderItem={this.renderItem}

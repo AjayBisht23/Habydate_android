@@ -15,7 +15,9 @@ class CommonTextInput extends Component {
             <View style={[styles.viewContainer]}>
                 <Item floatingLabel style={{marginLeft: 20, marginRight: 20}}>
                     <Label>{placeholder}</Label>
-                    <Input style={{paddingLeft: 0}} {...this.props}/>
+                    <Input style={{paddingLeft: 0}}
+                           autoCapitalize={'none'}
+                           {...this.props}/>
                 </Item>
             </View>
         );
