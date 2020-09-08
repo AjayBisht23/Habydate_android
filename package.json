@@ -48,7 +48,8 @@
     "react-native-swiper": "^1.6.0",
     "react-native-view-overflow": "0.0.5",
     "react-redux": "^7.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "tipsi-stripe": "^7.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
