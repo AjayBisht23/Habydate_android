@@ -19,17 +19,17 @@ class MenuScreen extends Component {
                 {
                     id: 2,
                     title: 'Matches',
-                    count: 12,
+                    count: 0,
                 },
                 {
                     id: 3,
                     title: 'Messages',
-                    count: 6,
+                    count: 0,
                 },
                 {
                     id: 4,
                     title: 'Notifications',
-                    count: 6,
+                    count: 0,
                 },
                 {
                     id: 5,

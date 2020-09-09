@@ -4,7 +4,7 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Button, Icon} from "native-base";
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {HEIGHT_RATIO, regex, shadow, TouchableFeedback} from '../../../utils/regex';
+import {HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
@@ -13,6 +13,9 @@ import PulseLoader from '../../../components/pluseloader/PulseLoader';
 import CongraMatchModal from './CongraMatchModal';
 import {discoverUsers, updateUserAction} from '../../../actions/userAction';
 import {swipeCardUser} from '../../../actions/swipeCardAction';
+import moment from 'moment';
+import {getStore} from '../../../../App';
+import {SWIPECARDLIMIT} from '../../../actions/types';
 
 class HomeScreen extends Component {
 
@@ -28,12 +31,13 @@ class HomeScreen extends Component {
         };
         this.location = null;
         this.filterData = {
-            selectedDistance: 30,
-            selectedAge: 25,
+            selectedDistance: 800,
+            selectedAge: 60,
         };
     }
 
     componentDidMount(): void {
+        this.getLastSwipeLimit();
         this.updateOnlineStatus();
         getCurrentLocation().then(location => {
             this.location = location.coords;
@@ -42,6 +46,24 @@ class HomeScreen extends Component {
             console.log(error);
         })
     }
+
+    getLastSwipeLimit = () => {
+        let {user} = this.props;
+        let {packageEndDate, dailySwipeCount, swipeStartDate} = user;
+        if (regex.isPremiumUser(packageEndDate)) {
+            if (Boolean(swipeStartDate)) {
+                let a = moment.unix(swipeStartDate).local();
+                let b = moment();
+                let diff = a.diff(b, 'days');
+                if (diff === 0) {
+                    getStore.dispatch({
+                        type: SWIPECARDLIMIT,
+                        payload: dailySwipeCount
+                    })
+                }
+            }
+        }
+    };
 
     updateOnlineStatus = () => {
         updateUserAction(this.props.user.uid, {online: true}, 'home');
@@ -98,10 +120,51 @@ class HomeScreen extends Component {
     onSwiped = (type, index) => {
         let uid = this.props.user.uid;
         let other = this.state.cards[index];
-        swipeCardUser(uid, other.uid, type).then(response => {
-            if (response)
-                this.setState({matchUser: other, congoModalVisible: true});
-        })
+
+        let isValidSwipe = this.checkSwipeLimit();
+        if (isValidSwipe) {
+            swipeCardUser(uid, other.uid, type).then(response => {
+                if (response) {
+                    if (!this.state.congoModalVisible)
+                        this.setState({matchUser: other, congoModalVisible: true});
+                }
+            })
+        }
+    };
+
+    checkSwipeLimit = () => {
+        let {user, swipeCardLimit} = this.props;
+        let {uid, packageEndDate, swipeStartDate} = user;
+
+        let isUpdate = true;
+        if (!regex.isPremiumUser(packageEndDate)) {
+            let parameter = {};
+            if (Boolean(swipeStartDate)) {
+                let a = moment.unix(swipeStartDate).local();
+                let b = moment();
+                let diff = a.diff(b, 'days');
+                if (diff === 0) {
+                    if (swipeCardLimit >= MAX_CARD_SWIPE_LIMIT) {
+                        isUpdate = false;
+                        this.swiper.swipeBack();
+                        alert('You reached daily limit.');
+                    } else
+                        parameter = {dailySwipeCount: swipeCardLimit + 1};
+                } else
+                    parameter = {swipeStartDate: moment().utc().unix(), dailySwipeCount: 1};
+            } else
+                parameter = {swipeStartDate: moment().utc().unix(), dailySwipeCount: 1};
+
+            if (isUpdate) {
+                updateUserAction(uid, parameter, 'home');
+                getStore.dispatch({
+                    type: SWIPECARDLIMIT,
+                    payload: parameter.dailySwipeCount
+                });
+            }
+        }
+
+        return isUpdate;
     };
 
     onSwipedAllCards = () => {
@@ -251,6 +314,7 @@ class HomeScreen extends Component {
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
     user: state.auth.user,
+    swipeCardLimit: state.auth.swipeCardLimit,
 });
 
 export default connect(mapStateToProps)(HomeScreen);

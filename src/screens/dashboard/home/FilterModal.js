@@ -143,7 +143,7 @@ class FilterModal extends Component {
                                 </View>
                                 <Slider
                                     minimumValue={1}
-                                    maximumValue={200}
+                                    maximumValue={800}
                                     value={selectedDistance}
                                     minimumTrackTintColor={theme.pinkColor}
                                     thumbImage={require('./../../../assets/sliderthumb.png')}

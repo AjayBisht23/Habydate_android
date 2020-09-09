@@ -72,6 +72,8 @@ export const shadow = (elevation, spread = 5, offsetX = 0, offsetY = 0) => Platf
   }
 });
 
+export const MAX_CARD_SWIPE_LIMIT = 5;
+
 export const regex = {
   isEmpty: (val) => {
     switch (val) {
@@ -199,6 +201,10 @@ export const regex = {
        return endDate.diff(startData, 'days');
      } else
        return 0;
+  },
+
+  isPremiumUser: (packageEndDate) => {
+      return regex.getDayLeft(packageEndDate) !== 0
   },
 
   logout: async (navigation) => {

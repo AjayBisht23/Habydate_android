@@ -31,3 +31,6 @@ export const MATCHES = 'MATCHES';
 
 // App::Conversation
 export const CONVERSATIONS = 'CONVERSATIONS';
+
+// App::SWIPE CARD
+export const SWIPECARDLIMIT = 'SWIPECARDLIMIT';
