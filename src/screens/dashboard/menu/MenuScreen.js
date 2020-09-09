@@ -41,11 +41,11 @@ class MenuScreen extends Component {
                     title: 'Invite Friends',
                     count: 0,
                 },
-                {
-                    id: 7,
-                    title: 'Language (s)',
-                    count: 0,
-                },
+                // {
+                //     id: 7,
+                //     title: 'Language (s)',
+                //     count: 0,
+                // },
                 {
                     id: 8,
                     title: 'Terms and Conditions',
