@@ -50,7 +50,7 @@ class PaymentPackagesScreen extends Component {
                         <FastImage source={require('./../../../assets/payment_background.png')} style={{width: W_WIDTH, height: ASPECT_RATIO(278)}}/>
                         <FastImage source={require('./../../../assets/payment_curve.png')} style={{position: 'absolute', top: ASPECT_RATIO(278) - 50, width: W_WIDTH, height: ASPECT_RATIO(278)}}/>
                         <View>
-                            <Text style={[styles.titleText, {color: theme.primaryColor}]}>Pricing</Text>
+                            <Text style={[styles.titleText, {marginTop: -15, color: theme.primaryColor}]}>Pricing</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
                                 <Text style={[styles.monthlyText, {marginRight: 10, color: theme.primaryColor}]}>Bill yearly</Text>
                                 <Switch
@@ -86,7 +86,7 @@ class PaymentPackagesScreen extends Component {
                         </View>
                         <CommonButton
                             theme={theme}
-                            container={{marginVertical: ASPECT_RATIO(25)}}
+                            container={{marginVertical: ASPECT_RATIO(15)}}
                             backgroundColor={theme.pinkColor}
                             borderColor={theme.pinkColor}
                             textColor={theme.backgroundColor}
@@ -128,17 +128,17 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 36,
         paddingHorizontal: 20,
-        paddingVertical: 10
+        paddingVertical: ASPECT_RATIO(10)
     },
     packageTitleText: {
-        marginTop: 10,
+        marginTop: ASPECT_RATIO(10),
         fontSize: 24,
         fontWeight: '800',
     },
     renderItemView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 7,
+        paddingVertical: ASPECT_RATIO(5),
     },
     renderItemText: {
         marginLeft: 10,
