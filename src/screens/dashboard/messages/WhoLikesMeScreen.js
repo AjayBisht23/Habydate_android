@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import WhoLikeComponent from '../../../components/messages/WhoLikeComponent';
 import {getWhoLikedMeLists} from '../../../actions/swipeCardAction';
+import {regex} from '../../../utils/regex';
 
 class MessagesScreen extends Component {
 
@@ -20,21 +21,39 @@ class MessagesScreen extends Component {
         navigation.goBack();
     };
 
+    renderData = () => {
+        const {theme, navigation, peopleWhoLiked, user} = this.props;
+
+        if (!regex.isPremiumUser(user.packageEndDate)) {
+            return <View style={styles.emptyView}>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who likes you with Epicbae Premium</Text>
+            </View>
+        }
+
+        if (peopleWhoLiked.length === 0) {
+            return <View style={styles.emptyView}>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>No likes found for you.</Text>
+            </View>
+        } else {
+            return <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                data={peopleWhoLiked}
+                extraData={peopleWhoLiked}
+                renderItem={({item}) => <WhoLikeComponent theme={theme} item={item}/> }
+                keyExtractor={(item, index) => index.toString()}
+            />
+        }
+    };
+
     render() {
-        const {theme, navigation, peopleWhoLiked} = this.props;
+        const {theme} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'People who liked you'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        data={peopleWhoLiked}
-                        extraData={peopleWhoLiked}
-                        renderItem={({item}) => <WhoLikeComponent theme={theme} item={item}/> }
-                        keyExtractor={(item, index) => index.toString()}
-                    />
+                    {this.renderData()}
                 </View>
             </View>
         );
@@ -53,4 +72,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    emptyView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F7F7F7',
+        paddingHorizontal: 20,
+    },
+    infoText: {
+        marginTop: 10,
+        fontSize: 24,
+        fontWeight: '400',
+        textAlign: 'center'
+    }
 });

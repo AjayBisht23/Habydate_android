@@ -50,7 +50,7 @@ class HomeScreen extends Component {
     getLastSwipeLimit = () => {
         let {user} = this.props;
         let {packageEndDate, dailySwipeCount, swipeStartDate} = user;
-        if (regex.isPremiumUser(packageEndDate)) {
+        if (!regex.isPremiumUser(packageEndDate)) {
             if (Boolean(swipeStartDate)) {
                 let a = moment.unix(swipeStartDate).local();
                 let b = moment();

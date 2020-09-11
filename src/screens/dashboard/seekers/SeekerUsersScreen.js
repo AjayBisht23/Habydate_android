@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, FlatList, ScrollView, Text} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerUserComponent from '../../../components/seekers/SeekerUserComponent';
 import {discoverUsers} from '../../../actions/userAction';
+import {regex} from '../../../utils/regex';
 
 class SeekerUsersScreen extends Component {
 
@@ -46,30 +47,43 @@ class SeekerUsersScreen extends Component {
 
     };
 
-    render() {
+    renderData = () => {
         const {nearByUsers} = this.state;
+        const {theme, user} = this.props;
+
+        if (!regex.isPremiumUser(user.packageEndDate)) {
+            return <View style={styles.emptyView}>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>Nearby see people with Epicbae Premium</Text>
+            </View>
+        }
+
+        if (nearByUsers.length === 0) {
+            return <View style={styles.emptyView}>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>Nearby no user available.</Text>
+            </View>
+        } else {
+            return <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                data={nearByUsers}
+                extraData={nearByUsers}
+                renderItem={({item}) => <SeekerUserComponent {...this.props} item={item}/> }
+                numColumns={2}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        }
+    };
+
+    render() {
         const {theme, route} = this.props;
         let params = route.params;
         const {title} = params.seeker;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <HeaderComponent title={title}
-                                 theme={theme}
-                                 // rightView={<Button transparent onPress={this.onRightPress}>
-                                 //     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
-                                 // </Button>}
-                                 onLeftPress={this.onBackPress}/>
+                <HeaderComponent title={title} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                    <FlatList
-                        showsVerticalScrollIndicator={false}
-                        showsHorizontalScrollIndicator={false}
-                        data={nearByUsers}
-                        extraData={nearByUsers}
-                        renderItem={({item}) => <SeekerUserComponent {...this.props} item={item}/> }
-                        numColumns={2}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
+                    {this.renderData()}
                 </View>
             </View>
         );
@@ -88,4 +102,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    emptyView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F7F7F7',
+        paddingHorizontal: 20,
+    },
+    infoText: {
+        marginTop: 10,
+        fontSize: 24,
+        fontWeight: '400',
+        textAlign: 'center'
+    }
 });

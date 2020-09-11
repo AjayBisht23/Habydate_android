@@ -5,6 +5,7 @@ import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
 import FastImage from 'react-native-fast-image';
 import {getSeekerRequestLists} from '../../../actions/seekerAction';
+import {regex} from '../../../utils/regex';
 
 class SeekerRequestScreen extends Component {
 
@@ -21,30 +22,40 @@ class SeekerRequestScreen extends Component {
         navigation.goBack();
     };
 
+    renderData = () => {
+        const {theme, navigation, seekerRequests, user} = this.props;
+
+        if (!regex.isPremiumUser(user.packageEndDate)) {
+            return <View style={styles.emptyView}>
+                <FastImage source={require('../../../assets/seeker_heart.png')} style={{width: 65, height: 60}}/>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who sent you requests with Epicbae Premium</Text>
+            </View>
+        }
+
+        if (seekerRequests.length === 0) {
+            return <View style={styles.emptyView}>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>No request found for you.</Text>
+            </View>
+        } else {
+            return <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                data={seekerRequests}
+                extraData={seekerRequests}
+                renderItem={({item}) => <SeekerRequestComponent type={'others'} theme={theme} navigation={navigation} item={item}/> }
+                keyExtractor={(item, index) => index.toString()}
+            />
+        }
+    };
+
     render() {
-        const {theme, navigation, seekerRequests} = this.props;
+        const {theme} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <HeaderComponent title={'Seekers Request'}
-                                 theme={theme}
-                                 onLeftPress={this.onBackPress}/>
+                <HeaderComponent title={'Seekers Request'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                    {
-                        seekerRequests.length === 0
-                            ? <View style={styles.emptyView}>
-                                <FastImage source={require('../../../assets/seeker_heart.png')} style={{width: 65, height: 60}}/>
-                                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who sent you requests with Epicbae Premium</Text>
-                            </View>
-                            : <FlatList
-                                showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}
-                                data={seekerRequests}
-                                extraData={seekerRequests}
-                                renderItem={({item}) => <SeekerRequestComponent type={'others'} theme={theme} navigation={navigation} item={item}/> }
-                                keyExtractor={(item, index) => index.toString()}
-                            />
-                    }
+                    {this.renderData()}
                 </View>
             </View>
         );
