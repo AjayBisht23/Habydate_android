@@ -8,6 +8,7 @@ import {
     Left,
     Right,
 } from 'native-base';
+import {White} from '../../themes/constantColors';
 
 class HeaderComponent extends React.PureComponent {
     render() {
@@ -16,7 +17,7 @@ class HeaderComponent extends React.PureComponent {
         if (type === 1) { // Register Step Header
             let getIndex = currentIndex;
             return (
-                <Header transparent>
+                <Header transparent androidStatusBarColor={White}>
                     <Left>
                         {
                             currentIndex === 1
@@ -46,7 +47,7 @@ class HeaderComponent extends React.PureComponent {
         }
 
         return (
-            <Header transparent>
+            <Header transparent androidStatusBarColor={White}>
                 <Left>
                     {
                         leftView

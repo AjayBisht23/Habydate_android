@@ -11,9 +11,7 @@ class VerifiedCodeScreen extends Component {
     }
 
     componentDidMount() {
-        setTimeout(() => {
-            regex.setDashboard({token: 'dfm43n34'})
-        }, 500)
+        
     }
 
     render() {

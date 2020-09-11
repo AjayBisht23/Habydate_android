@@ -17,7 +17,6 @@ import {
   STORAGE_KEY,
 } from '../actions/types';
 import {getStore} from '../../App';
-// import {defaultRestClient} from "./restClient";
 import * as messages from './messages';
 import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
 import moment from 'moment';
@@ -149,10 +148,8 @@ export const regex = {
   },
 
   changeStatusStyle: (type) => {
-    if (type !== 'dark-content')
-      StatusBar.setBackgroundColor(Black, true);
-    else
-      StatusBar.setBackgroundColor(White, true);
+    // if (OS === 'android')
+    //   StatusBar.setHidden(true);
 
     StatusBar.setBarStyle(type, true);
   },
@@ -182,10 +179,9 @@ export const regex = {
 
   setDashboard: (data) => {
     return new Promise(async (resolve, reject) => {
-      // defaultRestClient.setAuthorization(data.token);
       await AsyncStorage.setItem('userToken', JSON.stringify(data.token));
       getStore.dispatch({type: LOGIN, payload: data});
-      // regex.changeStatusStyle('light-content');
+      regex.changeStatusStyle('light-content');
       resolve(true);
     });
   },
@@ -235,9 +231,8 @@ export const regex = {
 
   clearData: async () => {
     regex.authSignOut();
-    // regex.changeStatusStyle('default');
+    regex.changeStatusStyle('default');
     await AsyncStorage.clear();
-    // defaultRestClient.clearAuthorization();
     getStore.dispatch({type: LOGOUT});
   },
 

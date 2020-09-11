@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {View, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {LOGIN, LOGOUT} from '../actions/types';
+import {LOGOUT} from '../actions/types';
 import {getStore} from '../../App';
 import {regex} from '../utils/regex';
 import {PINK} from '../themes/constantColors';
@@ -16,6 +16,7 @@ class SplashScreen extends Component {
   componentDidMount(): void {
     this.bootstrapAsync();
     regex.changeStatusStyle('default');
+    StatusBar.setHidden(true);
   }
 
   bootstrapAsync = async () => {
@@ -25,22 +26,26 @@ class SplashScreen extends Component {
       userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
         getCurrentUser().then(user => {
+          StatusBar.setHidden(false);
           let stepCompleted = user.user.stepCompleted;
           if (stepCompleted > 8)
-            getStore.dispatch({type: LOGIN, payload: user.user});
-          else {
-            regex.authSignOut();
-            getStore.dispatch({type: LOGOUT});
-          }
+            regex.setDashboard({token: user.user.uid, ...user.user});
+          else
+            this.openAuth();
         }).catch((error) => {
-          getStore.dispatch({type: LOGOUT});
+          this.openAuth();
         })
-      } else {
-        getStore.dispatch({type: LOGOUT});
-      }
+      } else
+        this.openAuth();
     } catch (e) {
-      getStore.dispatch({type: LOGOUT});
+        this.openAuth();
     }
+  };
+
+  openAuth = () => {
+    StatusBar.setHidden(false);
+    regex.authSignOut();
+    getStore.dispatch({type: LOGOUT});
   };
 
   render() {

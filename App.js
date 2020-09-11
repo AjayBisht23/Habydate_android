@@ -11,9 +11,6 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import AppReducer from './src/reducers';
 import AppNavigator from './src/navigators/AppNavigator';
-import {enableScreens} from 'react-native-screens';
-
-enableScreens();
 
 export const getStore = createStore(AppReducer);
 
