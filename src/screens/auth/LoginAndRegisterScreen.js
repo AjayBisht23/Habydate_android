@@ -131,10 +131,9 @@ class LoginAndRegisterScreen extends Component {
                                     />
                                 </View>
                             </View>
-                        </View>
-                        <View style={{flex: 1}}>
                             <CommonButton
                                 theme={theme}
+                                container={{marginTop: 30}}
                                 backgroundColor={theme.pinkColor}
                                 borderColor={theme.pinkColor}
                                 textColor={theme.backgroundColor}
@@ -145,7 +144,7 @@ class LoginAndRegisterScreen extends Component {
                                 <Text style={[styles.againText, {color: theme.subPrimaryColor}]}>{infoText}</Text>
                                 <Text style={[styles.againText, {color: theme.pinkColor, fontWeight: '600'}]} onPress={this.joinNowPress}>{actionText}</Text>
                             </View>
-                            <View style={{flex: 1, marginHorizontal: 20, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: ASPECT_RATIO(45)}}>
+                            <View style={{flex: 1, marginHorizontal: 20, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 25}}>
                                 <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>By creating an account, you agree to our</Text>
                                 <View style={{flexDirection: 'row'}}>
                                     <Text style={[styles.infoText, {color: theme.primaryColor}]}>Terms & Conditions</Text>

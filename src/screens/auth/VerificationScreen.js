@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import {Black, White} from '../../themes/constantColors';
-import {regex, shadow, W_WIDTH} from '../../utils/regex';
+import {ASPECT_RATIO, regex, shadow, W_WIDTH} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {getUserDataAndUpdateInFirestore} from '../../actions/userAction';
@@ -109,14 +109,9 @@ class VerificationScreen extends Component {
                                     </View>
                                 )}
                             />
-                            {/*<View style={{flexDirection: 'row', justifyContent: 'center', marginTop:  ASPECT_RATIO(55)}}>*/}
-                            {/*    <Text style={[styles.resentText, {color: theme.subPrimaryColor}]}>Resend code in </Text>*/}
-                            {/*    <Text style={[styles.timeText, {color: theme.primaryColor}]}>15 sec</Text>*/}
-                            {/*</View>*/}
-                        </View>
-                        <View style={{flex: 1}}>
                             <CommonButton
                                 theme={theme}
+                                container={{marginTop: ASPECT_RATIO(45)}}
                                 backgroundColor={theme.pinkColor}
                                 borderColor={theme.pinkColor}
                                 textColor={theme.backgroundColor}
@@ -125,7 +120,7 @@ class VerificationScreen extends Component {
                             />
                             <CommonButton
                                 theme={theme}
-                                container={{marginTop: 10}}
+                                container={{marginTop: ASPECT_RATIO(10)}}
                                 backgroundColor={'transparent'}
                                 borderColor={'transparent'}
                                 textColor={theme.pinkColor}

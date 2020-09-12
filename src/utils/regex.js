@@ -35,7 +35,7 @@ const XSMAX_HEIGHT = 896;
 export const W_HEIGHT = Dimensions.get('window').height;
 export const W_WIDTH = Dimensions.get('window').width;
 
-export const ASPECT_RATIO = (value) => (value * X_HEIGHT) / 812;
+export const ASPECT_RATIO = (value) => (value * W_HEIGHT) / 568;
 export const HEIGHT_RATIO = (value) => (value * W_HEIGHT);
 
 let isIPhoneX = false;
@@ -223,10 +223,12 @@ export const regex = {
 
   authSignOut: () => {
     let user = auth().currentUser;
-    let getUser = user._user;
-    let uid = getUser.uid;
-    updateUserAction(uid, {online: false}, 'register');
-    auth().signOut().then(() => console.log('User signed out!'));
+    if (Boolean(user)) {
+      let getUser = user._user;
+      let uid = getUser.uid;
+      updateUserAction(uid, {online: false}, 'register');
+      auth().signOut().then(() => console.log('User signed out!'));
+    }
   },
 
   clearData: async () => {

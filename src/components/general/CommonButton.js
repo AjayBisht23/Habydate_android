@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         borderRadius: 28,
     },
     buttonText: {
-        fontSize: ASPECT_RATIO(16),
+        fontSize: 14,
         fontWeight: '500',
     }
 });
