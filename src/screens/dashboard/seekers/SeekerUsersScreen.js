@@ -53,7 +53,7 @@ class SeekerUsersScreen extends Component {
 
         if (!regex.isPremiumUser(user.packageEndDate)) {
             return <View style={styles.emptyView}>
-                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>Nearby see people with Epicbae Premium</Text>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>Nearby see people with Legendbae Premium</Text>
             </View>
         }
 

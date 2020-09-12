@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, FlatList, ScrollView, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {HEIGHT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {Button, Icon} from 'native-base';
-import {ONLINE} from '../../../themes/constantColors';
+import {Icon} from 'native-base';
+import {ONLINE, Transparent} from '../../../themes/constantColors';
 import ReadMore from 'react-native-read-more-text';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
 import {distance} from '../../../utils/location';
@@ -49,6 +49,7 @@ class OtherProfileScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
+                <StatusBar backgroundColor={Transparent} />
                 <ParallaxScrollView
                     showsVerticalScrollIndicator={false}
                     showsHorizontalScrollIndicator={false}
@@ -65,13 +66,17 @@ class OtherProfileScreen extends Component {
                     )}
                     renderFixedHeader={() => (
                         <View key="fixed-header" style={styles.fixedSection}>
-                            <Button transparent onPress={this.onBackPress}>
-                                <Icon type={'Feather'} name={'x'} style={{fontSize: 30, color: theme.backgroundColor}} />
-                            </Button>
+                            <TouchableFeedback onPress={this.onBackPress}>
+                                <View style={styles.buttonView}>
+                                    <Icon type={'Feather'} name={'x'} style={{fontSize: 30, color: theme.backgroundColor}}/>
+                                </View>
+                            </TouchableFeedback>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                <Button transparent onPress={this.onBackPress}>
-                                    <Icon type={'Feather'} name={'more-horizontal'} style={{color: theme.backgroundColor}} />
-                                </Button>
+                                <TouchableFeedback>
+                                    <View style={styles.buttonView}>
+                                        <Icon type={'Feather'} name={'more-horizontal'} style={{color: theme.backgroundColor}} />
+                                    </View>
+                                </TouchableFeedback>
                             </View>
                         </View>
                     )}>
@@ -177,6 +182,12 @@ const STICKY_HEADER_HEIGHT = HEIGHT_RATIO(.103);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     imageView: {
         width: W_WIDTH,

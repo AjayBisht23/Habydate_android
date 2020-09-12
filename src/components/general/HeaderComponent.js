@@ -1,14 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import {
-    Body,
-    Button,
-    Header,
-    Icon,
-    Left,
-    Right,
-} from 'native-base';
+import {View, Text, StyleSheet} from 'react-native';
+import {Header, Icon} from 'native-base';
 import {White} from '../../themes/constantColors';
+import {TouchableFeedback} from '../../utils/regex';
 
 class HeaderComponent extends React.PureComponent {
     render() {
@@ -17,57 +11,89 @@ class HeaderComponent extends React.PureComponent {
         if (type === 1) { // Register Step Header
             let getIndex = currentIndex;
             return (
-                <Header transparent androidStatusBarColor={White}>
-                    <Left>
+                <Header style={styles.header} transparent androidStatusBarColor={White}>
+                    <View style={styles.container}>
                         {
                             currentIndex === 1
-                                ? <Button transparent onPress={()=>onLeftPress(1)}>
-                                    <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
-                                </Button>
-                                : <Button style={{paddingLeft: 15}} transparent onPress={()=>onLeftPress(2)}>
-                                    <Text style={{fontSize: 14, fontWeight: '600', color: theme.pinkColor}}>Previous</Text>
-                                </Button>
+                                ? <TouchableFeedback onPress={()=>onLeftPress(1)}>
+                                    <View style={styles.buttonView}>
+                                        <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 35, color: theme.primaryColor}} />
+                                    </View>
+                                </TouchableFeedback>
+                                : <TouchableFeedback onPress={()=>onLeftPress(2)}>
+                                    <View style={[styles.buttonView, {width: null, paddingHorizontal: 10}]}>
+                                        <Text style={{fontSize: 14, fontWeight: '600', color: theme.pinkColor}}>Previous</Text>
+                                    </View>
+                                </TouchableFeedback>
                         }
-                    </Left>
-                    <Body style={{flex: 3}}>
-                        <View style={{flexDirection: 'row'}}>
-                            <Text style={{fontSize: 16, fontWeight: '600', color: theme.primaryColor}}>{getIndex}</Text>
-                            <Text style={{fontSize: 16, fontWeight: '600', color: theme.subSecondaryColor}}>/8</Text>
+                        <View style={styles.bodyView}>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={{fontSize: 16, fontWeight: '600', color: theme.primaryColor}}>{getIndex}</Text>
+                                <Text style={{fontSize: 16, fontWeight: '600', color: theme.subSecondaryColor}}>/8</Text>
+                            </View>
                         </View>
-                    </Body>
-                    <Right>
                         {
-                            getIndex > 2 && <Button transparent onPress={()=>onLeftPress(3)}>
-                                <Text style={{fontSize: 14, fontWeight: '600', color: theme.pinkColor}}>Skip</Text>
-                            </Button>
+                            getIndex > 2
+                                ? <TouchableFeedback onPress={()=>onLeftPress(3)}>
+                                    <View style={[styles.buttonView, {width: null, paddingHorizontal: 10}]}>
+                                        <Text style={{fontSize: 14, fontWeight: '600', color: theme.pinkColor}}>Skip</Text>
+                                    </View>
+                                </TouchableFeedback>
+                                : <View style={[styles.buttonView]} />
                         }
-                    </Right>
+                    </View>
                 </Header>
             );
         }
 
         return (
-            <Header transparent androidStatusBarColor={White}>
-                <Left>
+            <Header style={styles.header} transparent androidStatusBarColor={White}>
+                <View style={styles.container}>
                     {
                         leftView
                             ? leftView
-                            : <Button transparent onPress={()=>onLeftPress()}>
-                                <Icon type={'Feather'} name={'chevron-left'} style={{color: theme.primaryColor}} />
-                            </Button>
+                            : <TouchableFeedback onPress={()=>onLeftPress()}>
+                                <View style={styles.buttonView}>
+                                    <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 35, color: theme.primaryColor}} />
+                                </View>
+                            </TouchableFeedback>
                     }
-                </Left>
-                <Body style={{flex: 3}}>
+                    <View style={styles.bodyView}>
+                        {title && <Text style={{fontSize: 20, fontWeight: '600', color: theme.primaryColor, ...titleStyle}}>{title}</Text>}
+                    </View>
                     {
-                        title && <Text style={{fontSize: 20, fontWeight: '600', color: theme.primaryColor, ...titleStyle}}>{title}</Text>
+                        rightView
+                            ? rightView
+                            : <View style={styles.buttonView} />
                     }
-                </Body>
-                <Right>
-                    {rightView}
-                </Right>
+                </View>
             </Header>
         );
     }
 }
 
 export default HeaderComponent;
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    header: {
+        paddingLeft: 0,
+        paddingRight: 0
+    },
+    bodyView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});

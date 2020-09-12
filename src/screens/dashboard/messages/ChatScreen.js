@@ -213,12 +213,7 @@ class ChatScreen extends React.Component {
                         </TouchableWithoutFeedback>
                     </View>
                     <Right>
-                        {/*<Button transparent onPress={this.searchPress}>*/}
-                        {/*    <Icon type={'Feather'} name="phone" style={{color: theme.primaryColor, fontSize: 20}} />*/}
-                        {/*</Button>*/}
-                        {/*<Button transparent onPress={this.optionPress}>*/}
-                        {/*    <Icon type={'Feather'} name="video" style={{color: theme.primaryColor, fontSize: 24}} />*/}
-                        {/*</Button>*/}
+
                     </Right>
                 </View>
             </Header>

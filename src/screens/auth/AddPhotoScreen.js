@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
-import {Button, Icon} from 'native-base';
+import {Icon} from 'native-base';
 import AddPhotoComponent from '../../components/register/AddPhotoComponent';
 import ImagePicker from "react-native-customized-image-picker";
 import {updateUserAction} from '../../actions/userAction';
-import {regex} from '../../utils/regex';
+import {regex, TouchableFeedback} from '../../utils/regex';
 import {assetUploadInCloudinaryServer} from '../../actions/cloudinaryStorageAction';
 
 class AddPhotoScreen extends Component {
@@ -160,9 +160,11 @@ class AddPhotoScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Add Photos'}
                                  theme={theme}
-                                 rightView={<Button transparent onPress={this.onRightPress}>
-                                     <Icon type={'Feather'} name={'check'} style={{color: theme.pinkColor}} />
-                                 </Button>}
+                                 rightView={<TouchableFeedback onPress={this.onRightPress}>
+                                     <View style={styles.buttonView}>
+                                         <Icon type={'Feather'} name={'check'} style={{color: theme.pinkColor}} />
+                                     </View>
+                                 </TouchableFeedback>}
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
@@ -190,4 +192,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });

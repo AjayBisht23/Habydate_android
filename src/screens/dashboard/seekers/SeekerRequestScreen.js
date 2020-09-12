@@ -28,7 +28,7 @@ class SeekerRequestScreen extends Component {
         if (!regex.isPremiumUser(user.packageEndDate)) {
             return <View style={styles.emptyView}>
                 <FastImage source={require('../../../assets/seeker_heart.png')} style={{width: 65, height: 60}}/>
-                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who sent you requests with Epicbae Premium</Text>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who sent you requests with Legendbae Premium</Text>
             </View>
         }
 

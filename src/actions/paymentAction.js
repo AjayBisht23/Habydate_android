@@ -34,7 +34,7 @@ export function openCardModal(user, amount, packageEndDate) {
                 amount: amount,
                 currency: 'usd',
                 token: tokenId,
-                description: 'Epicbae plan purchased.',
+                description: 'Legendbae plan purchased.',
             }).then(response => {
                 regex.hideLoader();
                 if (Boolean(response.response))

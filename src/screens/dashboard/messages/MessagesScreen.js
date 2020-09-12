@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text, FlatList, Switch, ScrollView} from 'react-native';
 import {connect} from 'react-redux';
-import {Button, Icon} from 'native-base';
+import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import MessagesComponent from '../../../components/messages/MessagesComponent';
 import {PINK, White} from '../../../themes/constantColors';
@@ -75,11 +75,7 @@ class MessagesScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
-                <HeaderComponent title={'Messages'} theme={theme}
-                                 // rightView={<Button transparent onPress={this.onRightPress}>
-                                 //     <Icon type={'Feather'} name={'search'} style={{color: theme.subSecondaryColor}} />
-                                 // </Button>}
-                                 onLeftPress={this.onBackPress}/>
+                <HeaderComponent title={'Messages'} theme={theme} onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
                         showsVerticalScrollIndicator={false}

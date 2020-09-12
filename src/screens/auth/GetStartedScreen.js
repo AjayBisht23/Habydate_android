@@ -112,7 +112,7 @@ class GetStartedScreen extends Component {
                                  <Text style={[styles.infoText, {color: theme.primaryColor}]}>Terms & Conditions</Text>
                                  <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}> and </Text>
                                  <Text style={[styles.infoText, {color: theme.primaryColor}]}>Privacy policy</Text>
-                                 <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}> of Epicbae</Text>
+                                 <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}> of Legendbae</Text>
                              </View>
                          </View>
                      </View>

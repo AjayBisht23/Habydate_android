@@ -31,7 +31,7 @@ class MatchesScreen extends Component {
 
         if (!regex.isPremiumUser(user.packageEndDate)) {
             return <View style={styles.emptyView}>
-                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who matches with you with Epicbae Premium</Text>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who matches with you with Legendbae Premium</Text>
             </View>
         }
 

@@ -1,6 +1,7 @@
 export const gradientColor = ['#00C899', '#5cabe2'];
 export const gradientTransparent = ['transparent', 'transparent'];
 
+export const Transparent = 'transparent';
 export const White = '#ffffff';
 export const Black = '#1A1A1A';
 export const PINK = '#9B0067';

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Swiper from 'react-native-deck-swiper'
 import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Button, Icon} from "native-base";
+import {Icon} from "native-base";
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import {HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
@@ -273,13 +273,17 @@ class HomeScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Discover'}
                                  theme={theme}
-                                 leftView={<Button transparent onPress={this.onMenuPress}>
-                                     <Icon type={'Feather'} name={'align-left'} style={{fontSize: 28, color: theme.primaryColor}} />
-                                 </Button>}
+                                 leftView={<TouchableFeedback onPress={this.onMenuPress}>
+                                     <View style={styles.buttonView}>
+                                         <Icon type={'Feather'} name={'align-left'} style={{fontSize: 28, color: theme.primaryColor}} />
+                                     </View>
+                                 </TouchableFeedback>}
                                  rightView={<View style={{flexDirection: 'row'}}>
-                                     <Button transparent onPress={this.onFilterPress}>
-                                         <Icon type={'Feather'} name={'filter'} style={{fontSize: 25, color: theme.primaryColor}} />
-                                     </Button>
+                                     <TouchableFeedback onPress={this.onFilterPress}>
+                                         <View style={styles.buttonView}>
+                                             <Icon type={'Feather'} name={'filter'} style={{fontSize: 25, color: theme.primaryColor}} />
+                                         </View>
+                                     </TouchableFeedback>
                                  </View>}/>
                 {
                     loading
@@ -322,6 +326,12 @@ export default connect(mapStateToProps)(HomeScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     innerView: {
         flex: 1

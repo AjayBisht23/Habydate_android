@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
-import {regex, W_WIDTH} from '../../../utils/regex';
+import {regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import {
     bodyTypeData, drinkingData, eatingData, educationData,
     genderData,
@@ -11,7 +11,7 @@ import {
 } from '../../../json/generalCatogeryData';
 import CommonButton from '../../../components/general/CommonButton';
 import {connect} from 'react-redux';
-import {Button, Icon} from 'native-base';
+import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 
 class SelectInformationScreen extends Component {
@@ -111,9 +111,11 @@ class SelectInformationScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={route.params.title}
                                  theme={theme}
-                                 rightView={<Button transparent onPress={this.onRightPress}>
-                                     <Icon type={'Feather'} name={'check'} style={{color: theme.pinkColor}} />
-                                 </Button>}
+                                 rightView={<TouchableFeedback onPress={this.onRightPress}>
+                                     <View style={styles.buttonView}>
+                                         <Icon type={'Feather'} name={'check'} style={{color: theme.pinkColor}} />
+                                     </View>
+                                 </TouchableFeedback>}
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {paddingTop: 20, backgroundColor: theme.container.backgroundColor}]}>
                     <FlatList
@@ -139,6 +141,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: W_WIDTH
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     titleText: {
         marginHorizontal: 20,

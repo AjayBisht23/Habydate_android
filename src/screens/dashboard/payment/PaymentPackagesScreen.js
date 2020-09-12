@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, FlatList, Switch} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {ASPECT_RATIO, W_WIDTH} from '../../../utils/regex';
+import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import {White} from '../../../themes/constantColors';
 import CommonButton from '../../../components/general/CommonButton';
-import {Button, Icon} from 'native-base';
+import {Icon} from 'native-base';
 
 class PaymentPackagesScreen extends Component {
 
@@ -65,9 +65,11 @@ class PaymentPackagesScreen extends Component {
                         </View>
                     </View>
                     <View style={{position: 'absolute', top: 55}}>
-                        <Button transparent onPress={this.onBackPress}>
-                            <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 30, color: theme.backgroundColor}} />
-                        </Button>
+                        <TouchableFeedback onPress={this.onBackPress}>
+                            <View style={styles.buttonView}>
+                                <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 35, color: theme.backgroundColor}} />
+                            </View>
+                        </TouchableFeedback>
                     </View>
                     <View style={[styles.emptyView, {paddingHorizontal: 20}]}>
                         <View style={[styles.packageInfoView, {backgroundColor: theme.backgroundColor}]}>
@@ -109,6 +111,12 @@ export default connect(mapStateToProps)(PaymentPackagesScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     emptyView: {
         flex: 1,

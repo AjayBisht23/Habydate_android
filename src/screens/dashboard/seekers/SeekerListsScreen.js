@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {seekerData} from '../../../json/seekerData';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerItemComponent from '../../../components/seekers/SeekerItemComponent';
-import {Button, Icon} from 'native-base';
+import {Icon} from 'native-base';
+import {TouchableFeedback} from '../../../utils/regex';
 
 class SeekerListsScreen extends Component {
 
@@ -33,9 +34,11 @@ class SeekerListsScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Seekers'}
                                  theme={theme}
-                                 rightView={<Button transparent onPress={this.onSendSeeker}>
-                                     <Icon type={'Feather'} name={'send'} style={{fontSize: 28, color: theme.primaryColor}} />
-                                 </Button>}
+                                 rightView={<TouchableFeedback onPress={this.onSendSeeker}>
+                                     <View style={styles.buttonView}>
+                                         <Icon type={'Feather'} name={'send'} style={{fontSize: 28, color: theme.primaryColor}} />
+                                     </View>
+                                 </TouchableFeedback>}
                                  onLeftPress={this.onBackPress}/>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor, paddingHorizontal: 10}]}>
                     <FlatList
@@ -63,5 +66,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 });

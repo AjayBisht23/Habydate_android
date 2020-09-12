@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {Button, Icon} from "native-base";
+import {Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
 import FastImage from 'react-native-fast-image';
-import {regex, shadow} from '../../../utils/regex';
+import {regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE} from '../../../themes/constantColors';
 import {distance} from '../../../utils/location';
 
@@ -35,9 +35,11 @@ class CongraMatchModal extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <HeaderComponent title={'Congratulations!'} titleStyle={{fontSize: 14, fontWeight: '400'}}
                                  theme={theme}
-                                 leftView={<Button transparent onPress={this.onClosePress}>
-                                     <Icon type={'Feather'} name={'x'} style={{fontSize: 28, color: theme.subSecondaryColor}} />
-                                 </Button>}/>
+                                 leftView={<TouchableFeedback onPress={this.onClosePress}>
+                                     <View style={styles.buttonView}>
+                                         <Icon type={'Feather'} name={'x'} style={{fontSize: 28, color: theme.subSecondaryColor}} />
+                                     </View>
+                                 </TouchableFeedback>}/>
                 <View style={[styles.innerContainer, {backgroundColor: theme.container.backgroundColor}]}>
                     <Text style={[styles.matchTitleText, {color: theme.pinkColor}]}>{`It's Match`}</Text>
                     <View style={[styles.cardView]}>
@@ -88,6 +90,12 @@ export default CongraMatchModal;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     innerContainer: {
         flex: 1,

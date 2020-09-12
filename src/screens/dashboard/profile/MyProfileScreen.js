@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, TextInput, FlatList, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {ASPECT_RATIO, HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {Button, Icon} from 'native-base';
-import CommonButton from '../../../components/general/CommonButton';
+import {Icon} from 'native-base';
 import ReadMore from 'react-native-read-more-text';
 import {updateUserAction} from '../../../actions/userAction';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
 import ImagePicker from 'react-native-customized-image-picker';
 import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
+import {Transparent} from '../../../themes/constantColors';
 
 class MyProfileScreen extends Component {
 
@@ -163,6 +163,7 @@ class MyProfileScreen extends Component {
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
+                <StatusBar backgroundColor={Transparent} />
                 <ParallaxScrollView
                     backgroundColor={theme.container.backgroundColor}
                     headerBackgroundColor={'transparent'}
@@ -177,16 +178,17 @@ class MyProfileScreen extends Component {
                     )}
                     renderFixedHeader={() => (
                         <View key="fixed-header" style={styles.fixedSection}>
-                            <Button transparent onPress={this.onBackPress}>
-                                <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 30, color: theme.backgroundColor}} />
-                            </Button>
+                            <TouchableFeedback onPress={this.onBackPress}>
+                                <View style={styles.buttonView}>
+                                    <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 35, color: theme.backgroundColor}} />
+                                </View>
+                            </TouchableFeedback>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                {/*<Button transparent onPress={this.onBackPress}>*/}
-                                {/*    <Icon type={'Feather'} name={'camera'} style={{color: theme.backgroundColor}} />*/}
-                                {/*</Button>*/}
-                                <Button transparent onPress={this.onEditPress}>
-                                    <Icon type={'Feather'} name={isEdit ? 'send' : 'edit'} style={{color: theme.backgroundColor}} />
-                                </Button>
+                                <TouchableFeedback onPress={this.onEditPress}>
+                                    <View style={styles.buttonView}>
+                                        <Icon type={'Feather'} name={isEdit ? 'send' : 'edit'} style={{color: theme.backgroundColor}} />
+                                    </View>
+                                </TouchableFeedback>
                             </View>
                         </View>
                     )}>
@@ -278,6 +280,12 @@ const STICKY_HEADER_HEIGHT = HEIGHT_RATIO(.103);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    buttonView: {
+        width: 45,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     imageView: {
         width: W_WIDTH,

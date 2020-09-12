@@ -26,7 +26,7 @@ class MessagesScreen extends Component {
 
         if (!regex.isPremiumUser(user.packageEndDate)) {
             return <View style={styles.emptyView}>
-                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who likes you with Epicbae Premium</Text>
+                <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>See people who likes you with Legendbae Premium</Text>
             </View>
         }
 
