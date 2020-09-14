@@ -1,7 +1,7 @@
 import stripe from 'tipsi-stripe';
-import {regex} from '../utils/regex';
+import {OS, regex} from '../utils/regex';
 import {updateUserAction} from './userAction';
-import {STRIPE_PUBLIC_KEY} from '../config/config';
+import {IS_STRIPE_LIVE, STRIPE_CLOUD_SERVER_URL, STRIPE_PUBLIC_KEY} from '../config/config';
 
 export function setUpStripe() {
     stripe.setOptions({
@@ -9,7 +9,7 @@ export function setUpStripe() {
     })
 }
 
-export function openCardModal(user, amount, packageEndDate) {
+export function openCardModal(user, amount, packageEndDate, navigation) {
     stripe.paymentRequestWithCardForm({
         smsAutofillDisabled: true,
         requiredBillingAddressFields: 'full',
@@ -37,10 +37,16 @@ export function openCardModal(user, amount, packageEndDate) {
                 description: 'Legendbae plan purchased.',
             }).then(response => {
                 regex.hideLoader();
-                if (Boolean(response.response))
+                if (Boolean(response.response)) {
                     updateUserAction(user.uid, {packageEndDate}, 'payment');
+                    navigation.navigate('Home');
+                }
             }).catch(error => {
                 regex.hideLoader();
+                if ((!IS_STRIPE_LIVE && OS === 'android')) {
+                    updateUserAction(user.uid, {packageEndDate}, 'payment');
+                    navigation.navigate('Home');
+                }
             })
         }
     });
@@ -49,7 +55,7 @@ export function openCardModal(user, amount, packageEndDate) {
 
 export function paymentUsingCard(parameter) {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:5000/epicbae-246b2/us-central1/payWithStripe', {
+        fetch(STRIPE_CLOUD_SERVER_URL, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

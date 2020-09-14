@@ -24,8 +24,7 @@ class SeekerUserComponent extends Component {
                         <FastImage source={require('./../../assets/blur_effect.png')} style={{position: 'absolute', bottom: 0, left: 0, right: 0, top: 0}}/>
                         <View style={styles.bottomView}>
                             <View style={[styles.bottomNameView]}>
-                                <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}</Text>
-                                <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(item.DoB)}</Text>
+                                <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}{regex.getAge(item.DoB)}</Text>
                             </View>
                             <View style={[styles.bottomNameView]}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.backgroundColor}}/>
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     bottomNameView: {
+        flex: 1,
         marginTop: 5,
         flexDirection: 'row',
         alignItems: 'center',

@@ -23,13 +23,13 @@ class PaymentMethodScreen extends Component {
     };
 
     openCardDetail = async () => {
-        const { user, route } = this.props;
+        const { user, route, navigation } = this.props;
         let params = route.params;
         let type = params.isMonth ? 'M' : 'y';
         let packageEndDate = moment().add(1, type).unix();
         let amount = params.isMonth ? 25 : 250;
 
-        openCardModal(user, amount, packageEndDate);
+        openCardModal(user, amount, packageEndDate, navigation);
     };
 
     render() {

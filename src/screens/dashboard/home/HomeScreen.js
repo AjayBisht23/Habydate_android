@@ -4,7 +4,15 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from "native-base";
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {ASPECT_RATIO, HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
+import {
+    ASPECT_RATIO,
+    HEIGHT_RATIO,
+    MAX_CARD_SWIPE_LIMIT,
+    regex,
+    shadow,
+    TouchableFeedback,
+    W_WIDTH,
+} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
@@ -197,11 +205,10 @@ class HomeScreen extends Component {
                 <FastImage source={{uri: regex.getProfilePic(item.photos)}} style={{flex: 1, borderRadius: 20, overflow: 'hidden'}}/>
                 <FastImage source={require('./../../../assets/blur_effect.png')} style={{position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, borderRadius: 20, overflow: 'hidden'}}/>
                 <View style={{position: 'absolute', top: 0, right: 0, left: 0, bottom: 0}}>
-                    <View style={{position: 'absolute', right: 0, left: 0, bottom: 20}}>
+                    <View style={{position: 'absolute', right: 0, left: 0, bottom: 20, paddingHorizontal: 20,}}>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             {item.online && <View style={styles.onlineView} />}
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}</Text>
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(item.DoB)}</Text>
+                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{item.name}{regex.getAge(item.DoB)}</Text>
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 5}}>
                             <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 16, color: theme.backgroundColor}}/>

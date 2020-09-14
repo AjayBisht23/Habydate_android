@@ -50,8 +50,7 @@ class CongraMatchModal extends Component {
                                 <View style={{position: 'absolute', right: 0, left: 0, bottom: 20}}>
                                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                                         {data.online && <View style={styles.onlineView} />}
-                                        <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{data.name}</Text>
-                                        <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(data.DoB)}</Text>
+                                        <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{data.name}{regex.getAge(data.DoB)}</Text>
                                     </View>
                                     <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 5}}>
                                         <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 16, color: theme.backgroundColor}}/>

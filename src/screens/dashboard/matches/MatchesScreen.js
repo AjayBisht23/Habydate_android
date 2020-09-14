@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import MatchComponent from '../../../components/matches/MatchComponent';
 import {getAllMatchesLists} from '../../../actions/matchesAction';
 import {regex} from '../../../utils/regex';
-import FastImage from 'react-native-fast-image';
 
 class MatchesScreen extends Component {
 

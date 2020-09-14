@@ -27,8 +27,7 @@ class MatchComponent extends Component {
                     <View style={styles.bottomView}>
                         <View style={[styles.bottomNameView]}>
                             {item.online && <View style={styles.onlineView} />}
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{user.name}</Text>
-                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{regex.getAge(user.DoB)}</Text>
+                            <Text style={[styles.nameText, {color: theme.backgroundColor}]}>{user.name}{regex.getAge(user.DoB)}</Text>
                         </View>
                         {/*<Text style={[styles.locationText, {color: theme.backgroundColor}]}>{user.locationName}</Text>*/}
                     </View>
@@ -88,7 +87,8 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },
     nameText: {
-        fontSize: 18,
+        flex: 1,
+        fontSize: 16,
         fontWeight: '600'
     },
     locationText: {

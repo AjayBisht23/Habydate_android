@@ -83,8 +83,7 @@ class OtherProfileScreen extends Component {
                         <View style={[styles.userView]}>
                             <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                 {online && <View style={styles.onlineView} />}
-                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>{name}</Text>
-                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>{regex.getAge(DoB)}</Text>
+                                <Text style={[styles.nameText, {color: theme.primaryColor}]}>{name}{regex.getAge(DoB)}</Text>
                             </View>
                             <View style={[styles.locationView, {backgroundColor: theme.primaryBackgroundColor}]}>
                                 <Icon type={'Feather'} name={'map-pin'} style={{fontSize: 14, color: theme.subPrimaryColor}}/>
