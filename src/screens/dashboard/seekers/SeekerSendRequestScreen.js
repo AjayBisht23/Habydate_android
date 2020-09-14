@@ -42,7 +42,7 @@ class SeekerSendRequestScreen extends Component {
     };
 
     _hideDateTimePicker = () => {
-        console.log("canceled");
+
     };
 
     chatSwitch = (isChat) => {

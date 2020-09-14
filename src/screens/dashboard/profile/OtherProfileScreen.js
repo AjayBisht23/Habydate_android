@@ -19,7 +19,6 @@ class OtherProfileScreen extends Component {
             instagramPhotos: [],
             ...params.profileData
         };
-        console.log(this.state);
     }
 
     onBackPress = () => {

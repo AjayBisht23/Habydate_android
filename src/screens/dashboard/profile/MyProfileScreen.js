@@ -108,7 +108,6 @@ class MyProfileScreen extends Component {
         }
 
         Promise.all(uploadPhotos).then(response => {
-            console.log(response);
             regex.hideLoader();
             let photos = [...this.state.photos];
             response.forEach((asset) => {
@@ -121,7 +120,6 @@ class MyProfileScreen extends Component {
             this.setState({photos});
             updateUserAction(this.props.user.uid, {photos: photos}, 'profile');
         }).catch(error => {
-            console.log(error);
             regex.hideLoader();
         });
     };

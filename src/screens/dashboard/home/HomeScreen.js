@@ -43,7 +43,7 @@ class HomeScreen extends Component {
             this.location = location.coords;
             this.getNearByUserData();
         }).catch(error => {
-            console.log(error);
+            this.setState({loading: false});
         })
     }
 

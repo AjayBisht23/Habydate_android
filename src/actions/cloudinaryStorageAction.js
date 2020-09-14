@@ -8,7 +8,6 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
             type: photo.mime,
             name: `${new Date().valueOf().toString()}.png`,
         };
-        console.log(media);
         data.append('file', media);
         data.append('upload_preset', CLOUDINARY_PRESENT_NAME);
         data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
@@ -21,7 +20,6 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
             else
                 resolve(data);
         }).catch(err => {
-            console.log(err.message);
             reject(err);
         })
     });
