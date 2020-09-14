@@ -14,10 +14,6 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
         data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
         fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
             method: 'post',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'multipart/form-data'
-            },
             body: data
         }).then(res => res.json()).then(data => {
             if (isReturnData)
