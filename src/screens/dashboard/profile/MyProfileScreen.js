@@ -8,7 +8,7 @@ import {Icon} from 'native-base';
 import ReadMore from 'react-native-read-more-text';
 import {updateUserAction} from '../../../actions/userAction';
 import SquarePhotoComponent from '../../../components/general/SquarePhotoComponent';
-import ImagePicker from 'react-native-customized-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
 import {Transparent} from '../../../themes/constantColors';
 
@@ -108,6 +108,7 @@ class MyProfileScreen extends Component {
         }
 
         Promise.all(uploadPhotos).then(response => {
+            console.log(response);
             regex.hideLoader();
             let photos = [...this.state.photos];
             response.forEach((asset) => {
@@ -120,6 +121,7 @@ class MyProfileScreen extends Component {
             this.setState({photos});
             updateUserAction(this.props.user.uid, {photos: photos}, 'profile');
         }).catch(error => {
+            console.log(error);
             regex.hideLoader();
         });
     };
@@ -132,7 +134,8 @@ class MyProfileScreen extends Component {
         ImagePicker.openPicker({
             multiple: true,
             maxSize: selectedLength,
-            compressQuality: 20
+            compressQuality: 20,
+            mediaType: 'photo'
         }).then(images => {
             if (images.length > 0)
                 this.uploadPhotos(images);

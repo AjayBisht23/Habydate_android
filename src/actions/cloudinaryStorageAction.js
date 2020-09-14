@@ -6,13 +6,18 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
         let media = {
             uri: photo.path,
             type: photo.mime,
-            name: `${new Date().valueOf().toString()}${photo.filename}`,
+            name: `${new Date().valueOf().toString()}.png`,
         };
+        console.log(media);
         data.append('file', media);
         data.append('upload_preset', CLOUDINARY_PRESENT_NAME);
         data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
         fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
             method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'multipart/form-data'
+            },
             body: data
         }).then(res => res.json()).then(data => {
             if (isReturnData)
@@ -20,6 +25,7 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
             else
                 resolve(data);
         }).catch(err => {
+            console.log(err.message);
             reject(err);
         })
     });

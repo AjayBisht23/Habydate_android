@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {Icon} from 'native-base';
 import AddPhotoComponent from '../../components/register/AddPhotoComponent';
-import ImagePicker from "react-native-customized-image-picker";
+import ImagePicker from 'react-native-image-crop-picker';
 import {updateUserAction} from '../../actions/userAction';
 import {regex, TouchableFeedback} from '../../utils/regex';
 import {assetUploadInCloudinaryServer} from '../../actions/cloudinaryStorageAction';
@@ -115,7 +115,8 @@ class AddPhotoScreen extends Component {
         ImagePicker.openPicker({
             multiple: true,
             maxSize: selectedLength,
-            compressQuality: 20
+            compressQuality: 20,
+            mediaType: 'photo'
         }).then(images => {
             for (let i = 0; i < images.length; i++) {
                let getData = this.state.photoData[this.lastIndex + i];

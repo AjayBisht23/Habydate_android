@@ -14,7 +14,7 @@ import {
     updateLatestMessageInSeeker,
 } from '../../../actions/seekerAction';
 import ActionSheet from 'react-native-actionsheet'
-import ImagePicker from "react-native-customized-image-picker";
+import ImagePicker from 'react-native-image-crop-picker';
 import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
 import {
     addMessageInConversation,

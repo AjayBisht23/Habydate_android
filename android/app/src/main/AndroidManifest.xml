@@ -1,5 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
           package="com.epicbae.hardik">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +12,6 @@
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:allowBackup="false"
-      tools:replace="android:theme"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
@@ -28,9 +26,6 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      <activity android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
-                android:exported="true"
-                android:theme="@style/Theme_Light.Default" />
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
