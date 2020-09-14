@@ -56,7 +56,7 @@ export function getStatusBarHeight(skipAndroid) {
 
 export const Header_Height = getStatusBarHeight() + (Platform.OS === 'ios' ? 44 : 34);
 
-export const shadow = (elevation, spread = 5, offsetX = 0, offsetY = 0) => Platform.select({
+export const shadow = (elevation = 4, spread = 5, offsetX = 0, offsetY = 0) => Platform.select({
   ios: {
     shadowOffset: {
       width: offsetX,

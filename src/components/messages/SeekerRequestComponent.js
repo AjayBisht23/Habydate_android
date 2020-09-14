@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, regex, shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {regex, TouchableFeedback} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {ONLINE, PINK, White} from '../../themes/constantColors';
 import CommonButton from '../general/CommonButton';
 import {deleteSeekerRequest, updateSeekerRequestStatus} from '../../actions/seekerAction';
 import {getAndUpdateNotificationItem} from '../../actions/notificationsAction';

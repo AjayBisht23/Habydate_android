@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         marginTop: 5,
-        fontSize: ASPECT_RATIO(18),
+        fontSize: 18,
         fontWeight: '400',
         textAlign: 'center'
     }

@@ -47,10 +47,10 @@ class PaymentPackagesScreen extends Component {
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                 <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
                     <View style={styles.emptyView}>
-                        <FastImage source={require('./../../../assets/payment_background.png')} style={{width: W_WIDTH, height: ASPECT_RATIO(278)}}/>
-                        <FastImage source={require('./../../../assets/payment_curve.png')} style={{position: 'absolute', top: ASPECT_RATIO(278) - 50, width: W_WIDTH, height: ASPECT_RATIO(278)}}/>
-                        <View>
-                            <Text style={[styles.titleText, {marginTop: -15, color: theme.primaryColor}]}>Pricing</Text>
+                        <FastImage source={require('./../../../assets/payment_background.png')} style={{width: W_WIDTH, height: 238}}/>
+                        <FastImage source={require('./../../../assets/payment_curve.png')} style={{position: 'absolute', top: 188, width: W_WIDTH, height: 238}}/>
+                        <View style={{marginVertical: 15}}>
+                            <Text style={[styles.titleText, {marginTop: 188 - 238, color: theme.primaryColor}]}>Pricing</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
                                 <Text style={[styles.monthlyText, {marginRight: 10, color: theme.primaryColor}]}>Bill yearly</Text>
                                 <Switch
@@ -63,38 +63,38 @@ class PaymentPackagesScreen extends Component {
                                 <Text style={[styles.monthlyText, {marginLeft: 10, color: theme.primaryColor}]}>Bill monthly</Text>
                             </View>
                         </View>
+                        <View style={[styles.emptyView, {paddingHorizontal: 20}]}>
+                            <View style={[styles.packageInfoView, {backgroundColor: theme.backgroundColor}]}>
+                                <View>
+                                    <Text style={styles.packageTitleText}>{'Premium Plan'}</Text>
+                                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                        <Text style={styles.priceText}>{`$${isMonth ? '25' : '250'}`}</Text>
+                                        <Text style={[styles.priceTitleText, {color: theme.subSecondaryColor}]}>{`/${isMonth ? 'month' : 'year'}`}</Text>
+                                    </View>
+                                </View>
+                                {this.renderFunctionalityItem('Unlimited swipes')}
+                                {this.renderFunctionalityItem('Message directly')}
+                                {this.renderFunctionalityItem('Swipe around the world')}
+                                {this.renderFunctionalityItem('See who like you')}
+                                {this.renderFunctionalityItem('Access to all seekers options')}
+                            </View>
+                            <CommonButton
+                                theme={theme}
+                                container={{marginBottom: ASPECT_RATIO(10), marginTop: ASPECT_RATIO(10)}}
+                                backgroundColor={theme.pinkColor}
+                                borderColor={theme.pinkColor}
+                                textColor={theme.backgroundColor}
+                                title={'Subscribe Now'}
+                                onPress={this.subscribeNowPress}
+                            />
+                        </View>
                     </View>
-                    <View style={{position: 'absolute', top: 55}}>
+                    <View style={{position: 'absolute', top: 40}}>
                         <TouchableFeedback onPress={this.onBackPress}>
                             <View style={styles.buttonView}>
                                 <Icon type={'Feather'} name={'chevron-left'} style={{fontSize: 35, color: theme.backgroundColor}} />
                             </View>
                         </TouchableFeedback>
-                    </View>
-                    <View style={[styles.emptyView, {paddingHorizontal: 20}]}>
-                        <View style={[styles.packageInfoView, {backgroundColor: theme.backgroundColor}]}>
-                            <View style={{flex: 1}}>
-                                <Text style={styles.packageTitleText}>{'Premium Plan'}</Text>
-                                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                                    <Text style={styles.priceText}>{`$${isMonth ? '25' : '250'}`}</Text>
-                                    <Text style={[styles.priceTitleText, {color: theme.subSecondaryColor}]}>{`/${isMonth ? 'month' : 'year'}`}</Text>
-                                </View>
-                            </View>
-                            {this.renderFunctionalityItem('Unlimited swipes')}
-                            {this.renderFunctionalityItem('Message directly')}
-                            {this.renderFunctionalityItem('Swipe around the world')}
-                            {this.renderFunctionalityItem('See who like you')}
-                            {this.renderFunctionalityItem('Access to all seekers options')}
-                        </View>
-                        <CommonButton
-                            theme={theme}
-                            container={{marginVertical: ASPECT_RATIO(15)}}
-                            backgroundColor={theme.pinkColor}
-                            borderColor={theme.pinkColor}
-                            textColor={theme.backgroundColor}
-                            title={'Subscribe Now'}
-                            onPress={this.subscribeNowPress}
-                        />
                     </View>
                 </View>
             </View>
@@ -136,17 +136,17 @@ const styles = StyleSheet.create({
         flex: 1,
         borderRadius: 36,
         paddingHorizontal: 20,
-        paddingVertical: ASPECT_RATIO(10)
+        paddingVertical: 8
     },
     packageTitleText: {
-        marginTop: ASPECT_RATIO(10),
+        marginTop: 8,
         fontSize: 24,
         fontWeight: '800',
     },
     renderItemView: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: ASPECT_RATIO(5),
+        paddingVertical: ASPECT_RATIO(2),
     },
     renderItemText: {
         marginLeft: 10,

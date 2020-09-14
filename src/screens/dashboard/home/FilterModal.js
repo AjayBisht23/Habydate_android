@@ -124,16 +124,8 @@ class FilterModal extends Component {
                         <Text style={[styles.titleText, {color: theme.primaryColor}]}>{'Filter'}</Text>
                         <Text style={[styles.titleText, {color: theme.subPrimaryColor}]} onPress={this.resetPress}>{'Reset'}</Text>
                     </View>
-                    <ScrollView showsVerticalScrollIndicator={false}
-                                showsHorizontalScrollIndicator={false}>
+                    <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
                         <View style={{paddingBottom: 20}}>
-                            {/*<View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>*/}
-                            {/*    <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Location'}</Text>*/}
-                            {/*    <View style={[styles.rightRowView]}>*/}
-                            {/*        <Text style={[styles.commonTitleText, {color: theme.subPrimaryColor}]}>{selectedLocation}</Text>*/}
-                            {/*        <Icon type={'Feather'} name={'chevron-right'} style={{fontSize: 22, color: theme.subPrimaryColor}}/>*/}
-                            {/*    </View>*/}
-                            {/*</View>*/}
                             <View style={[styles.commonView, {borderColor: theme.borderColor}]}>
                                 <View style={[styles.itemView]}>
                                     <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Distance'}</Text>
@@ -216,18 +208,6 @@ class FilterModal extends Component {
                                     onValueChange={(selectedAge) => this.setState({selectedAge: Math.round(selectedAge)})}
                                 />
                             </View>
-                            {/*<View style={[styles.itemView, styles.commonView, {borderColor: theme.borderColor}]}>*/}
-                            {/*    <Text style={[styles.commonTitleText, {color: theme.primaryColor}]}>{'Match Sound'}</Text>*/}
-                            {/*    <View style={[styles.rightRowView]}>*/}
-                            {/*        <Switch*/}
-                            {/*            trackColor={{ false: theme.pinkColor, true: theme.pinkColor }}*/}
-                            {/*            thumbColor={White}*/}
-                            {/*            ios_backgroundColor={'transparent'}*/}
-                            {/*            onValueChange={this.matchSoundSwitch}*/}
-                            {/*            value={isMatchSound}*/}
-                            {/*        />*/}
-                            {/*    </View>*/}
-                            {/*</View>*/}
                         </View>
                     </ScrollView>
                     <CommonButton
@@ -250,7 +230,7 @@ export default FilterModal;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: ASPECT_RATIO(225),
+        paddingTop: ASPECT_RATIO(80),
         width: W_WIDTH,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },

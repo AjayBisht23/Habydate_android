@@ -4,7 +4,7 @@ import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from "native-base";
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
+import {ASPECT_RATIO, HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
@@ -349,12 +349,12 @@ const styles = StyleSheet.create({
     commonLike: {
         padding: 20,
         marginHorizontal: 8,
-        marginBottom: HEIGHT_RATIO(.03),
+        marginBottom: HEIGHT_RATIO(.01),
         borderRadius: 40,
         ...shadow(),
     },
     cardView: {
-        height: HEIGHT_RATIO(0.65),
+        height: HEIGHT_RATIO(0.63),
         borderRadius: 20,
         justifyContent: 'center',
         borderWidth: 1,

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {ASPECT_RATIO, regex, shadow} from '../../utils/regex';
+import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 
 class CongratulationsScreen extends Component {

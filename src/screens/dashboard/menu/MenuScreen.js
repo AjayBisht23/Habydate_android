@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     innerView: {
         flex: 1,
         marginHorizontal: 20,
-        paddingTop: ASPECT_RATIO(65)
+        paddingTop: ASPECT_RATIO(45)
     },
     imageView: {
         width: 80,

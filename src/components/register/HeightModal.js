@@ -75,7 +75,7 @@ export default HeightModal;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: ASPECT_RATIO(225),
+        paddingTop: ASPECT_RATIO(80),
         width: W_WIDTH,
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },

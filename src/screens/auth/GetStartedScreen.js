@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         textAlign: 'center',
-        fontSize: ASPECT_RATIO(18),
+        fontSize: 18,
         fontWeight: '800',
     },
     orView: {

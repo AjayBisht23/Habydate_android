@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, TextInput, FlatList, StatusBar} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {ASPECT_RATIO, HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from 'native-base';
 import ReadMore from 'react-native-read-more-text';
@@ -305,12 +305,13 @@ const styles = StyleSheet.create({
     },
     premiumText: {
         marginLeft: 8,
-        fontSize: ASPECT_RATIO(16),
+        fontSize: 16,
         fontWeight: '500',
     },
     fixedSection: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         position: 'absolute',
         bottom: 10,
         right: 0,
