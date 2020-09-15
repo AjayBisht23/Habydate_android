@@ -13,7 +13,6 @@ import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
 import AddPhotoScreen from '../screens/auth/AddPhotoScreen';
 import CongratulationsScreen from '../screens/auth/CongratulationsScreen';
 import MenuScreen from '../screens/dashboard/menu/MenuScreen';
-import {W_WIDTH} from '../utils/regex';
 import MatchesScreen from '../screens/dashboard/matches/MatchesScreen';
 import MessagesScreen from '../screens/dashboard/messages/MessagesScreen';
 import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMeScreen';
@@ -129,6 +128,7 @@ function SeekerStackScreen() {
             <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
             <Stack.Screen name="SeekerSendRequest" component={SeekerSendRequestScreen} />
             <Stack.Screen name="SendMySeekerRequest" component={SendMySeekerRequestScreen} />
+            {CommonView()}
         </Stack.Navigator>
     );
 }

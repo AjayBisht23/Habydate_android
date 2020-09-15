@@ -14,7 +14,7 @@ class MenuScreen extends Component {
                 {
                     id: 1,
                     title: 'My Membership',
-                    count: regex.getDayLeft(props.user.packageEndDate),
+                    count: 0,
                 },
                 {
                     id: 2,
@@ -94,15 +94,22 @@ class MenuScreen extends Component {
     };
 
     renderItem = ({ item, index }) => {
-        const {theme} = this.props;
+        const {theme, user, notificationCount} = this.props;
+
+        let count = 0;
+        if (item.id === 1)
+           count = regex.getDayLeft(user.packageEndDate);
+        else if (item.id === 4)
+           count = notificationCount;
+
         return <TouchableFeedback onPress={()=>this.onItemPress(item)}>
             <View style={{flexDirection: 'row', paddingVertical: 15, alignItems: 'center',}}>
                 <Text style={{fontSize: 16, color: '#333333', fontWeight: '400'}}>{item.title}</Text>
                 {
-                    index === 0 && item.count > 0
-                        ? <Text style={{marginLeft: 10, fontSize: 14, color: theme.pinkColor, fontWeight: '800'}}>{item.count} days left</Text>
-                        : item.count > 0 && <View style={{marginLeft: 10, paddingVertical: 5, paddingHorizontal: 12, borderRadius: 20, backgroundColor: theme.pinkColor}}>
-                        <Text style={{fontSize: 14, color: theme.backgroundColor, fontWeight: '800'}}>{item.count}</Text>
+                    index === 0 && count > 0
+                        ? <Text style={{marginLeft: 10, fontSize: 14, color: theme.pinkColor, fontWeight: '800'}}>{count} days left</Text>
+                        : count > 0 && <View style={{marginLeft: 10, width: 12, height: 12, borderRadius: 6, backgroundColor: theme.pinkColor}}>
+                        <Text style={{fontSize: 14, color: theme.backgroundColor, fontWeight: '800'}}></Text>
                     </View>
                 }
             </View>
@@ -150,6 +157,7 @@ class MenuScreen extends Component {
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
     user: state.auth.user,
+    notificationCount: state.auth.notificationCount,
 });
 
 export default connect(mapStateToProps)(MenuScreen);

@@ -97,15 +97,3 @@ export function addMessageInConversation(id, parameter) {
         })
     });
 }
-
-export function getAllMessageListsFromConversation(conversationId, otherUser) {
-    return new Promise((resolve, reject) => {
-        conversationsCollection
-            .doc(conversationId)
-            .collection('Messages')
-            .orderBy('createdAt', 'desc')
-            .get().then((response) => {
-            resolve(setFormatAsPerGiftedChatArray(response, otherUser));
-        })
-    });
-}

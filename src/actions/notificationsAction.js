@@ -1,6 +1,8 @@
 import {notificationsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
+import {getStore} from '../../App';
+import {NOTIFICATIONS} from './types';
 
 export function createNewNotification(parameter) {
     return new Promise((resolve, reject) => {
@@ -37,6 +39,17 @@ export function getNotificationLists(uid) {
                         ...data
                     })
                 }
+
+                let notificationReadCount = getStore.getState().auth.user.notificationReadCount;
+                if (notificationReadCount !== undefined)
+                    notificationReadCount = response.length - notificationReadCount;
+                else
+                    notificationReadCount = response.length;
+
+                getStore.dispatch({
+                    type: NOTIFICATIONS,
+                    payload: {data: response, count: notificationReadCount}
+                });
 
                 resolve(response);
             });

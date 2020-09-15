@@ -1,27 +1,38 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {View, StyleSheet, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import NotificationComponent from '../../../components/notifcations/NotificationComponent';
 import {getNotificationLists} from '../../../actions/notificationsAction';
+import {updateUserAction} from '../../../actions/userAction';
 
 class NotificationsScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            notificationData: []
-        }
     }
 
     componentDidMount(): void {
         this.getData();
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext: any): boolean {
+        let readCount = this.props.notifications;
+        if (nextProps.notifications.length > readCount)
+            this.updateNotificationCount({notificationReadCount: nextProps.notifications.length});
+
+        return true;
+    }
+
     getData = () => {
-        getNotificationLists(this.props.user.uid).then(response => {
-           this.setState({notificationData: response});
+        getNotificationLists(this.props.user.uid).then(res => {
+            if (res.length > 0)
+                this.updateNotificationCount({notificationReadCount: res.length})
         });
+    };
+
+    updateNotificationCount = (parameter) => {
+        updateUserAction(this.props.user.uid, parameter, 'notifications');
     };
 
     onBackPress = () => {
@@ -30,8 +41,7 @@ class NotificationsScreen extends Component {
     };
 
     render() {
-        const {notificationData} = this.state;
-        const {theme, navigation} = this.props;
+        const {theme, navigation, notifications} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -39,8 +49,8 @@ class NotificationsScreen extends Component {
                 <View style={[styles.innerView]}>
                     <FlatList showsVerticalScrollIndicator={false}
                               showsHorizontalScrollIndicator={false}
-                              data={notificationData}
-                              extraData={notificationData}
+                              data={notifications}
+                              extraData={notifications}
                               renderItem={({item}) => <NotificationComponent refreshData={this.getData} theme={theme} item={item} navigation={navigation}/> }
                               keyExtractor={item => item.id.toString()}
                     />
@@ -53,6 +63,7 @@ class NotificationsScreen extends Component {
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
     user: state.auth.user,
+    notifications: state.auth.notifications,
 });
 
 export default connect(mapStateToProps)(NotificationsScreen);

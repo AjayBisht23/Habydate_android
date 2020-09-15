@@ -34,7 +34,7 @@ class SeekerDetailScreen extends Component {
     };
 
     render() {
-        const {theme, navigation, route, location} = this.props;
+        const {theme, route, location} = this.props;
         let params = route.params;
         const { user, date, address, note, seekerKey, request_status } = params.item;
         const {title} = getSeekerTitle(seekerKey);

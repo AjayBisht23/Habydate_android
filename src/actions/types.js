@@ -29,6 +29,10 @@ export const SEEKER_REQUESTS = 'SEEKER_REQUESTS';
 // App::Matches
 export const MATCHES = 'MATCHES';
 
+// App::Notifications
+export const NOTIFICATIONS = 'NOTIFICATIONS';
+export const NOTIFICATION_UNREAD_COUNT = 'NOTIFICATION_UNREAD_COUNT';
+
 // App::Conversation
 export const CONVERSATIONS = 'CONVERSATIONS';
 

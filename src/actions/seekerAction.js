@@ -153,15 +153,3 @@ export function addMessageInSeeker(id, parameter) {
         })
     });
 }
-
-export function getAllMessagesFromSeeker(seekerId, otherUser) {
-    return  new Promise((resolve, reject) => {
-        seekerRequestCollection
-            .doc(seekerId)
-            .collection('Messages')
-            .orderBy('createdAt', 'desc')
-            .get().then(response => {
-            resolve(setFormatAsPerGiftedChatArray(response, otherUser));
-        })
-    });
-}

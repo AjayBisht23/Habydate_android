@@ -3,7 +3,7 @@ import {
   GET_LOCATION,
   HIDE_LOADER,
   LOGIN,
-  LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS,
+  LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS, NOTIFICATIONS,
   PEOPLE_WHO_LIKED, SEEKER_REQUESTS,
   SET_USER_DATA,
   SHOW_LOADER, SWIPECARDLIMIT,
@@ -14,7 +14,7 @@ import {THEMES} from '../themes/themes';
 const initialAuthState = {loading: true, user: null, theme: THEMES[0],
   showLoader: false, location: {latitude: 0.00, longitude: 0.00}, swipeCardLimit: 0,
   peopleWhoLiked: [], seekerRequests: [], mySendSeekerRequests: [],
-  matches: [], conversations: []};
+  matches: [], notifications: [], notificationCount: 0, conversations: []};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -54,6 +54,9 @@ function auth(state = initialAuthState, action) {
 
     case MATCHES:
       return {...state, matches: action.payload};
+
+    case NOTIFICATIONS:
+      return {...state, notifications: action.payload.data, notificationCount: action.payload.count};
 
     case CONVERSATIONS:
       return {...state, conversations: action.payload};

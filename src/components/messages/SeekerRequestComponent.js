@@ -75,7 +75,7 @@ class SeekerRequestComponent extends Component {
                                             onPress={() => this.onRequestStatusPress('accepted')}
                                         />
                                     </View>
-                                    : request_status === 'accepted' && type === 'others'
+                                    : request_status === 'accepted' && (type === 'others' || type === 'my')
                                     ? <View style={[styles.requestView]}>
                                         <CommonButton
                                             theme={theme}
@@ -88,7 +88,7 @@ class SeekerRequestComponent extends Component {
                                             onPress={this.onChat}
                                         />
                                     </View>
-                                    : type === 'my'
+                                    : request_status === '' && type === 'my'
                                     && <View style={[styles.requestView]}>
                                         <CommonButton
                                             theme={theme}

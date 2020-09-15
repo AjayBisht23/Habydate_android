@@ -10,7 +10,6 @@ import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';
 import {
     addMessageInSeeker,
-    getAllMessagesFromSeeker,
     updateLatestMessageInSeeker,
 } from '../../../actions/seekerAction';
 import ActionSheet from 'react-native-actionsheet'
@@ -18,11 +17,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
 import {
     addMessageInConversation,
-    getAllMessageListsFromConversation,
     readMessageInConversation,
     updateLatestMessageInConversation,
 } from '../../../actions/conversationsAction';
 import Video from 'react-native-video';
+import {conversationsCollection, seekerRequestCollection} from '../../../config/firestore';
+import {setFormatAsPerGiftedChatArray} from '../../../actions/generalAction';
 
 class ChatScreen extends React.Component {
 
@@ -42,16 +42,34 @@ class ChatScreen extends React.Component {
 
     getDataFromSeeker = () => {
         const {seeker_id, user} = this.getConversationData();
-        getAllMessagesFromSeeker(seeker_id, user).then(messages => {
-            this.setState({messages})
-        });
+        this.getAllMessagesFromSeeker(seeker_id, user);
+    };
+
+    getAllMessagesFromSeeker = (seekerId, otherUser) => {
+        seekerRequestCollection
+            .doc(seekerId)
+            .collection('Messages')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(response => {
+                let messages = setFormatAsPerGiftedChatArray(response, otherUser);
+                this.setState({messages})
+            });
     };
 
     getDataFromConversation = () => {
         const {matches_id, user} = this.getConversationData();
-        getAllMessageListsFromConversation(matches_id, user).then(messages => {
-            this.setState({messages})
-        });
+        this.getAllMessageListsFromConversation(matches_id, user);
+    };
+
+    getAllMessageListsFromConversation = (conversationId, otherUser) => {
+        conversationsCollection
+            .doc(conversationId)
+            .collection('Messages')
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(response => {
+                let messages = setFormatAsPerGiftedChatArray(response, otherUser);
+                this.setState({messages})
+            });
     };
 
     getData = () => {
@@ -128,14 +146,10 @@ class ChatScreen extends React.Component {
     uploadDataInFirestore = (id, parameter) => {
         if (this.getType() === 'seeker') {
             updateLatestMessageInSeeker(id, parameter);
-            addMessageInSeeker(id, parameter).then(response => {
-                this.getDataFromSeeker();
-            })
+            addMessageInSeeker(id, parameter);
         } else  {
             updateLatestMessageInConversation(id, parameter);
-            addMessageInConversation(id, parameter).then(response => {
-                this.getDataFromConversation();
-            })
+            addMessageInConversation(id, parameter);
         }
     };
 

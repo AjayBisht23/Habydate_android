@@ -24,6 +24,7 @@ import {swipeCardUser} from '../../../actions/swipeCardAction';
 import moment from 'moment';
 import {getStore} from '../../../../App';
 import {SWIPECARDLIMIT} from '../../../actions/types';
+import {getNotificationLists} from '../../../actions/notificationsAction';
 
 class HomeScreen extends Component {
 
@@ -47,6 +48,7 @@ class HomeScreen extends Component {
     componentDidMount(): void {
         this.getLastSwipeLimit();
         this.updateOnlineStatus();
+        this.getNotificationData();
         getCurrentLocation().then(location => {
             this.location = location.coords;
             this.getNearByUserData();
@@ -54,6 +56,10 @@ class HomeScreen extends Component {
             this.setState({loading: false});
         })
     }
+
+    getNotificationData = () => {
+        getNotificationLists(this.props.user.uid);
+    };
 
     getLastSwipeLimit = () => {
         let {user} = this.props;
