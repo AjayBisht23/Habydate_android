@@ -8,6 +8,7 @@ import {PINK} from '../../../themes/constantColors';
 import {TouchableFeedback} from '../../../utils/regex';
 import {getAllConversationLists} from '../../../actions/conversationsAction';
 import {getSeekerRequestLists} from '../../../actions/seekerAction';
+import {getWhoLikedMeLists} from '../../../actions/swipeCardAction';
 
 class MessagesScreen extends Component {
 
@@ -18,6 +19,7 @@ class MessagesScreen extends Component {
     componentDidMount(): void {
         getAllConversationLists(this.props.user.uid);
         getSeekerRequestLists(this.props.user.uid);
+        getWhoLikedMeLists(this.props.user.uid)
     }
 
     onBackPress = () => {
@@ -34,7 +36,7 @@ class MessagesScreen extends Component {
     };
 
     renderHeader = () => {
-        const {theme, navigation, seekerUnreadCount} = this.props;
+        const {theme, navigation, seekerUnreadCount, whoLikedUnreadCount} = this.props;
         return <View>
             {/*<View style={[styles.rowView, {borderRadius: 15, paddingVertical: 15, borderBottomWidth: 0, backgroundColor: '#FD353920', paddingHorizontal: 25}]}>*/}
             {/*    <Text style={[styles.headText, {color: theme.primaryColor}]}>Available for video call</Text>*/}
@@ -63,9 +65,11 @@ class MessagesScreen extends Component {
                 <View style={[styles.rowView, {borderBottomWidth: 0}]}>
                     <Text style={[styles.headText, {color: theme.primaryColor}]}>Who Likes Me</Text>
                     <View style={[{flexDirection: 'row', alignItems: 'center',}]}>
-                        <View style={styles.countView}>
-                            <Text style={[styles.countText, {color: theme.backgroundColor}]}>12</Text>
-                        </View>
+                        {
+                            whoLikedUnreadCount > 0 && <View style={styles.countView}>
+                                <Text style={[styles.countText, {color: theme.backgroundColor}]}>{whoLikedUnreadCount}</Text>
+                            </View>
+                        }
                         <Icon type={'Feather'} name={'chevron-right'} style={{color: theme.subSecondaryColor}} />
                     </View>
                 </View>
@@ -101,6 +105,7 @@ const mapStateToProps = (state) => ({
     user: state.auth.user,
     conversations: state.auth.conversations,
     seekerUnreadCount: state.auth.seekerUnreadCount,
+    whoLikedUnreadCount: state.auth.whoLikedUnreadCount,
 });
 
 export default connect(mapStateToProps)(MessagesScreen);

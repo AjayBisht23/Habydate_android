@@ -55,9 +55,15 @@ export function getWhoLikedMeLists(uid) {
                             })
                         }
 
+                        let likedReadCount = getStore.getState().auth.user.likedReadCount;
+                        if (likedReadCount !== undefined)
+                            likedReadCount = response.length - likedReadCount;
+                        else
+                            likedReadCount = response.length;
+
                         getStore.dispatch({
                             type: PEOPLE_WHO_LIKED,
-                            payload: response
+                            payload: {data: response, count: likedReadCount}
                         });
                         resolve(response);
                     });

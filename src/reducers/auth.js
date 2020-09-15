@@ -4,7 +4,7 @@ import {
   HIDE_LOADER,
   LOGIN,
   LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS, NOTIFICATION_UNREAD_COUNT, NOTIFICATIONS,
-  PEOPLE_WHO_LIKED, SEEKER_REQUESTS, SEEKER_REQUESTS_COUNT,
+  PEOPLE_WHO_LIKED, PEOPLE_WHO_LIKED_COUNT, SEEKER_REQUESTS, SEEKER_REQUESTS_COUNT,
   SET_USER_DATA,
   SHOW_LOADER, SWIPECARDLIMIT,
   THEME,
@@ -14,10 +14,10 @@ import {THEMES} from '../themes/themes';
 const initialAuthState = {loading: true, user: null, theme: THEMES[0],
   showLoader: false, location: {latitude: 0.00, longitude: 0.00},
   swipeCardLimit: 0,
-  peopleWhoLiked: [],
+  mySendSeekerRequests: [],
   matches: [],
   seekerRequests: [], seekerUnreadCount: 0,
-  mySendSeekerRequests: [],
+  peopleWhoLiked: [], whoLikedUnreadCount: 0,
   notifications: [], notificationCount: 0,
   conversations: [], conversationCount: 0,
 };
@@ -50,7 +50,10 @@ function auth(state = initialAuthState, action) {
       return {...state, swipeCardLimit: action.payload};
 
     case PEOPLE_WHO_LIKED:
-      return {...state, peopleWhoLiked: action.payload};
+      return {...state, peopleWhoLiked: action.payload.data, whoLikedUnreadCount: action.payload.count};
+
+    case PEOPLE_WHO_LIKED_COUNT:
+      return {...state, whoLikedUnreadCount: action.payload};
 
     case MY_SEND_SEEKER_REQUESTS:
       return {...state, mySendSeekerRequests: action.payload};

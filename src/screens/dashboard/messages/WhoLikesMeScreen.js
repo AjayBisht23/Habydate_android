@@ -3,8 +3,10 @@ import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import WhoLikeComponent from '../../../components/messages/WhoLikeComponent';
-import {getWhoLikedMeLists} from '../../../actions/swipeCardAction';
 import {regex} from '../../../utils/regex';
+import {updateUserAction} from '../../../actions/userAction';
+import {getStore} from '../../../../App';
+import {PEOPLE_WHO_LIKED_COUNT} from '../../../actions/types';
 
 class MessagesScreen extends Component {
 
@@ -13,8 +15,16 @@ class MessagesScreen extends Component {
     }
 
     componentDidMount(): void {
-        getWhoLikedMeLists(this.props.user.uid)
+       this.updateWhoLikedCount({likedReadCount: this.props.peopleWhoLiked.length});
     }
+
+    updateWhoLikedCount = (parameter) => {
+        updateUserAction(this.props.user.uid, parameter, 'whoLiked');
+        getStore.dispatch({
+            type: PEOPLE_WHO_LIKED_COUNT,
+            payload: 0
+        })
+    };
 
     onBackPress = () => {
         const {navigation} = this.props;
