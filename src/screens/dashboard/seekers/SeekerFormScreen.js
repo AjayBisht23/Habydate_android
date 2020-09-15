@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet, Text, ScrollView, TextInput, Switch} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {HEIGHT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from "native-base";
 import CommonButton from '../../../components/general/CommonButton';
@@ -13,7 +13,7 @@ import * as messages from '../../../utils/messages';
 import {sendSeekerRequest} from '../../../actions/seekerAction';
 import {distance} from '../../../utils/location';
 
-class SeekerSendRequestScreen extends Component {
+class SeekerFormScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -204,7 +204,7 @@ const mapStateToProps = (state) => ({
     location: state.auth.location,
 });
 
-export default connect(mapStateToProps)(SeekerSendRequestScreen);
+export default connect(mapStateToProps)(SeekerFormScreen);
 
 const styles = StyleSheet.create({
     container: {

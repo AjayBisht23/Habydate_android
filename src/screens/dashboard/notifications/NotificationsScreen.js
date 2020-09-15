@@ -5,6 +5,8 @@ import HeaderComponent from '../../../components/general/HeaderComponent';
 import NotificationComponent from '../../../components/notifcations/NotificationComponent';
 import {getNotificationLists} from '../../../actions/notificationsAction';
 import {updateUserAction} from '../../../actions/userAction';
+import {getStore} from '../../../../App';
+import {NOTIFICATION_UNREAD_COUNT} from '../../../actions/types';
 
 class NotificationsScreen extends Component {
 
@@ -33,6 +35,10 @@ class NotificationsScreen extends Component {
 
     updateNotificationCount = (parameter) => {
         updateUserAction(this.props.user.uid, parameter, 'notifications');
+        getStore.dispatch({
+            type: NOTIFICATION_UNREAD_COUNT,
+            payload: 0
+        })
     };
 
     onBackPress = () => {

@@ -25,6 +25,7 @@ export const PEOPLE_WHO_LIKED = 'PEOPLE_WHO_LIKED';
 // App::Seeker
 export const MY_SEND_SEEKER_REQUESTS = 'MY_SEND_SEEKER_REQUESTS';
 export const SEEKER_REQUESTS = 'SEEKER_REQUESTS';
+export const SEEKER_REQUESTS_COUNT = 'SEEKER_REQUESTS_COUNT';
 
 // App::Matches
 export const MATCHES = 'MATCHES';

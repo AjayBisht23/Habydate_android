@@ -1,21 +1,31 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, Switch, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
 import FastImage from 'react-native-fast-image';
-import {getSeekerRequestLists} from '../../../actions/seekerAction';
 import {regex} from '../../../utils/regex';
+import {updateUserAction} from '../../../actions/userAction';
+import {getStore} from '../../../../App';
+import {SEEKER_REQUESTS_COUNT} from '../../../actions/types';
 
-class SeekerRequestScreen extends Component {
+class SeekerRequestListsScreen extends Component {
 
     constructor(props) {
         super(props);
     }
 
     componentDidMount(): void {
-        getSeekerRequestLists(this.props.user.uid)
+        this.updateSeekerRequestCount({seekerReadCount: this.props.seekerRequests.length})
     }
+
+    updateSeekerRequestCount = (parameter) => {
+        updateUserAction(this.props.user.uid, parameter, 'seekerRequest');
+        getStore.dispatch({
+            type: SEEKER_REQUESTS_COUNT,
+            payload: 0
+        })
+    };
 
     onBackPress = () => {
         const {navigation} = this.props;
@@ -68,7 +78,7 @@ const mapStateToProps = (state) => ({
     seekerRequests: state.auth.seekerRequests,
 });
 
-export default connect(mapStateToProps)(SeekerRequestScreen);
+export default connect(mapStateToProps)(SeekerRequestListsScreen);
 
 const styles = StyleSheet.create({
     container: {

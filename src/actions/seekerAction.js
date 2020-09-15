@@ -60,9 +60,16 @@ export function getSeekerRequestLists(id) {
                             ...data
                         })
                     }
+
+                    let seekerReadCount = getStore.getState().auth.user.seekerReadCount;
+                    if (seekerReadCount !== undefined)
+                        seekerReadCount = response.length - seekerReadCount;
+                    else
+                        seekerReadCount = response.length;
+
                     getStore.dispatch({
                         type: SEEKER_REQUESTS,
-                        payload: response
+                        payload: {data: response, count: seekerReadCount}
                     });
                     resolve(response);
                 });

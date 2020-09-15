@@ -5,7 +5,7 @@ import HeaderComponent from '../../../components/general/HeaderComponent';
 import SeekerRequestComponent from '../../../components/messages/SeekerRequestComponent';
 import {getMySeekerRequestLists} from '../../../actions/seekerAction';
 
-class SendMySeekerRequestScreen extends Component {
+class SeekerMyRequestListsScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
     mySendSeekerRequests: state.auth.mySendSeekerRequests,
 });
 
-export default connect(mapStateToProps)(SendMySeekerRequestScreen);
+export default connect(mapStateToProps)(SeekerMyRequestListsScreen);
 
 const styles = StyleSheet.create({
     container: {

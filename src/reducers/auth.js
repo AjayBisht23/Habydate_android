@@ -3,8 +3,8 @@ import {
   GET_LOCATION,
   HIDE_LOADER,
   LOGIN,
-  LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS, NOTIFICATIONS,
-  PEOPLE_WHO_LIKED, SEEKER_REQUESTS,
+  LOGOUT, MATCHES, MY_SEND_SEEKER_REQUESTS, NOTIFICATION_UNREAD_COUNT, NOTIFICATIONS,
+  PEOPLE_WHO_LIKED, SEEKER_REQUESTS, SEEKER_REQUESTS_COUNT,
   SET_USER_DATA,
   SHOW_LOADER, SWIPECARDLIMIT,
   THEME,
@@ -16,7 +16,7 @@ const initialAuthState = {loading: true, user: null, theme: THEMES[0],
   swipeCardLimit: 0,
   peopleWhoLiked: [],
   matches: [],
-  seekerRequests: [],
+  seekerRequests: [], seekerUnreadCount: 0,
   mySendSeekerRequests: [],
   notifications: [], notificationCount: 0,
   conversations: [], conversationCount: 0,
@@ -56,13 +56,19 @@ function auth(state = initialAuthState, action) {
       return {...state, mySendSeekerRequests: action.payload};
 
     case SEEKER_REQUESTS:
-      return {...state, seekerRequests: action.payload};
+      return {...state, seekerRequests: action.payload.data, seekerUnreadCount: action.payload.count};
+
+    case SEEKER_REQUESTS_COUNT:
+      return {...state, seekerUnreadCount: action.payload};
 
     case MATCHES:
       return {...state, matches: action.payload};
 
     case NOTIFICATIONS:
       return {...state, notifications: action.payload.data, notificationCount: action.payload.count};
+
+    case NOTIFICATION_UNREAD_COUNT:
+      return {...state, notificationCount: action.payload};
 
     case CONVERSATIONS:
       return {...state, conversations: action.payload.data, conversationCount: action.payload.count};
