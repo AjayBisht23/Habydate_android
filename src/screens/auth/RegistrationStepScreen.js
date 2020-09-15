@@ -41,6 +41,7 @@ class RegistrationStepScreen extends Component {
             drinkingStatus: regex.isEmpty(params.drinkingStatus) ? '' : params.drinkingStatus,
             smokingStatus: regex.isEmpty(params.smokingStatus) ? '' : params.smokingStatus,
             eatingStatus: regex.isEmpty(params.eatingStatus) ? '' : params.eatingStatus,
+            socialType: regex.isEmpty(params.socialType) ? 'phone' : params.socialType,
         };
     }
     anim = new Animated.Value(0);

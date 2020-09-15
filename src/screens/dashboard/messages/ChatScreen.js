@@ -99,25 +99,27 @@ class ChatScreen extends React.Component {
 
         Promise.all(uploadPhotos).then(response => {
             response.forEach(({data, photo}) => {
-                let parameter = {
-                    media_id: data.public_id,
-                    user: {
-                        _id: this.props.user.uid
+                if (Boolean(data.public_id)) {
+                    let parameter = {
+                        media_id: data.public_id,
+                        user: {
+                            _id: this.props.user.uid
+                        }
+                    };
+                    if (photo.mime.includes('image')) {
+                        parameter.messageType = 'image';
+                        parameter.image = data.secure_url;
+                    } else {
+                        parameter.messageType = 'video';
+                        parameter.video = data.secure_url;
                     }
-                };
-                if (photo.mime.includes('image')) {
-                    parameter.messageType = 'image';
-                    parameter.image = data.secure_url;
-                } else {
-                    parameter.messageType = 'video';
-                    parameter.video = data.secure_url;
-                }
-                if (this.getType() === 'seeker') {
-                    const {seeker_id} = this.getConversationData();
-                    this.uploadDataInFirestore(seeker_id, parameter);
-                } else {
-                    const {matches_id} = this.getConversationData();
-                    this.uploadDataInFirestore(matches_id, parameter);
+                    if (this.getType() === 'seeker') {
+                        const {seeker_id} = this.getConversationData();
+                        this.uploadDataInFirestore(seeker_id, parameter);
+                    } else {
+                        const {matches_id} = this.getConversationData();
+                        this.uploadDataInFirestore(matches_id, parameter);
+                    }
                 }
             });
         })

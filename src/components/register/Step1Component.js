@@ -14,6 +14,7 @@ class Step1Component extends Component {
             name: props.data.name,
             username: props.data.username,
             email: props.data.email,
+            socialType: props.data.socialType,
         }
     }
 

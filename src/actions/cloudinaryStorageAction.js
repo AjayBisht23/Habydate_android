@@ -1,10 +1,11 @@
 import {CLOUDINARY_CLOUD_NAME, CLOUDINARY_PRESENT_NAME} from '../config/config';
+import {OS} from '../utils/regex';
 
 export function assetUploadInCloudinaryServer(photo, isReturnData) {
     return new Promise((resolve, reject) => {
         const data = new FormData();
         let media = {
-            uri: photo.path,
+            uri:  OS === 'ios' ? photo.sourceURL : photo.path,
             type: photo.mime,
             name: `${new Date().valueOf().toString()}.png`,
         };
