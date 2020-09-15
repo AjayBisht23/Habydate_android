@@ -94,11 +94,13 @@ class MenuScreen extends Component {
     };
 
     renderItem = ({ item, index }) => {
-        const {theme, user, notificationCount} = this.props;
+        const {theme, user, notificationCount, conversationCount} = this.props;
 
         let count = 0;
         if (item.id === 1)
            count = regex.getDayLeft(user.packageEndDate);
+        else if (item.id === 3)
+            count = conversationCount;
         else if (item.id === 4)
            count = notificationCount;
 
@@ -158,6 +160,7 @@ const mapStateToProps = (state) => ({
     theme: state.auth.theme,
     user: state.auth.user,
     notificationCount: state.auth.notificationCount,
+    conversationCount: state.auth.conversationCount,
 });
 
 export default connect(mapStateToProps)(MenuScreen);

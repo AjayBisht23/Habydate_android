@@ -34,18 +34,26 @@ export function getAllConversationLists(uid) {
                         if (Boolean(snapshot)) {
                             let docs = snapshot.docs;
                             let conversations = [];
+                            let conversationUnreadCount = 0;
                             for (let v in docs) {
                                 let data = {
                                     ...docs[v]._data
                                 };
                                 let obj = response.find(o => o.customId === data.matches_id);
                                 data.user = obj.user;
+
+                                let latestMessage = data.latestMessage;
+                                const {createdAt} = latestMessage;
+                                let checkRead = Boolean(data[uid]) ? (data[uid] < createdAt) : true;
+                                if (checkRead)
+                                    conversationUnreadCount+=1;
+
                                 conversations.push(data);
                             }
 
                             getStore.dispatch({
                                 type: CONVERSATIONS,
-                                payload: conversations
+                                payload: {data: conversations, count: conversationUnreadCount}
                             });
                             resolve(conversations);
                         }

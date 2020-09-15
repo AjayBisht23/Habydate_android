@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, Switch, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import MessagesComponent from '../../../components/messages/MessagesComponent';
-import {PINK, White} from '../../../themes/constantColors';
+import {PINK} from '../../../themes/constantColors';
 import {TouchableFeedback} from '../../../utils/regex';
 import {getAllConversationLists} from '../../../actions/conversationsAction';
 

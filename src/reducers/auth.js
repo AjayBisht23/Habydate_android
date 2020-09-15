@@ -12,9 +12,15 @@ import {
 import {THEMES} from '../themes/themes';
 
 const initialAuthState = {loading: true, user: null, theme: THEMES[0],
-  showLoader: false, location: {latitude: 0.00, longitude: 0.00}, swipeCardLimit: 0,
-  peopleWhoLiked: [], seekerRequests: [], mySendSeekerRequests: [],
-  matches: [], notifications: [], notificationCount: 0, conversations: []};
+  showLoader: false, location: {latitude: 0.00, longitude: 0.00},
+  swipeCardLimit: 0,
+  peopleWhoLiked: [],
+  matches: [],
+  seekerRequests: [],
+  mySendSeekerRequests: [],
+  notifications: [], notificationCount: 0,
+  conversations: [], conversationCount: 0,
+};
 
 function auth(state = initialAuthState, action) {
   switch (action.type) {
@@ -59,7 +65,7 @@ function auth(state = initialAuthState, action) {
       return {...state, notifications: action.payload.data, notificationCount: action.payload.count};
 
     case CONVERSATIONS:
-      return {...state, conversations: action.payload};
+      return {...state, conversations: action.payload.data, conversationCount: action.payload.count};
 
     default:
       return state;
