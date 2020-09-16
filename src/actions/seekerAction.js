@@ -4,7 +4,6 @@ import {MY_SEND_SEEKER_REQUESTS, SEEKER_REQUESTS} from './types';
 import {getUserDetail} from './userAction';
 import moment from 'moment';
 import {createNewNotification} from './notificationsAction';
-import {setFormatAsPerGiftedChatArray} from './generalAction';
 
 export function sendSeekerRequest(parameter) {
     return new Promise((resolve, reject) => {

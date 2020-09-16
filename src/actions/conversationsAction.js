@@ -3,7 +3,6 @@ import moment from 'moment';
 import {getStore} from '../../App';
 import {CONVERSATIONS} from './types';
 import {getAllMatchesLists} from './matchesAction';
-import {setFormatAsPerGiftedChatArray} from './generalAction';
 
 export function createNewConversation(id, members) {
     return new Promise((resolve, reject) => {

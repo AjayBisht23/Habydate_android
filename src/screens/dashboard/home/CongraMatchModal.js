@@ -20,7 +20,10 @@ class CongraMatchModal extends Component {
     };
 
     onSendMessagePress = () => {
-
+       this.onClosePress();
+       const {uid, data, navigation} = this.props;
+       let matches_id = `${uid}${data.uid}`;
+       navigation.navigate('ChatScreen', {conversation: {matches_id, user: data}, type: 'messages'})
     };
 
     onKeepExploringPress = () => {

@@ -138,10 +138,8 @@ class HomeScreen extends Component {
         let isValidSwipe = this.checkSwipeLimit();
         if (isValidSwipe) {
             swipeCardUser(uid, other.uid, type).then(response => {
-                if (response) {
-                    if (!this.state.congoModalVisible)
-                        this.setState({matchUser: other, congoModalVisible: true});
-                }
+                if (response && !this.state.congoModalVisible)
+                    this.setState({matchUser: other, congoModalVisible: true});
             })
         }
     };
@@ -280,7 +278,7 @@ class HomeScreen extends Component {
 
     render () {
         const {modalVisible, loading, congoModalVisible, matchUser} = this.state;
-        const {theme, user} = this.props;
+        const {theme, user, navigation} = this.props;
 
         return (
             <View style={[styles.container, {backgroundColor: theme.container.backgroundColor}]}>
@@ -318,7 +316,7 @@ class HomeScreen extends Component {
                                  }}/>
                 </Modal>
                 <Modal animationType={'fade'} transparent={true} visible={congoModalVisible} onRequestClose={() => {}}>
-                    <CongraMatchModal theme={theme} data={matchUser} location={this.location} onClose={(data) => {
+                    <CongraMatchModal navigation={navigation} theme={theme} uid={user.uid} data={matchUser} location={this.location} onClose={(data) => {
                         let setStateData = {congoModalVisible: false};
                         this.setState(setStateData);
                     }}/>
