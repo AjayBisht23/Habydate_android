@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {HEIGHT_RATIO, W_WIDTH} from '../../utils/regex';
+import {StyleSheet, View} from 'react-native';
+import {HEIGHT_RATIO} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 class AllPhotoComponent extends Component {
@@ -21,8 +21,6 @@ class AllPhotoComponent extends Component {
 }
 
 export default AllPhotoComponent;
-
-const totalWidth = W_WIDTH;
 
 const styles = StyleSheet.create({
     container: {

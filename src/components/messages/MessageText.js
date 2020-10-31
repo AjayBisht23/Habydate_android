@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Linking, StyleSheet, View, } from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 // @ts-ignore
 import ParsedText from 'react-native-parsed-text';
 import Communications from 'react-native-communications';

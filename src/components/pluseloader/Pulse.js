@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Animated, Easing, Dimensions } from 'react-native';
+import React from 'react';
+import {Animated, Dimensions, Easing, StyleSheet, View} from 'react-native';
 import {HEIGHT_RATIO} from '../../utils/regex';
 
 const { height, width } = Dimensions.get('window');

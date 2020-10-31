@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, View, Text, TouchableWithoutFeedback} from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {Composer, GiftedChat, Send} from 'react-native-gifted-chat';
 import {connect} from 'react-redux';
 import MessageInputToolBar from '../../../components/messages/MessageInputToolBar';
@@ -8,11 +8,8 @@ import {regex} from '../../../utils/regex';
 import MessageItem from '../../../components/messages/MessageItem';
 import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';
-import {
-    addMessageInSeeker,
-    updateLatestMessageInSeeker,
-} from '../../../actions/seekerAction';
-import ActionSheet from 'react-native-actionsheet'
+import {addMessageInSeeker, updateLatestMessageInSeeker} from '../../../actions/seekerAction';
+import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-crop-picker';
 import {assetUploadInCloudinaryServer} from '../../../actions/cloudinaryStorageAction';
 import {

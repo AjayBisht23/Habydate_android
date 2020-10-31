@@ -5,8 +5,8 @@ import {IS_STRIPE_LIVE, STRIPE_CLOUD_SERVER_URL, STRIPE_PUBLIC_KEY} from '../con
 
 export function setUpStripe() {
     stripe.setOptions({
-        publishableKey: STRIPE_PUBLIC_KEY
-    })
+        publishableKey: STRIPE_PUBLIC_KEY,
+    });
 }
 
 export function openCardModal(user, amount, packageEndDate, navigation) {
@@ -47,7 +47,7 @@ export function openCardModal(user, amount, packageEndDate, navigation) {
                     updateUserAction(user.uid, {packageEndDate}, 'payment');
                     navigation.navigate('Home');
                 }
-            })
+            });
         }
     });
 }

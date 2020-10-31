@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {regex} from '../../utils/regex';
 
 class VerifiedCodeScreen extends Component {
 
@@ -11,7 +10,7 @@ class VerifiedCodeScreen extends Component {
     }
 
     componentDidMount() {
-        
+
     }
 
     render() {

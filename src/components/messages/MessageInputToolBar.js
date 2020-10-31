@@ -1,10 +1,6 @@
-import React from 'react'
-import {
-    StyleSheet,
-    View,
-    Keyboard,
-} from 'react-native'
-import {Actions, Composer, Send} from "react-native-gifted-chat";
+import React from 'react';
+import {Keyboard, StyleSheet, View} from 'react-native';
+import {Actions, Composer, Send} from 'react-native-gifted-chat';
 import {regex} from '../../utils/regex';
 
 const styles = StyleSheet.create({
@@ -38,7 +34,7 @@ export default class MessageInputToolBar extends React.Component {
         this.keyboardWillShowListener = Keyboard.addListener(
             'keyboardWillShow',
             this.keyboardWillShow,
-        )
+        );
         this.keyboardWillHideListener = Keyboard.addListener(
             'keyboardWillHide',
             this.keyboardWillHide,
@@ -60,7 +56,7 @@ export default class MessageInputToolBar extends React.Component {
                 position: 'relative',
             })
         }
-    }
+    };
 
     keyboardWillHide = () => {
         if (this.state.position !== 'absolute') {
@@ -68,7 +64,7 @@ export default class MessageInputToolBar extends React.Component {
                 position: 'absolute',
             })
         }
-    }
+    };
 
     renderActions() {
         const { containerStyle, ...props } = this.props;

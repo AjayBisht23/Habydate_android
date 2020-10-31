@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, Switch} from 'react-native';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../../utils/regex';

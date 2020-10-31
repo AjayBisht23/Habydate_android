@@ -468,4 +468,4 @@ export const eatingData = [
         title: 'Non-Vegetarian',
         selected: false
     },
-]
+];

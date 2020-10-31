@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import CommonTextInput from '../../../components/general/CommonTextInput';
 import CommonButton from '../../../components/general/CommonButton';
 import {regex, W_WIDTH} from '../../../utils/regex';
@@ -19,7 +19,7 @@ class AccountSettingScreen extends Component {
             username: user.username,
             email: user.email,
             // phone: user.phone,
-        }
+        };
     }
 
     onBackPress = () => {
@@ -30,17 +30,17 @@ class AccountSettingScreen extends Component {
     nextPress = () => {
         const {name, username, email} = this.state;
 
-        if (regex.isEmpty(name))
+        if (regex.isEmpty(name)) {
             alert(messages.enterFullName);
-        else if (regex.isEmpty(username))
+        } else if (regex.isEmpty(username)) {
             alert(messages.enterUserName);
-        else if (!regex.validateUsername(username))
+        } else if (!regex.validateUsername(username)) {
             alert(messages.enterValidUserName);
-        else if (regex.isEmpty(email))
+        } else if (regex.isEmpty(email)) {
             alert(messages.enterEmail);
-        else if (!regex.validateEmail(email))
+        } else if (!regex.validateEmail(email)) {
             alert(messages.enterValidEmail);
-        else {
+        } else {
             regex.showLoader();
             updateUserAction(this.props.user.uid, this.state, 'account_setting').then(() => {
                 regex.hideLoader();
@@ -65,14 +65,14 @@ class AccountSettingScreen extends Component {
                             placeholder={'Full Name'}
                             keyboardType={'default'}
                             value={name}
-                            onChangeText={(name)=>this.setState({name})}
+                            onChangeText={(name) => this.setState({name})}
                         />
                         <CommonTextInput
                             autoCompleteType={'username'}
                             placeholder={'Username'}
                             keyboardType={'default'}
                             value={username}
-                            onChangeText={(username)=>this.setState({username})}
+                            onChangeText={(username) => this.setState({username})}
                         />
                         <CommonTextInput
                             autoCompleteType={'email'}
@@ -80,7 +80,7 @@ class AccountSettingScreen extends Component {
                             keyboardType={'email-address'}
                             editable={socialType === 'phone'}
                             value={email}
-                            onChangeText={(email)=>this.setState({email})}
+                            onChangeText={(email) => this.setState({email})}
                         />
                         {/*<CommonTextInput*/}
                         {/*    placeholder={'Phone'}*/}
@@ -115,7 +115,7 @@ export default connect(mapStateToProps)(AccountSettingScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: W_WIDTH
+        width: W_WIDTH,
     },
     titleText: {
         marginHorizontal: 20,

@@ -3,7 +3,7 @@ import {getStore} from '../../App';
 import {GET_LOCATION} from '../actions/types';
 import {updateUserAction} from '../actions/userAction';
 import auth from '@react-native-firebase/auth';
-import geohash from "ngeohash";
+import geohash from 'ngeohash';
 
 export function distance(location, location1, unit) {
     let lat1 = location.latitude,

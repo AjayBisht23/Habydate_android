@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import {TouchableFeedback} from '../../../utils/regex';
 import {openCardModal, setUpStripe} from '../../../actions/paymentAction';
 import moment from 'moment';

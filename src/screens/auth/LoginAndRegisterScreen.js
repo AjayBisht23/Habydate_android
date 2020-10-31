@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, Keyboard, ScrollView} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {BORDER} from '../../themes/constantColors';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
 import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';

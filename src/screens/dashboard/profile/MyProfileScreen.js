@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, TextInput, FlatList, StatusBar} from 'react-native';
+import {FlatList, StatusBar, StyleSheet, Text, TextInput, View} from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {HEIGHT_RATIO, regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';

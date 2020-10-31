@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Avatar, SystemMessage, Day } from 'react-native-gifted-chat';
-import { StylePropType, isSameUser } from 'react-native-gifted-chat/lib/utils';
+import {StyleSheet, View} from 'react-native';
+import {Avatar, Day, SystemMessage} from 'react-native-gifted-chat';
+import {isSameUser} from 'react-native-gifted-chat/lib/utils';
 import MessageBubble from './MessageBubble';
 
 const styles = {

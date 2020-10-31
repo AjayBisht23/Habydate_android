@@ -1,24 +1,11 @@
 'use strict';
 
-import {
-  StatusBar,
-  Alert,
-  Platform,
-  TouchableWithoutFeedback,
-  TouchableNativeFeedback,
-  Dimensions,
-} from 'react-native';
+import {Alert, Dimensions, Platform, StatusBar, TouchableWithoutFeedback} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  HIDE_LOADER,
-  LOGIN,
-  LOGOUT,
-  SHOW_LOADER,
-  STORAGE_KEY,
-} from '../actions/types';
+import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER, STORAGE_KEY} from '../actions/types';
 import {getStore} from '../../App';
 import * as messages from './messages';
-import {Black, TIMETEXTCOLOR, White} from '../themes/constantColors';
+import {TIMETEXTCOLOR} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 import {updateUserAction} from '../actions/userAction';

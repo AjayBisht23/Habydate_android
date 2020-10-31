@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableOpacity, Animated, Easing } from 'react-native';
+import {Animated, Easing, TouchableOpacity, View} from 'react-native';
 import Pulse from './Pulse';
 import {PINK, White} from '../../themes/constantColors';
 import {shadow} from '../../utils/regex';

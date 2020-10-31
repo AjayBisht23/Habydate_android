@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList, ScrollView} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {seekerData} from '../../../json/seekerData';
 import HeaderComponent from '../../../components/general/HeaderComponent';

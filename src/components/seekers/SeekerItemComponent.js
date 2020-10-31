@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../utils/regex';
+import {TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 class SeekerItemComponent extends Component {

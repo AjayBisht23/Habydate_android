@@ -1,5 +1,5 @@
 import React, {Component, createRef} from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';

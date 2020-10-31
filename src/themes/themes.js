@@ -1,17 +1,15 @@
 import {
-  Black,
-  White,
-  gradientColor,
-  gradientTransparent,
-  BUBBLELEFT,
-  BUBBLERIGHT,
-  TEXTCOLOR,
-  INFOTEXTCOLOR,
-  TIMETEXTCOLOR,
-  PINK,
-  BORDER,
-  LIGHTWHITE,
-  PRIMARYB,
+    Black,
+    BORDER,
+    BUBBLELEFT,
+    BUBBLERIGHT,
+    INFOTEXTCOLOR,
+    LIGHTWHITE,
+    PINK,
+    PRIMARYB,
+    TEXTCOLOR,
+    TIMETEXTCOLOR,
+    White,
 } from './constantColors';
 
 export const THEMES = [

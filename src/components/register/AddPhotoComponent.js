@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {shadow, TouchableFeedback, W_WIDTH} from '../../utils/regex';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import FastImage from 'react-native-fast-image';
 
 class AddPhotoComponent extends Component {

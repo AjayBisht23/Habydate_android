@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, FlatList} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';

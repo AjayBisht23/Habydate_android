@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StatusBar} from 'react-native';
+import {StatusBar, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {LOGOUT} from '../actions/types';
 import {getStore} from '../../App';

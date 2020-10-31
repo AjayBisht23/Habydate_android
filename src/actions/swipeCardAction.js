@@ -12,20 +12,27 @@ export function checkOtherUserSwipeExits(uid, other_uid) {
             .where('other_uid', '==', uid)
             .where('action', 'in', ['like', 'superLike'])
             .get().then(snapshot => {
-                if (Boolean(snapshot))
-                    resolve(snapshot.docs);
-        })
+            if (Boolean(snapshot)) {
+                resolve(snapshot.docs);
+            }
+        });
     });
 }
 
 export function swipeCardUser(uid, other_uid, action) {
     return new Promise((resolve, reject) => {
-        swipeCardsCollection.doc(`${uid}${other_uid}`).set({uid, other_uid, action, createdAt: moment().utc().unix()}, { merge: true}).then(() => {
+        swipeCardsCollection.doc(`${uid}${other_uid}`).set({
+            uid,
+            other_uid,
+            action,
+            createdAt: moment().utc().unix(),
+        }, {merge: true}).then(() => {
             checkOtherUserSwipeExits(uid, other_uid).then(responseData => {
                 if (responseData.length > 0 && [action === 'like' || action === 'superLike']) {
                     addSwipeMatch(uid, other_uid).then(response => resolve(response));
-                } else
-                    reject(false)
+                } else {
+                    reject(false);
+                }
             });
         });
     });
@@ -51,15 +58,16 @@ export function getWhoLikedMeLists(uid) {
                             let data = responseData[v].data;
                             response.push({
                                 user,
-                                ...data
-                            })
+                                ...data,
+                            });
                         }
 
                         let likedReadCount = getStore.getState().auth.user.likedReadCount;
-                        if (likedReadCount !== undefined)
+                        if (likedReadCount !== undefined) {
                             likedReadCount = response.length - likedReadCount;
-                        else
+                        } else {
                             likedReadCount = response.length;
+                        }
 
                         getStore.dispatch({
                             type: PEOPLE_WHO_LIKED,

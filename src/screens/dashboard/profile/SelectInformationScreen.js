@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
-import {regex, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {TouchableFeedback, W_WIDTH} from '../../../utils/regex';
 import {
-    bodyTypeData, drinkingData, eatingData, educationData,
+    bodyTypeData,
+    drinkingData,
+    eatingData,
+    educationData,
     genderData,
     heightData,
-    lookingData, maritalData,
-    personalityData, religionData,
-    sexualityData, smokingData,
+    lookingData,
+    maritalData,
+    personalityData,
+    religionData,
+    sexualityData,
+    smokingData,
 } from '../../../json/generalCatogeryData';
 import CommonButton from '../../../components/general/CommonButton';
 import {connect} from 'react-redux';

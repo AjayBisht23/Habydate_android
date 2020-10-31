@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, Animated} from 'react-native';
+import {Animated, ScrollView, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import Step1Component from '../../components/register/Step1Component';

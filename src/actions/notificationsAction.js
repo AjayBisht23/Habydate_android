@@ -11,9 +11,9 @@ export function createNewNotification(parameter) {
                 ...parameter,
                 createdAt: moment().utc().unix(),
             }).then(response => {
-            resolve(true)
-        })
-    })
+            resolve(true);
+        });
+    });
 }
 
 export function getNotificationLists(uid) {
@@ -24,7 +24,7 @@ export function getNotificationLists(uid) {
             const getUserInfo = response.docs.map(doc => {
                 const firebaseData = {
                     id: doc.id,
-                    ...doc.data()
+                    ...doc.data(),
                 };
                 return getUserDetail(firebaseData.from_user, firebaseData);
             });
@@ -36,36 +36,37 @@ export function getNotificationLists(uid) {
                     let data = responseData[v].data;
                     response.push({
                         user,
-                        ...data
-                    })
+                        ...data,
+                    });
                 }
 
                 let notificationReadCount = getStore.getState().auth.user.notificationReadCount;
-                if (notificationReadCount !== undefined)
+                if (notificationReadCount !== undefined) {
                     notificationReadCount = response.length - notificationReadCount;
-                else
+                } else {
                     notificationReadCount = response.length;
+                }
 
                 getStore.dispatch({
                     type: NOTIFICATIONS,
-                    payload: {data: response, count: notificationReadCount}
+                    payload: {data: response, count: notificationReadCount},
                 });
 
                 resolve(response);
             });
-        })
-    })
+        });
+    });
 }
 
 export function updateNotificationStatus(id, request_status) {
     return new Promise((resolve, reject) => {
         notificationsCollection
             .doc(id)
-            .set({request_status: request_status}, { merge: true})
+            .set({request_status: request_status}, {merge: true})
             .then(() => {
-                resolve(true)
-            })
-    })
+                resolve(true);
+            });
+    });
 }
 
 export function getAndUpdateNotificationItem(relationship_id, request_status) {

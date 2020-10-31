@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import CommonButton from '../general/CommonButton';
 import {regex, TouchableFeedback} from '../../utils/regex';
 import {getSeekerTitle} from '../../actions/generalAction';
@@ -24,7 +24,7 @@ class NotificationComponent extends Component {
     };
 
     renderItem = () => {
-        const {theme, item, navigation} = this.props;
+        const {theme, item} = this.props;
         const {user, notification_type, seekerKey, address, createdAt, request_status} = item;
 
         if (notification_type === 'matches') {
@@ -78,7 +78,7 @@ class NotificationComponent extends Component {
         const {user} = item;
 
         return (
-            <TouchableFeedback onPress={()=>navigation.navigate('SeekerDetail')}>
+            <TouchableFeedback onPress={() => navigation.navigate('OtherProfile', {profileData: user})}>
                 <View style={[styles.container, {borderColor: theme.borderColor}]}>
                     <FastImage source={{uri: regex.getProfilePic(user.photos)}} style={{width: 56, height: 56, borderRadius: 28}}/>
                     <View style={[styles.infoView]}>

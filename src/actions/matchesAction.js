@@ -11,9 +11,10 @@ export function checkMatchExits(uid, other_uid) {
         matchesCollection
             .where('members', 'in', [[uid, other_uid], [other_uid, uid]])
             .onSnapshot(snapshot => {
-                if (Boolean(snapshot))
+                if (Boolean(snapshot)) {
                     resolve(snapshot.docs);
-            })
+                }
+            });
     });
 }
 
@@ -29,7 +30,8 @@ export function addSwipeMatch(uid, other_uid) {
                         other_uid,
                         last_swipe_by: uid,
                         members: [uid, other_uid],
-                        createdAt: moment().utc().unix()}, { merge: true})
+                        createdAt: moment().utc().unix(),
+                    }, {merge: true})
                     .then(() => {
                         createNewNotification({
                             relationship_id: customId,
@@ -38,12 +40,13 @@ export function addSwipeMatch(uid, other_uid) {
                             from_user: uid,
                         });
                         createNewConversation(customId, [uid, other_uid]);
-                        resolve(true)
+                        resolve(true);
                     }).catch(error => {
-                    reject(false)
+                    reject(false);
                 });
-            } else
-                resolve(false)
+            } else {
+                resolve(false);
+            }
         });
     });
 }
@@ -53,9 +56,10 @@ function getUserMatch(data) {
         matchesCollection
             .where(data.key, '==', data.value)
             .get().then(snapshot => {
-            if (Boolean(snapshot))
+            if (Boolean(snapshot)) {
                 resolve(snapshot.docs);
-        })
+            }
+        });
     });
 }
 
@@ -84,17 +88,18 @@ export function getAllMatchesLists(uid, isGetConversation) {
                     let data = responseData[v].data;
                     response.push({
                         user,
-                        ...data
-                    })
+                        ...data,
+                    });
                 }
 
                 getStore.dispatch({
                     type: MATCHES,
-                    payload: response
+                    payload: response,
                 });
 
-                if (isGetConversation)
+                if (isGetConversation) {
                     getAllConversationLists(uid);
+                }
 
                 resolve(response);
             });

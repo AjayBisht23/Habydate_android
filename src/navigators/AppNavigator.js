@@ -1,7 +1,7 @@
-import React, {PureComponent} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {connect} from 'react-redux';
 import SplashScreen from '../screens/SplashScreen';
 import enableFontPatch from './enableFontPatch';
@@ -31,8 +31,8 @@ import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen'
 import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
 import ChatScreen from '../screens/dashboard/messages/ChatScreen';
 import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
-import { firebase } from '@react-native-firebase/analytics';
-import { GoogleSignin } from '@react-native-community/google-signin';
+import {firebase} from '@react-native-firebase/analytics';
+import {GoogleSignin} from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/config';
 import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
 import LoaderComponent from '../components/LoaderComponent';

@@ -11,19 +11,18 @@ export function setFormatAsPerGiftedChatArray(response, otherUser) {
         const data = {
             _id: doc.id,
             ...firebaseData,
-            createdAt: moment.unix(firebaseData.createdAt).local()
+            createdAt: moment.unix(firebaseData.createdAt).local(),
         };
 
-        if (!firebaseData.system)
-        {
+        if (!firebaseData.system) {
             data.user = firebaseData.user._id === currentUser.uid ? {
                 ...firebaseData.user,
                 name: currentUser.name,
-                avatar: regex.getProfilePic(currentUser.photos)
+                avatar: regex.getProfilePic(currentUser.photos),
             } : {
                 ...firebaseData.user,
                 name: otherUser.name,
-                avatar: regex.getProfilePic(otherUser.photos)
+                avatar: regex.getProfilePic(otherUser.photos),
             };
         }
 
@@ -33,5 +32,7 @@ export function setFormatAsPerGiftedChatArray(response, otherUser) {
 }
 
 export function getSeekerTitle(key) {
-    return seekerData.find(function (o) {return o.key === key });
+    return seekerData.find(function (o) {
+        return o.key === key;
+    });
 }

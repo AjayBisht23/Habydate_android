@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, TextInput, Switch} from 'react-native';
+import {ScrollView, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import {HEIGHT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import moment from 'moment';
-import TimePicker from "react-native-navybits-date-time-picker";
+import TimePicker from 'react-native-navybits-date-time-picker';
 import {Black, White} from '../../../themes/constantColors';
 import * as messages from '../../../utils/messages';
 import {sendSeekerRequest} from '../../../actions/seekerAction';

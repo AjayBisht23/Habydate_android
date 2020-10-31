@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
 import {HEIGHT_RATIO, regex} from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import moment from 'moment';
 import {updateSeekerRequestStatus} from '../../../actions/seekerAction';

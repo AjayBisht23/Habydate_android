@@ -5,7 +5,7 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
     return new Promise((resolve, reject) => {
         const data = new FormData();
         let media = {
-            uri:  OS === 'ios' ? photo.sourceURL : photo.path,
+            uri: OS === 'ios' ? photo.sourceURL : photo.path,
             type: photo.mime,
             name: `${new Date().valueOf().toString()}.png`,
         };
@@ -14,12 +14,13 @@ export function assetUploadInCloudinaryServer(photo, isReturnData) {
         data.append('cloud_name', CLOUDINARY_CLOUD_NAME);
         fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`, {
             method: 'post',
-            body: data
+            body: data,
         }).then(res => res.json()).then(data => {
-            if (isReturnData)
+            if (isReturnData) {
                 resolve({data, photo});
-            else
+            } else {
                 resolve(data);
+            }
         }).catch(err => {
             reject(err);
         })

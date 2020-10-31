@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import CommonTextInput from '../general/CommonTextInput';
 import CommonButton from '../general/CommonButton';
 import {ASPECT_RATIO, regex, W_WIDTH} from '../../utils/regex';
 import * as messages from '../../utils/messages';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 class Step1Component extends Component {
 

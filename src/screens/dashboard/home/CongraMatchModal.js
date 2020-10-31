@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import FastImage from 'react-native-fast-image';
 import {regex, shadow, TouchableFeedback} from '../../../utils/regex';

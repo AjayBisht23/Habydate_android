@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {regex, TouchableFeedback, W_WIDTH} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE} from '../../themes/constantColors';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import {distance} from '../../utils/location';
 
 class SeekerUserComponent extends Component {

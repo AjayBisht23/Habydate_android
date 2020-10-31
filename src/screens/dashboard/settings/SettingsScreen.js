@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text, ScrollView, Switch, Alert} from 'react-native';
+import {Alert, ScrollView, StyleSheet, Switch, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import {White} from '../../../themes/constantColors';
 import {regex, TouchableFeedback} from '../../../utils/regex';
 import {deleteUser, updateUserAction} from '../../../actions/userAction';

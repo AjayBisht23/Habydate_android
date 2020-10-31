@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import CommonButton from '../general/CommonButton';
 import {W_WIDTH} from '../../utils/regex';
 import {drinkingData, eatingData, smokingData} from '../../json/generalCatogeryData';

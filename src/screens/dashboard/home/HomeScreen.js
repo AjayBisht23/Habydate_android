@@ -1,18 +1,10 @@
-import React, { Component } from 'react'
-import Swiper from 'react-native-deck-swiper'
+import React, {Component} from 'react';
+import Swiper from 'react-native-deck-swiper';
 import {Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Icon} from "native-base";
+import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
-import {
-    ASPECT_RATIO,
-    HEIGHT_RATIO,
-    MAX_CARD_SWIPE_LIMIT,
-    regex,
-    shadow,
-    TouchableFeedback,
-    W_WIDTH,
-} from '../../../utils/regex';
+import {HEIGHT_RATIO, MAX_CARD_SWIPE_LIMIT, regex, shadow, TouchableFeedback} from '../../../utils/regex';
 import {ONLINE, PINK, RED, SUPERLIKE, White} from '../../../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import FilterModal from './FilterModal';
