@@ -1,17 +1,8 @@
 import {
-    CONVERSATIONS,
     GET_LOCATION,
     HIDE_LOADER,
     LOGIN,
     LOGOUT,
-    MATCHES,
-    MY_SEND_SEEKER_REQUESTS,
-    NOTIFICATION_UNREAD_COUNT,
-    NOTIFICATIONS,
-    PEOPLE_WHO_LIKED,
-    PEOPLE_WHO_LIKED_COUNT,
-    SEEKER_REQUESTS,
-    SEEKER_REQUESTS_COUNT,
     SET_USER_DATA,
     SHOW_LOADER,
     SWIPECARDLIMIT,
@@ -56,33 +47,6 @@ function auth(state = initialAuthState, action) {
 
     case SWIPECARDLIMIT:
       return {...state, swipeCardLimit: action.payload};
-
-    case PEOPLE_WHO_LIKED:
-      return {...state, peopleWhoLiked: action.payload.data, whoLikedUnreadCount: action.payload.count};
-
-    case PEOPLE_WHO_LIKED_COUNT:
-      return {...state, whoLikedUnreadCount: action.payload};
-
-    case MY_SEND_SEEKER_REQUESTS:
-      return {...state, mySendSeekerRequests: action.payload};
-
-    case SEEKER_REQUESTS:
-      return {...state, seekerRequests: action.payload.data, seekerUnreadCount: action.payload.count};
-
-    case SEEKER_REQUESTS_COUNT:
-      return {...state, seekerUnreadCount: action.payload};
-
-    case MATCHES:
-      return {...state, matches: action.payload};
-
-    case NOTIFICATIONS:
-      return {...state, notifications: action.payload.data, notificationCount: action.payload.count};
-
-    case NOTIFICATION_UNREAD_COUNT:
-      return {...state, notificationCount: action.payload};
-
-    case CONVERSATIONS:
-      return {...state, conversations: action.payload.data, conversationCount: action.payload.count};
 
     default:
       return state;

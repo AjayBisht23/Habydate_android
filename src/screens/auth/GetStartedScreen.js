@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {ASPECT_RATIO, regex, shadow, TouchableFeedback} from '../../utils/regex';
+import {ASPECT_RATIO, shadow, TouchableFeedback} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
-import {getFacebookData, getGoogleData} from '../../actions/socialLogin';
-import {getUserDataAndUpdateInFirestore} from '../../actions/userAction';
 
 class GetStartedScreen extends Component {
 
@@ -24,38 +22,11 @@ class GetStartedScreen extends Component {
     };
 
     facebookPress = () => {
-        regex.showLoader();
-        getFacebookData().then(response => {
-            getUserDataAndUpdateInFirestore(response).then(response => {
-                this.checkUserData(response);
-            });
-        }).catch(error => {
-            regex.hideLoader();
-        });
+
     };
 
     googlePress = () => {
-        regex.showLoader();
-        getGoogleData().then(response => {
-            getUserDataAndUpdateInFirestore(response).then(response => {
-                this.checkUserData(response);
-            });
-        }).catch(error => {
-            regex.hideLoader();
-        });
-    };
 
-    checkUserData = (response) => {
-       regex.hideLoader();
-       const {navigation} = this.props;
-       let user = response.user;
-
-        if (user.stepCompleted > 8) { // Dashboard
-           regex.setDashboard({token: user.uid, ...user})
-        } else if (user.stepCompleted === 8) { // Profile step Remaining
-           navigation.navigate('AddPhoto', {data: user});
-        } else // Register step remaining
-           navigation.navigate('RegistrationStep', {...user});
     };
 
     render() {
