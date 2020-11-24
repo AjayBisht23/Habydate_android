@@ -8,6 +8,7 @@ import CountryPicker from 'react-native-country-picker-modal';
 import {ASPECT_RATIO, regex} from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
+import {signInPhone} from '../../actions/socialLogin';
 
 class LoginAndRegisterScreen extends Component {
 
@@ -35,6 +36,19 @@ class LoginAndRegisterScreen extends Component {
             alert(messages.enterPhoneNumber);
         else {
             let phone = `+${callingCode}${phone_number}`;
+
+            // Request to send OTP
+            if (regex.validatePhoneNumber(phone)) {
+                regex.showLoader();
+                signInPhone(phone).then(confirmResult => {
+                        regex.hideLoader();
+                        navigation.navigate('Verification', {type, callingCode, phone_number, confirmResult});
+                    }).catch(error => {
+                        regex.hideLoader();
+                        alert(error.message);
+                    })
+            } else
+                alert('Invalid Phone Number');
         }
     };
 

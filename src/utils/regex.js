@@ -8,6 +8,7 @@ import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
+import {updateUserAction} from '../actions/userAction';
 
 export const {OS} = Platform;
 export const TouchableFeedback = OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
@@ -212,6 +213,7 @@ export const regex = {
     if (Boolean(user)) {
       let getUser = user._user;
       let uid = getUser.uid;
+      updateUserAction(uid, {online: false}, 'register');
       auth().signOut().then(() => console.log('User signed out!'));
     }
   },
