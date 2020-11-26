@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Keyboard, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, Text, TextInput, View, TouchableWithoutFeedback} from 'react-native';
 import {connect} from 'react-redux';
 import HeaderComponent from '../../components/general/HeaderComponent';
 import {BORDER} from '../../themes/constantColors';
@@ -18,6 +18,7 @@ class LoginAndRegisterScreen extends Component {
             countryCode: 'US',
             callingCode: ["1"],
             phone_number: '',
+            visibleCountryCode: false
         };
     }
 
@@ -70,7 +71,7 @@ class LoginAndRegisterScreen extends Component {
     };
 
     render() {
-        const {phone_number, countryCode} = this.state;
+        const {phone_number, countryCode, visibleCountryCode} = this.state;
         const {theme, route} = this.props;
         let params = route.params;
         let type = params.type;
@@ -97,28 +98,34 @@ class LoginAndRegisterScreen extends Component {
                             <Text style={[styles.titleText, {color: theme.primaryColor}]}>{title}</Text>
                             <Text style={[styles.subTitleText, {color: theme.subPrimaryColor}]}>{subTitle}</Text>
                             <View style={styles.textView}>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginHorizontal: 15}}>
-                                    <CountryPicker
-                                        onSelect={(value) => {
-                                            this.setState({
-                                                countryCode: value.cca2,
-                                                callingCode: value.callingCode,
-                                            });
-                                        }}
-                                        styles={{itemCountryName: {borderBottomWidth: 0}}}
-                                        countryCode={countryCode}
-                                        withCallingCodeButton={true}
-                                        withFlag={true}
-                                        withEmoji={true}
-                                        withFilter={true}
-                                        withCallingCode={true}
-                                        withFlagButton={false}
-                                        withAlphaFilter={true}
-                                        translation="eng">
-                                        <Text>{`+${countryCode}`}</Text>
-                                    </CountryPicker>
-                                    <Icon type={'Feather'} name={'chevron-down'} style={{fontSize: 20, color: theme.primaryColor}} />
-                                </View>
+                                <TouchableWithoutFeedback onPress={()=>this.setState({visibleCountryCode: true})}>
+                                    <View style={{paddingHorizontal: 15, height: 55, alignItems: 'center', justifyContent: 'center'}}>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <CountryPicker
+                                                onSelect={(value) => {
+                                                    this.setState({
+                                                        countryCode: value.cca2,
+                                                        callingCode: value.callingCode,
+                                                    });
+                                                }}
+                                                styles={{itemCountryName: {borderBottomWidth: 0}}}
+                                                countryCode={countryCode}
+                                                withCallingCodeButton={true}
+                                                withFlag={true}
+                                                withEmoji={true}
+                                                withFilter={true}
+                                                withCallingCode={true}
+                                                withFlagButton={false}
+                                                withAlphaFilter={true}
+                                                visible={visibleCountryCode}
+                                                onClose={()=>this.setState({visibleCountryCode: false})}
+                                                translation="eng">
+                                                <Text>{`+${countryCode}`}</Text>
+                                            </CountryPicker>
+                                            <Icon type={'Feather'} name={'chevron-down'} style={{fontSize: 20, color: theme.primaryColor}} />
+                                        </View>
+                                    </View>
+                                </TouchableWithoutFeedback>
                                 <View style={[styles.textInput, {backgroundColor: theme.backgroundColor}]}>
                                     <TextInput
                                         style={{flex: 1, color: theme.primaryColor}}
