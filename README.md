@@ -20,8 +20,10 @@ react-native run-ios
 - Go to the ​project​ ​directory​ folder
 - Run ​npm install
 - Open a code editor of your choice.
+
 > iOS
-- Go to ios folder using terminal - Run ​pod install
+- Go to ios folder using terminal 
+- Run ​pod install
 - Back to project directory
 - Run ​react-native run-ios
   
