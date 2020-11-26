@@ -29,7 +29,7 @@ class NotificationComponent extends Component {
 
         if (notification_type === 'matches') {
             return <View style={[styles.nameView]}>
-                <Text style={[styles.likeText, {color: theme.secondaryColor}]}>Congratulations!, You match with
+                <Text style={[styles.likeText, {color: theme.secondaryColor}]}>Congratulations!, You matched with
                     <Text style={[styles.nameText, {color: theme.primaryColor}]}>{` ${user.name}`}</Text>
                 </Text>
                 <Text style={[styles.timeText, {color: theme.subSecondaryColor, marginTop: 8}]}>{moment.unix(createdAt).local().fromNow(true)}</Text>
