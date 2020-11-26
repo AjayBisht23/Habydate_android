@@ -69,18 +69,22 @@ well as your ​API key​ and ​secret​, which you will need in order to ​
 - ​IS_STRIPE_LIVE: ​Set true if you use live STRIPE_PUBLIC_KEY otherwise false
   
 ### Firebase app configuration
+
 > iOS
 - Go to ios/Epicbae folder
 - Replace the GoogleService-Info.plist file with your GoogleService-Info.plist file
+
 > Android
 - Go to android/app folder
 - Replace the google-services.json file with your google-services.json file
 
 ### Facebook app
+
 > iOS
 - Go to ios/Epicbae/Info.plist file
 - Replace FacebookAppID with your FacebookAppID
 - Replace FacebookDisplayName with your FacebookDisplayName
+
 > Android
 - Go to android/app/src/main/res/values/strings.xml file
 - Replace facebook_app_id with your facebook_app_id
