@@ -17,6 +17,7 @@ import moment from 'moment';
 import {getStore} from '../../../../App';
 import {SWIPECARDLIMIT} from '../../../actions/types';
 import {getNotificationLists} from '../../../actions/notificationsAction';
+import {getAllMatchesLists} from '../../../actions/matchesAction';
 
 class HomeScreen extends Component {
 
@@ -77,13 +78,22 @@ class HomeScreen extends Component {
 
     getNearByUserData = () => {
         this.setLoader(true, () => {
-            discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
-                let data = [];
-                for (let a in response)
-                    data.push(response[a]._data);
+            getAllMatchesLists(this.props.user.uid, true).then(response => {
+                discoverUsers(this.props.user.uid, this.location, this.filterData.selectedDistance).then(response => {
+                    let data = [];
+                    for (let a in response) {
+                        let user = response[a]._data;
+                        if (this.props.matches.length > 0) {
+                            let notMatchedUser = this.props.matches.filter(function(o){ return o.user.uid === user.uid});
+                            if (notMatchedUser.length === 0)
+                                data.push(user);
+                        } else
+                            data.push(user);
+                    }
 
-                if (data.length > 0)
-                    this.filterToData(data);
+                    if (data.length > 0)
+                        this.filterToData(data);
+                });
             });
         });
     };
@@ -321,6 +331,7 @@ class HomeScreen extends Component {
 const mapStateToProps = (state) => ({
     theme: state.auth.theme,
     user: state.auth.user,
+    matches: state.auth.matches,
     swipeCardLimit: state.auth.swipeCardLimit,
 });
 
