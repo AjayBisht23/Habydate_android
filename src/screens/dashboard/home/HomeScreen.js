@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Swiper from 'react-native-deck-swiper';
-import {Modal, StyleSheet, Text, View} from 'react-native';
+import {AppState, Modal, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import HeaderComponent from '../../../components/general/HeaderComponent';
@@ -47,8 +47,16 @@ class HomeScreen extends Component {
             this.getNearByUserData();
         }).catch(error => {
             this.setState({loading: false});
-        })
+        });
+        AppState.addEventListener('change', this._handleAppStateChange);
     }
+
+    _handleAppStateChange = (nextAppState) => {
+        if (nextAppState === 'active') {
+            updateUserAction(this.props.user.uid, {online: true}, 'splash');
+        } else if (nextAppState === 'background' || nextAppState === 'inactive')
+            updateUserAction(this.props.user.uid, {online: false}, 'splash');
+    };
 
     getNotificationData = () => {
         getNotificationLists(this.props.user.uid);
