@@ -226,7 +226,7 @@ class MyProfileScreen extends Component {
                             }
                             <View style={{height: 1, backgroundColor: theme.borderColor, marginVertical: 20}}/>
 
-                            <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
+                            <Text style={[styles.photoText, {color: theme.primaryColor}]}>{`All Photos (${photos.length})`}</Text>
                             <View style={{marginHorizontal: 20, marginTop: 10}}>
                                 <FlatList
                                     showsVerticalScrollIndicator={false}

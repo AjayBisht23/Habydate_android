@@ -105,7 +105,7 @@ class OtherProfileScreen extends Component {
 
                         {
                             photos.length > 0 && <View style={[styles.commonView, {backgroundColor: theme.backgroundColor, borderBottomWidth: 0}]}>
-                                <Text style={[styles.photoText, {color: theme.primaryColor}]}>All Photos (0)</Text>
+                                <Text style={[styles.photoText, {color: theme.primaryColor}]}>{`All Photos (${photos.length})`}</Text>
                                 <Text style={[styles.commonText, {color: theme.pinkColor}]} onPress={() => navigation.navigate('AllPhotos', {photos})}>See All</Text>
                             </View>
                         }
