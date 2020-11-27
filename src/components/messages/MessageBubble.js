@@ -1,12 +1,13 @@
 import React from 'react';
 import {Clipboard, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {MessageImage, QuickReplies} from 'react-native-gifted-chat';
+import {QuickReplies} from 'react-native-gifted-chat';
 import MessageVideo from 'react-native-gifted-chat/lib/MessageVideo';
 import MessageAudio from 'react-native-gifted-chat/lib/MessageAudio';
 import Time from 'react-native-gifted-chat/lib/Time';
 import Color from 'react-native-gifted-chat/lib/Color';
 import {isSameDay, isSameUser} from 'react-native-gifted-chat/lib/utils';
 import MessageText from './MessageText';
+import MessageImage from './MessageImage';
 
 const styles = {
     left: StyleSheet.create({
