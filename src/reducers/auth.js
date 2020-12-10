@@ -16,7 +16,7 @@ import {
   SHOW_LOADER,
   SWIPECARDLIMIT,
   THEME,
-} from '../actions/types';
+} from '../services/types';
 import {THEMES} from '../themes/themes';
 
 const initialAuthState = {

@@ -1,6 +1,6 @@
 import {NetInfo} from 'react-native';
 import App, {getStore} from '../../App';
-import {CONNECTION_STATE_CHANGED} from '../actions/types';
+import {CONNECTION_STATE_CHANGED} from '../services/types';
 
 NetInfo.isConnected.addEventListener('connectionChange', (isConnected) => {
   getStore.dispatch({

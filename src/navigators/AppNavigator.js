@@ -3,40 +3,40 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {connect} from 'react-redux';
-import SplashScreen from '../screens/SplashScreen';
+import Splash from '../screens/Splash';
 import enableFontPatch from './enableFontPatch';
-import GetStartedScreen from '../screens/auth/GetStartedScreen';
-import HomeScreen from '../screens/dashboard/home/HomeScreen';
-import LoginAndRegisterScreen from '../screens/auth/LoginAndRegisterScreen';
-import VerificationScreen from '../screens/auth/VerificationScreen';
-import RegistrationStepScreen from '../screens/auth/RegistrationStepScreen';
-import AddPhotoScreen from '../screens/auth/AddPhotoScreen';
-import CongratulationsScreen from '../screens/auth/CongratulationsScreen';
-import MenuScreen from '../screens/dashboard/menu/MenuScreen';
-import MatchesScreen from '../screens/dashboard/matches/MatchesScreen';
-import MessagesScreen from '../screens/dashboard/messages/MessagesScreen';
-import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMeScreen';
-import SeekerRequestScreen from '../screens/dashboard/seekers/SeekerRequestListsScreen';
-import PaymentPackagesScreen from '../screens/dashboard/payment/PaymentPackagesScreen';
-import PaymentMethodScreen from '../screens/dashboard/payment/PaymentMethodScreen';
-import NotificationsScreen from '../screens/dashboard/notifications/NotificationsScreen';
-import SeekerDetailScreen from '../screens/dashboard/seekers/SeekerDetailScreen';
-import SeekerListsScreen from '../screens/dashboard/seekers/SeekerListsScreen';
-import SeekerUsersScreen from '../screens/dashboard/seekers/SeekerUsersScreen';
-import SeekerSendRequestScreen from '../screens/dashboard/seekers/SeekerFormScreen';
-import SettingsScreen from '../screens/dashboard/settings/SettingsScreen';
-import AccountSettingScreen from '../screens/dashboard/settings/AccountSettingScreen';
-import MyProfileScreen from '../screens/dashboard/profile/MyProfileScreen';
-import OtherProfileScreen from '../screens/dashboard/profile/OtherProfileScreen';
-import AllPhotoScreen from '../screens/dashboard/profile/AllPhotoScreen';
-import ChatScreen from '../screens/dashboard/messages/ChatScreen';
-import VerifiedCodeScreen from '../screens/auth/VerifiedCodeScreen';
+import GetStartedScreen from '../screens/auth/GetStarted';
+import HomeScreen from '../screens/dashboard/home/Home';
+import LoginAndRegisterScreen from '../screens/auth/LoginAndRegister';
+import VerificationScreen from '../screens/auth/Verification';
+import RegistrationStepScreen from '../screens/auth/RegistrationStep';
+import AddPhotoScreen from '../screens/auth/AddPhoto';
+import CongratulationsScreen from '../screens/auth/Congratulations';
+import MenuScreen from '../screens/dashboard/menu/Menu';
+import MatchesScreen from '../screens/dashboard/matches/Matches';
+import MessagesScreen from '../screens/dashboard/messages/Messages';
+import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMe';
+import SeekerRequestScreen from '../screens/dashboard/seekers/SeekerRequestLists';
+import PaymentPackagesScreen from '../screens/dashboard/payment/PaymentPackages';
+import PaymentMethodScreen from '../screens/dashboard/payment/PaymentMethod';
+import NotificationsScreen from '../screens/dashboard/notifications/Notifications';
+import SeekerDetailScreen from '../screens/dashboard/seekers/SeekerDetail';
+import SeekerListsScreen from '../screens/dashboard/seekers/SeekerLists';
+import SeekerUsersScreen from '../screens/dashboard/seekers/SeekerUsers';
+import SeekerSendRequestScreen from '../screens/dashboard/seekers/SeekerForm';
+import SettingsScreen from '../screens/dashboard/settings/Settings';
+import AccountSettingScreen from '../screens/dashboard/settings/AccountSetting';
+import MyProfileScreen from '../screens/dashboard/profile/MyProfile';
+import OtherProfileScreen from '../screens/dashboard/profile/OtherProfile';
+import AllPhotoScreen from '../screens/dashboard/profile/AllPhoto';
+import ChatScreen from '../screens/dashboard/messages/Chat';
+import VerifiedCodeScreen from '../screens/auth/VerifiedCode';
 import {firebase} from '@react-native-firebase/analytics';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/config';
-import SelectInformationScreen from '../screens/dashboard/profile/SelectInformationScreen';
-import LoaderComponent from '../components/LoaderComponent';
-import SendMySeekerRequestScreen from '../screens/dashboard/seekers/SeekerMyRequestListsScreen';
+import SelectInformationScreen from '../screens/dashboard/profile/SelectInformation';
+import NHLoader from './components/NHLoader';
+import SendMySeekerRequestScreen from '../screens/dashboard/seekers/SeekerMyRequestLists';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -167,7 +167,7 @@ class AppNavigator extends React.PureComponent {
   render() {
     const {user, loading} = this.props;
 
-    if (loading) return <SplashScreen />;
+    if (loading) return <Splash />;
 
     return (
       <NavigationContainer>
@@ -208,7 +208,7 @@ class AppNavigator extends React.PureComponent {
             <Drawer.Screen name="Settings" component={SettingStackScreen} />
           </Drawer.Navigator>
         )}
-        <LoaderComponent loading={this.props.showLoader} />
+        <NHLoader loading={this.props.showLoader} />
       </NavigationContainer>
     );
   }

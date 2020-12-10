@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import HeaderComponent from '../../../components/general/HeaderComponent';
+import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import FastImage from 'react-native-fast-image';
@@ -42,7 +42,7 @@ class CongraMatchModal extends Component {
           styles.container,
           {backgroundColor: theme.container.backgroundColor},
         ]}>
-        <HeaderComponent
+        <NHHeader
           title={'Congratulations!'}
           titleStyle={{fontSize: 14, fontWeight: '400'}}
           theme={theme}

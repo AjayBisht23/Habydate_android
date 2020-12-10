@@ -14,13 +14,13 @@ import {
   LOGOUT,
   SHOW_LOADER,
   STORAGE_KEY,
-} from '../actions/types';
+} from '../services/types';
 import {getStore} from '../../App';
 import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
-import {updateUserAction} from '../actions/userAction';
+import {updateUserAction} from '../services/userAction';
 
 export const {OS} = Platform;
 export const TouchableFeedback =
