@@ -47,99 +47,108 @@ const navigationOption = () => {
   return {
     headerShown: false,
     headerBackTitleVisible: false,
-    gestureEnabled: false
+    gestureEnabled: false,
   };
 };
 
 let appNav = null;
 
 function CommonView() {
-    return (
-        <>
-            <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
-            <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
-            <Stack.Screen name="ChatScreen" component={ChatScreen} />
-            <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
-            <Stack.Screen name="SelectionInformation" component={SelectInformationScreen} />
-            <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
-            <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
-        </>
-    )
+  return (
+    <>
+      <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
+      <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
+      <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
+      <Stack.Screen
+        name="SelectionInformation"
+        component={SelectInformationScreen}
+      />
+      <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
+      <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
+    </>
+  );
 }
 
 function HomeStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function MyProfileStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="MyProfile" component={MyProfileScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="MyProfile" component={MyProfileScreen} />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function PaymentStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
-            <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
+    </Stack.Navigator>
+  );
 }
 
 function MatchesStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="Matches" component={MatchesScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="Matches" component={MatchesScreen} />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function MessagesStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="Messages" component={MessagesScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="Messages" component={MessagesScreen} />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function NotificationStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="Notification" component={NotificationsScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="Notification" component={NotificationsScreen} />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function SeekerStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="SeekerList" component={SeekerListsScreen} />
-            <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
-            <Stack.Screen name="SeekerSendRequest" component={SeekerSendRequestScreen} />
-            <Stack.Screen name="SendMySeekerRequest" component={SendMySeekerRequestScreen} />
-            {CommonView()}
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="SeekerList" component={SeekerListsScreen} />
+      <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
+      <Stack.Screen
+        name="SeekerSendRequest"
+        component={SeekerSendRequestScreen}
+      />
+      <Stack.Screen
+        name="SendMySeekerRequest"
+        component={SendMySeekerRequestScreen}
+      />
+      {CommonView()}
+    </Stack.Navigator>
+  );
 }
 
 function SettingStackScreen() {
-    return (
-        <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="Setting" component={SettingsScreen} />
-            <Stack.Screen name="AccountSetting" component={AccountSettingScreen} />
-        </Stack.Navigator>
-    );
+  return (
+    <Stack.Navigator screenOptions={navigationOption()}>
+      <Stack.Screen name="Setting" component={SettingsScreen} />
+      <Stack.Screen name="AccountSetting" component={AccountSettingScreen} />
+    </Stack.Navigator>
+  );
 }
 
 class AppNavigator extends React.PureComponent {
@@ -151,43 +160,55 @@ class AppNavigator extends React.PureComponent {
     appNav = this;
     await firebase.analytics().setAnalyticsCollectionEnabled(true);
     GoogleSignin.configure({
-        webClientId: WEB_CLIENT_ID,
+      webClientId: WEB_CLIENT_ID,
     });
   }
 
   render() {
     const {user, loading} = this.props;
 
-    if (loading)
-      return <SplashScreen />;
+    if (loading) return <SplashScreen />;
 
     return (
       <NavigationContainer>
-          {
-            user === null
-              ? <Stack.Navigator screenOptions={navigationOption()}>
-                  <Stack.Screen name="GetStarted" component={GetStartedScreen}/>
-                  <Stack.Screen name="LoginAndRegister" component={LoginAndRegisterScreen}/>
-                  <Stack.Screen name="Verification" component={VerificationScreen}/>
-                  <Stack.Screen name="RegistrationStep" component={RegistrationStepScreen}/>
-                  <Stack.Screen name="AddPhoto" component={AddPhotoScreen}/>
-                  <Stack.Screen name="Congratulations" component={CongratulationsScreen}/>
-                  <Stack.Screen name="VerifiedCode" component={VerifiedCodeScreen}/>
-                </Stack.Navigator>
-              : <Drawer.Navigator initialRouteName="Home"
-                                  drawerContent={props => <MenuScreen {...props} />}
-                                  edgeWidth={0}>
-                  <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
-                  <Drawer.Screen name="Home" component={HomeStackScreen} />
-                  <Drawer.Screen name="Payments" component={PaymentStackScreen} />
-                  <Drawer.Screen name="Matches" component={MatchesStackScreen} />
-                  <Drawer.Screen name="Messages" component={MessagesStackScreen} />
-                  <Drawer.Screen name="Notifications" component={NotificationStackScreen} />
-                  <Drawer.Screen name="Seekers" component={SeekerStackScreen} />
-                  <Drawer.Screen name="Settings" component={SettingStackScreen} />
-                </Drawer.Navigator>
-          }
-          <LoaderComponent loading={this.props.showLoader}/>
+        {user === null ? (
+          <Stack.Navigator screenOptions={navigationOption()}>
+            <Stack.Screen name="GetStarted" component={GetStartedScreen} />
+            <Stack.Screen
+              name="LoginAndRegister"
+              component={LoginAndRegisterScreen}
+            />
+            <Stack.Screen name="Verification" component={VerificationScreen} />
+            <Stack.Screen
+              name="RegistrationStep"
+              component={RegistrationStepScreen}
+            />
+            <Stack.Screen name="AddPhoto" component={AddPhotoScreen} />
+            <Stack.Screen
+              name="Congratulations"
+              component={CongratulationsScreen}
+            />
+            <Stack.Screen name="VerifiedCode" component={VerifiedCodeScreen} />
+          </Stack.Navigator>
+        ) : (
+          <Drawer.Navigator
+            initialRouteName="Home"
+            drawerContent={(props) => <MenuScreen {...props} />}
+            edgeWidth={0}>
+            <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
+            <Drawer.Screen name="Home" component={HomeStackScreen} />
+            <Drawer.Screen name="Payments" component={PaymentStackScreen} />
+            <Drawer.Screen name="Matches" component={MatchesStackScreen} />
+            <Drawer.Screen name="Messages" component={MessagesStackScreen} />
+            <Drawer.Screen
+              name="Notifications"
+              component={NotificationStackScreen}
+            />
+            <Drawer.Screen name="Seekers" component={SeekerStackScreen} />
+            <Drawer.Screen name="Settings" component={SettingStackScreen} />
+          </Drawer.Navigator>
+        )}
+        <LoaderComponent loading={this.props.showLoader} />
       </NavigationContainer>
     );
   }

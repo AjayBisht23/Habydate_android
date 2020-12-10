@@ -1,8 +1,20 @@
 'use strict';
 
-import {Alert, Dimensions, Platform, StatusBar, TouchableWithoutFeedback} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Platform,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER, STORAGE_KEY} from '../actions/types';
+import {
+  HIDE_LOADER,
+  LOGIN,
+  LOGOUT,
+  SHOW_LOADER,
+  STORAGE_KEY,
+} from '../actions/types';
 import {getStore} from '../../App';
 import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';
@@ -11,7 +23,8 @@ import auth from '@react-native-firebase/auth';
 import {updateUserAction} from '../actions/userAction';
 
 export const {OS} = Platform;
-export const TouchableFeedback = OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
+export const TouchableFeedback =
+  OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
 
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
@@ -23,14 +36,14 @@ export const W_HEIGHT = Dimensions.get('window').height;
 export const W_WIDTH = Dimensions.get('window').width;
 
 export const ASPECT_RATIO = (value) => (value * W_HEIGHT) / 568;
-export const HEIGHT_RATIO = (value) => (value * W_HEIGHT);
+export const HEIGHT_RATIO = (value) => value * W_HEIGHT;
 
 let isIPhoneX = false;
 
 if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS) {
   isIPhoneX =
-      (W_WIDTH === X_WIDTH && W_HEIGHT === X_HEIGHT) ||
-      (W_WIDTH === XSMAX_WIDTH && W_HEIGHT === XSMAX_HEIGHT);
+    (W_WIDTH === X_WIDTH && W_HEIGHT === X_HEIGHT) ||
+    (W_WIDTH === XSMAX_WIDTH && W_HEIGHT === XSMAX_HEIGHT);
 }
 
 export function getStatusBarHeight(skipAndroid) {
@@ -41,22 +54,24 @@ export function getStatusBarHeight(skipAndroid) {
   });
 }
 
-export const Header_Height = getStatusBarHeight() + (Platform.OS === 'ios' ? 44 : 34);
+export const Header_Height =
+  getStatusBarHeight() + (Platform.OS === 'ios' ? 44 : 34);
 
-export const shadow = (elevation = 4, spread = 5, offsetX = 0, offsetY = 0) => Platform.select({
-  ios: {
-    shadowOffset: {
-      width: offsetX,
-      height: offsetY
+export const shadow = (elevation = 4, spread = 5, offsetX = 0, offsetY = 0) =>
+  Platform.select({
+    ios: {
+      shadowOffset: {
+        width: offsetX,
+        height: offsetY,
+      },
+      shadowOpacity: 0.5,
+      shadowRadius: spread,
+      shadowColor: TIMETEXTCOLOR,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: spread,
-    shadowColor: TIMETEXTCOLOR
-  },
-  android: {
-    elevation: elevation
-  }
-});
+    android: {
+      elevation: elevation,
+    },
+  });
 
 export const MAX_CARD_SWIPE_LIMIT = 5;
 
@@ -91,7 +106,7 @@ export const regex = {
   },
 
   validateUsername: (val) => {
-    return /^[A-Za-z0-9_]{3,20}$/.test(val)
+    return /^[A-Za-z0-9_]{3,20}$/.test(val);
   },
 
   matchPassword: (val1, val2) => {
@@ -143,8 +158,7 @@ export const regex = {
 
   getProfilePic: (photos) => {
     if (photos !== undefined) {
-      if (photos.length > 0)
-        return photos[0].photoUrl;
+      if (photos.length > 0) return photos[0].photoUrl;
       else
         return 'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png';
     } else
@@ -154,11 +168,9 @@ export const regex = {
   getAge: (dob) => {
     if (Boolean(dob)) {
       let birthday = moment(dob, 'MM / DD / YYYY');
-      let age  = moment().diff(birthday, 'years');
-      if (age > 0)
-        return `, ${age}`;
-      else
-        return '';
+      let age = moment().diff(birthday, 'years');
+      if (age > 0) return `, ${age}`;
+      else return '';
     } else {
       return '';
     }
@@ -174,20 +186,19 @@ export const regex = {
   },
 
   checkPremiumUser: (packageEndDate) => {
-     return Boolean(packageEndDate);
+    return Boolean(packageEndDate);
   },
 
   getDayLeft: (packageEndDate) => {
-     if (regex.checkPremiumUser(packageEndDate)) {
-       let endDate = moment.unix(packageEndDate).local();
-       let startData = moment();
-       return endDate.diff(startData, 'days');
-     } else
-       return 0;
+    if (regex.checkPremiumUser(packageEndDate)) {
+      let endDate = moment.unix(packageEndDate).local();
+      let startData = moment();
+      return endDate.diff(startData, 'days');
+    } else return 0;
   },
 
   isPremiumUser: (packageEndDate) => {
-      return regex.getDayLeft(packageEndDate) !== 0
+    return regex.getDayLeft(packageEndDate) !== 0;
   },
 
   logout: async (navigation) => {
@@ -214,7 +225,9 @@ export const regex = {
       let getUser = user._user;
       let uid = getUser.uid;
       updateUserAction(uid, {online: false}, 'register');
-      auth().signOut().then(() => console.log('User signed out!'));
+      auth()
+        .signOut()
+        .then(() => console.log('User signed out!'));
     }
   },
 

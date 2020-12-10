@@ -17,4 +17,3 @@ export const TEXTCOLOR = '#4F4F4F';
 export const TIMETEXTCOLOR = '#BDBDBD';
 export const BUBBLELEFT = '#F1F2F6';
 export const BUBBLERIGHT = '#9B0067';
-

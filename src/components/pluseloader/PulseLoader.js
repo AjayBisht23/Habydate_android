@@ -7,91 +7,93 @@ import {shadow} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 export default class LocationPulseLoader extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			circles: []
-		};
+    this.state = {
+      circles: [],
+    };
 
-		this.counter = 1;
-		this.setInterval = null;
-		this.anim = new Animated.Value(1);
-	}
+    this.counter = 1;
+    this.setInterval = null;
+    this.anim = new Animated.Value(1);
+  }
 
-	componentDidMount() {
-		this.setCircleInterval();
-	}
+  componentDidMount() {
+    this.setCircleInterval();
+  }
 
-	setCircleInterval() {
-		this.setInterval = setInterval(this.addCircle.bind(this), this.props.interval);
-		this.addCircle();
-	}
+  setCircleInterval() {
+    this.setInterval = setInterval(
+      this.addCircle.bind(this),
+      this.props.interval,
+    );
+    this.addCircle();
+  }
 
-	addCircle() {
-		this.setState({ circles: [...this.state.circles, this.counter] });
-		this.counter++;
-	}
+  addCircle() {
+    this.setState({circles: [...this.state.circles, this.counter]});
+    this.counter++;
+  }
 
-	onPressIn() {
-		Animated.timing(this.anim, {
-			toValue: this.props.pressInValue,
-			duration: this.props.pressDuration,
-			easing: this.props.pressInEasing,
-		}).start(() => clearInterval(this.setInterval));
-	}
+  onPressIn() {
+    Animated.timing(this.anim, {
+      toValue: this.props.pressInValue,
+      duration: this.props.pressDuration,
+      easing: this.props.pressInEasing,
+    }).start(() => clearInterval(this.setInterval));
+  }
 
-	onPressOut() {
-		Animated.timing(this.anim, {
-			toValue: 1,
-			duration: this.props.pressDuration,
-			easing: this.props.pressOutEasing,
-		}).start(this.setCircleInterval.bind(this));
-	}
+  onPressOut() {
+    Animated.timing(this.anim, {
+      toValue: 1,
+      duration: this.props.pressDuration,
+      easing: this.props.pressOutEasing,
+    }).start(this.setCircleInterval.bind(this));
+  }
 
-	render() {
-		const { size, avatar, avatarBackgroundColor, interval } = this.props;
+  render() {
+    const {size, avatar, avatarBackgroundColor, interval} = this.props;
 
-		return (
-			<View style={{
-				flex: 1,
-				backgroundColor: 'transparent',
-				justifyContent: 'center',
-				alignItems: 'center',
-			}}>
-				{this.state.circles.map((circle) => (
-					<Pulse
-						key={circle}
-						{...this.props}
-					/>
-				))}
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'transparent',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        {this.state.circles.map((circle) => (
+          <Pulse key={circle} {...this.props} />
+        ))}
 
-				<TouchableOpacity
-					activeOpacity={1}
-					onPressIn={this.onPressIn.bind(this)}
-					onPressOut={this.onPressOut.bind(this)}
-					style={{
-						transform: [{
-							scale: this.anim
-						}]
-					}}
-				>
-					<FastImage
-						source={{ uri: avatar }}
-						style={{
-							width: size,
-							height: size,
-							borderRadius: size/2,
-							backgroundColor: avatarBackgroundColor,
-							borderWidth: 2,
-							borderColor: White,
-							...shadow(5)
-						}}
-					/>
-				</TouchableOpacity>
-			</View>
-		);
-	}
+        <TouchableOpacity
+          activeOpacity={1}
+          onPressIn={this.onPressIn.bind(this)}
+          onPressOut={this.onPressOut.bind(this)}
+          style={{
+            transform: [
+              {
+                scale: this.anim,
+              },
+            ],
+          }}>
+          <FastImage
+            source={{uri: avatar}}
+            style={{
+              width: size,
+              height: size,
+              borderRadius: size / 2,
+              backgroundColor: avatarBackgroundColor,
+              borderWidth: 2,
+              borderColor: White,
+              ...shadow(5),
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 
 LocationPulseLoader.propTypes = {
@@ -121,4 +123,3 @@ LocationPulseLoader.defaultProps = {
   backgroundColor: PINK,
   getStyle: undefined,
 };
-

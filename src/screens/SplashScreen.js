@@ -25,20 +25,20 @@ class SplashScreen extends Component {
     try {
       userToken = await AsyncStorage.getItem('userToken');
       if (userToken !== null) {
-        getCurrentUser().then(user => {
-          StatusBar.setHidden(false);
-          let stepCompleted = user.user.stepCompleted;
-          if (stepCompleted > 8)
-            regex.setDashboard({token: user.user.uid, ...user.user});
-          else
+        getCurrentUser()
+          .then((user) => {
+            StatusBar.setHidden(false);
+            let stepCompleted = user.user.stepCompleted;
+            if (stepCompleted > 8)
+              regex.setDashboard({token: user.user.uid, ...user.user});
+            else this.openAuth();
+          })
+          .catch((error) => {
             this.openAuth();
-        }).catch((error) => {
-          this.openAuth();
-        })
-      } else
-        this.openAuth();
+          });
+      } else this.openAuth();
     } catch (e) {
-        this.openAuth();
+      this.openAuth();
     }
   };
 
@@ -57,7 +57,10 @@ class SplashScreen extends Component {
           justifyContent: 'center',
           backgroundColor: PINK,
         }}>
-        <FastImage source={require('./../assets/splash_logo.png')} style={{width: 136, height: 120}}/>
+        <FastImage
+          source={require('./../assets/splash_logo.png')}
+          style={{width: 136, height: 120}}
+        />
       </View>
     );
   }

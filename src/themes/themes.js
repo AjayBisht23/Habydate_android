@@ -1,15 +1,15 @@
 import {
-    Black,
-    BORDER,
-    BUBBLELEFT,
-    BUBBLERIGHT,
-    INFOTEXTCOLOR,
-    LIGHTWHITE,
-    PINK,
-    PRIMARYB,
-    TEXTCOLOR,
-    TIMETEXTCOLOR,
-    White,
+  Black,
+  BORDER,
+  BUBBLELEFT,
+  BUBBLERIGHT,
+  INFOTEXTCOLOR,
+  LIGHTWHITE,
+  PINK,
+  PRIMARYB,
+  TEXTCOLOR,
+  TIMETEXTCOLOR,
+  White,
 } from './constantColors';
 
 export const THEMES = [
@@ -32,21 +32,21 @@ export const THEMES = [
       backgroundColor: Black,
       left: {
         wrapper: {
-          backgroundColor: BUBBLELEFT
+          backgroundColor: BUBBLELEFT,
         },
         text: {
-          color: Black
-        }
+          color: Black,
+        },
       },
       right: {
         wrapper: {
-          backgroundColor: BUBBLERIGHT
+          backgroundColor: BUBBLERIGHT,
         },
         text: {
-          color: White
-        }
+          color: White,
+        },
       },
-    }
+    },
   },
   {
     key: 'DARK',
@@ -66,20 +66,20 @@ export const THEMES = [
       backgroundColor: Black,
       left: {
         wrapper: {
-          backgroundColor: BUBBLELEFT
+          backgroundColor: BUBBLELEFT,
         },
         text: {
-          color: Black
-        }
+          color: Black,
+        },
       },
       right: {
         wrapper: {
-          backgroundColor: BUBBLERIGHT
+          backgroundColor: BUBBLERIGHT,
         },
         text: {
-          color: White
-        }
+          color: White,
+        },
       },
-    }
+    },
   },
 ];

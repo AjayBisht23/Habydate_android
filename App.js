@@ -17,9 +17,9 @@ export const getStore = createStore(AppReducer);
 class App extends React.Component {
   render() {
     return (
-        <Provider store={getStore}>
-          <AppNavigator />
-        </Provider>
+      <Provider store={getStore}>
+        <AppNavigator />
+      </Provider>
     );
   }
 }
