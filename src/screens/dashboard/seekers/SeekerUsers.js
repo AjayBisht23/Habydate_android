@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import SeekerUser from './components/SeekerUser';
 import {discoverUsers} from '../../../services/userAction';
-import {regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 
 class SeekerUsers extends Component {
   constructor(props) {
@@ -73,9 +73,7 @@ class SeekerUsers extends Component {
           showsHorizontalScrollIndicator={false}
           data={nearByUsers}
           extraData={nearByUsers}
-          renderItem={({item}) => (
-            <SeekerUser {...this.props} item={item} />
-          )}
+          renderItem={({item}) => <SeekerUser {...this.props} item={item} />}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}
         />
@@ -94,11 +92,7 @@ class SeekerUsers extends Component {
           styles.container,
           {backgroundColor: theme.container.backgroundColor},
         ]}>
-        <NHHeader
-          title={title}
-          theme={theme}
-          onLeftPress={this.onBackPress}
-        />
+        <NHHeader title={title} theme={theme} onLeftPress={this.onBackPress} />
         <View
           style={[
             styles.container,

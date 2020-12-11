@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
-import {TouchableFeedback} from '../../../utils/regex';
 import {openCardModal, setUpStripe} from '../../../services/paymentAction';
 import moment from 'moment';
 
@@ -53,7 +52,7 @@ class PaymentMethod extends Component {
           <Text style={[styles.titleText, {color: theme.subSecondaryColor}]}>
             Choose your preferred payment method
           </Text>
-          <TouchableFeedback onPress={this.openCardDetail}>
+          <TouchableWithoutFeedback onPress={this.openCardDetail}>
             <View
               style={[
                 styles.optionView,
@@ -70,7 +69,7 @@ class PaymentMethod extends Component {
                 style={{fontSize: 30, color: theme.subPrimaryColor}}
               />
             </View>
-          </TouchableFeedback>
+          </TouchableWithoutFeedback>
           {/*<View style={[styles.optionView, {backgroundColor: theme.backgroundColor}]}>*/}
           {/*   <View style={{flex: 1}}>*/}
           {/*       <FastImage source={require('./../../../assets/paypal.png')} style={{width: 81, height: 20}}/>*/}

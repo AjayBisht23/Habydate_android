@@ -2,7 +2,7 @@ import {THEME} from '../services/types';
 import {THEMES} from '../themes/themes';
 
 const initialState = {
-  theme: THEMES[0],
+  theme: THEMES.light,
 };
 
 function theme(state = initialState, action) {

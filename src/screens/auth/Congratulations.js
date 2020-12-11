@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {ASPECT_RATIO, regex} from '../../utils/regex';
+import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 
 class Congratulations extends Component {
@@ -54,7 +54,7 @@ class Congratulations extends Component {
           </View>
           <CommonButton
             theme={theme}
-            container={{marginBottom: ASPECT_RATIO(60)}}
+            container={{marginBottom: regex.aspectRatio(60)}}
             backgroundColor={theme.pinkColor}
             borderColor={theme.pinkColor}
             textColor={theme.backgroundColor}

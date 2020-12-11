@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated, Dimensions, Easing, StyleSheet, View} from 'react-native';
-import {HEIGHT_RATIO} from '../../../../utils/regex';
+import regex from '../../../../utils/regex';
 
 const {height, width} = Dimensions.get('window');
 
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     left: width / 2,
-    top: HEIGHT_RATIO(0.88) / 2,
+    top: regex.heightRatio(0.88) / 2,
   },
   circle: {
     borderWidth: 4 * StyleSheet.hairlineWidth,

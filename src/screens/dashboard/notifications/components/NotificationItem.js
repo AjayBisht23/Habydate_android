@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {Icon} from 'native-base';
 import CommonButton from '../../../../components/general/CommonButton';
-import {regex, TouchableFeedback} from '../../../../utils/regex';
+import regex from '../../../../utils/regex';
 import {getSeekerTitle} from '../../../../services/generalAction';
 import moment from 'moment';
 import {updateSeekerRequestStatus} from '../../../../services/seekerAction';
@@ -121,7 +121,7 @@ class NotificationItem extends Component {
     const {user} = item;
 
     return (
-      <TouchableFeedback
+      <TouchableWithoutFeedback
         onPress={() =>
           navigation.navigate('OtherProfile', {profileData: user})
         }>
@@ -132,7 +132,7 @@ class NotificationItem extends Component {
           />
           <View style={[styles.infoView]}>{this.renderItem()}</View>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   }
 }

@@ -1,20 +1,8 @@
 'use strict';
 
-import {
-  Alert,
-  Dimensions,
-  Platform,
-  StatusBar,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {Alert, Dimensions, Platform, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  HIDE_LOADER,
-  LOGIN,
-  LOGOUT,
-  SHOW_LOADER,
-  STORAGE_KEY,
-} from '../services/types';
+import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER} from '../services/types';
 import {getStore} from '../../App';
 import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';
@@ -22,60 +10,36 @@ import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 import {updateUserAction} from '../services/userAction';
 
-export const {OS} = Platform;
-export const TouchableFeedback =
-  OS === 'ios' ? TouchableWithoutFeedback : TouchableWithoutFeedback;
+const helper = {
+  getOS: () => Platform.OS,
 
-const X_WIDTH = 375;
-const X_HEIGHT = 812;
+  getWindowHeight: () => Dimensions.get('window').height,
 
-const XSMAX_WIDTH = 414;
-const XSMAX_HEIGHT = 896;
+  getWindowWidth: () => Dimensions.get('window').width,
 
-export const W_HEIGHT = Dimensions.get('window').height;
-export const W_WIDTH = Dimensions.get('window').width;
+  aspectRatio: (value) => (value * helper.getWindowHeight()) / 568,
 
-export const ASPECT_RATIO = (value) => (value * W_HEIGHT) / 568;
-export const HEIGHT_RATIO = (value) => value * W_HEIGHT;
+  heightRatio: (value) => value * helper.getWindowHeight(),
 
-let isIPhoneX = false;
-
-if (Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS) {
-  isIPhoneX =
-    (W_WIDTH === X_WIDTH && W_HEIGHT === X_HEIGHT) ||
-    (W_WIDTH === XSMAX_WIDTH && W_HEIGHT === XSMAX_HEIGHT);
-}
-
-export function getStatusBarHeight(skipAndroid) {
-  return Platform.select({
-    ios: isIPhoneX ? 40 : 20,
-    android: skipAndroid ? 0 : StatusBar.currentHeight,
-    default: 0,
-  });
-}
-
-export const Header_Height =
-  getStatusBarHeight() + (Platform.OS === 'ios' ? 44 : 34);
-
-export const shadow = (elevation = 4, spread = 5, offsetX = 0, offsetY = 0) =>
-  Platform.select({
-    ios: {
-      shadowOffset: {
-        width: offsetX,
-        height: offsetY,
+  shadow: (elevation = 4, spread = 5, offsetX = 0, offsetY = 0) => {
+    return Platform.select({
+      ios: {
+        shadowOffset: {
+          width: offsetX,
+          height: offsetY,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: spread,
+        shadowColor: TIMETEXTCOLOR,
       },
-      shadowOpacity: 0.5,
-      shadowRadius: spread,
-      shadowColor: TIMETEXTCOLOR,
-    },
-    android: {
-      elevation: elevation,
-    },
-  });
+      android: {
+        elevation: elevation,
+      },
+    });
+  },
 
-export const MAX_CARD_SWIPE_LIMIT = 5;
+  getSwipeCardLimit: () => 5,
 
-export const regex = {
   isEmpty: (val) => {
     switch (val) {
       case '':
@@ -101,58 +65,15 @@ export const regex = {
     return /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/.test(val);
   },
 
-  validatePassword: (val) => {
-    return /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9!@#$%^&*_]\S{5,16}$/.test(val);
-  },
-
   validateUsername: (val) => {
     return /^[A-Za-z0-9_]{3,20}$/.test(val);
-  },
-
-  matchPassword: (val1, val2) => {
-    if (val1 !== val2) {
-      return false;
-    } else {
-      return true;
-    }
-  },
-
-  hasNotch: () => {
-    let hasNotch = false;
-    if (Platform.OS === 'android') {
-      hasNotch = StatusBar.currentHeight > 24;
-    } else {
-      hasNotch = StatusBar.currentHeight > 20;
-    }
-
-    return hasNotch;
-  },
-
-  sortData: (property) => {
-    let sortOrder = 1;
-    if (property[0] === '-') {
-      sortOrder = -1;
-      property = property.substr(1);
-    }
-    return function (a, b) {
-      let result =
-        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-      return result * sortOrder;
-    };
   },
 
   isInt: (n) => {
     return Number(n) === n && n % 1 === 0;
   },
 
-  isFloat: (n) => {
-    return Number(n) === n && n % 1 !== 0;
-  },
-
   changeStatusStyle: (type) => {
-    // if (OS === 'android')
-    //   StatusBar.setHidden(true);
-
     StatusBar.setBarStyle(type, true);
   },
 
@@ -180,7 +101,7 @@ export const regex = {
     return new Promise(async (resolve, reject) => {
       await AsyncStorage.setItem('userToken', JSON.stringify(data.token));
       getStore.dispatch({type: LOGIN, payload: data});
-      regex.changeStatusStyle('light-content');
+      helper.changeStatusStyle('light-content');
       resolve(true);
     });
   },
@@ -190,7 +111,7 @@ export const regex = {
   },
 
   getDayLeft: (packageEndDate) => {
-    if (regex.checkPremiumUser(packageEndDate)) {
+    if (helper.checkPremiumUser(packageEndDate)) {
       let endDate = moment.unix(packageEndDate).local();
       let startData = moment();
       return endDate.diff(startData, 'days');
@@ -198,7 +119,7 @@ export const regex = {
   },
 
   isPremiumUser: (packageEndDate) => {
-    return regex.getDayLeft(packageEndDate) !== 0;
+    return helper.getDayLeft(packageEndDate) !== 0;
   },
 
   logout: async (navigation) => {
@@ -211,7 +132,7 @@ export const regex = {
           text: 'OK',
           onPress: () => {
             navigation.closeDrawer();
-            regex.clearData();
+            helper.clearData();
           },
         },
       ],
@@ -232,8 +153,8 @@ export const regex = {
   },
 
   clearData: async () => {
-    regex.authSignOut();
-    regex.changeStatusStyle('default');
+    helper.authSignOut();
+    helper.changeStatusStyle('default');
     await AsyncStorage.clear();
     getStore.dispatch({type: LOGOUT});
   },
@@ -249,11 +170,6 @@ export const regex = {
       type: HIDE_LOADER,
     });
   },
-
-  setThemeID: (theme) => {
-    return new Promise(async (resolve, reject) => {
-      await AsyncStorage.setItem(STORAGE_KEY, theme.key);
-      resolve(true);
-    });
-  },
 };
+
+export default helper;

@@ -2,7 +2,7 @@ import {SET_USER_DATA} from './types';
 import {usersCollection} from './../config/firestore';
 import {getStore} from '../../App';
 import auth from '@react-native-firebase/auth';
-import {regex} from '../utils/regex';
+import regex from '../utils/regex';
 import {getGeoHashRange} from '../utils/location';
 
 export function createNewUserAction(uid, parameter) {

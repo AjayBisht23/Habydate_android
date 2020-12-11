@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {regex, TouchableFeedback} from '../../../../utils/regex';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE, PINK, White} from '../../../../themes/constantColors';
 import moment from 'moment';
@@ -17,7 +17,7 @@ class MessagesItem extends Component {
 
     let checkRead = Boolean(item[uid]) ? item[uid] < createdAt : true;
     return (
-      <TouchableFeedback
+      <TouchableWithoutFeedback
         onPress={() =>
           navigation.navigate('ChatScreen', {
             conversation: item,
@@ -67,7 +67,7 @@ class MessagesItem extends Component {
             </View>
           </View>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   }
 }

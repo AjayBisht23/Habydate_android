@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import {Header, Icon} from 'native-base';
 import {White} from '../../themes/constantColors';
-import {TouchableFeedback} from '../../utils/regex';
 
 class NHHeader extends React.PureComponent {
   render() {
@@ -24,7 +23,7 @@ class NHHeader extends React.PureComponent {
         <Header style={styles.header} transparent androidStatusBarColor={White}>
           <View style={styles.container}>
             {currentIndex === 1 ? (
-              <TouchableFeedback onPress={() => onLeftPress(1)}>
+              <TouchableWithoutFeedback onPress={() => onLeftPress(1)}>
                 <View style={styles.buttonView}>
                   <Icon
                     type={'Feather'}
@@ -32,9 +31,9 @@ class NHHeader extends React.PureComponent {
                     style={{fontSize: 35, color: theme.primaryColor}}
                   />
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
             ) : (
-              <TouchableFeedback onPress={() => onLeftPress(2)}>
+              <TouchableWithoutFeedback onPress={() => onLeftPress(2)}>
                 <View
                   style={[
                     styles.buttonView,
@@ -49,7 +48,7 @@ class NHHeader extends React.PureComponent {
                     Previous
                   </Text>
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
             )}
             <View style={styles.bodyView}>
               <View style={{flexDirection: 'row'}}>
@@ -72,7 +71,7 @@ class NHHeader extends React.PureComponent {
               </View>
             </View>
             {getIndex > 2 ? (
-              <TouchableFeedback onPress={() => onLeftPress(3)}>
+              <TouchableWithoutFeedback onPress={() => onLeftPress(3)}>
                 <View
                   style={[
                     styles.buttonView,
@@ -87,7 +86,7 @@ class NHHeader extends React.PureComponent {
                     Skip
                   </Text>
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
             ) : (
               <View style={[styles.buttonView]} />
             )}
@@ -102,7 +101,7 @@ class NHHeader extends React.PureComponent {
           {leftView ? (
             leftView
           ) : (
-            <TouchableFeedback onPress={() => onLeftPress()}>
+            <TouchableWithoutFeedback onPress={() => onLeftPress()}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -110,7 +109,7 @@ class NHHeader extends React.PureComponent {
                   style={{fontSize: 35, color: theme.primaryColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           )}
           <View style={styles.bodyView}>
             {title && (

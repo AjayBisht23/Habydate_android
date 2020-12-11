@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import MatchItem from './components/MatchItem';
 import {getAllMatchesLists} from '../../../services/matchesAction';
-import {regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 
 class Matches extends Component {
   constructor(props) {

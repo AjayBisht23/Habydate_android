@@ -46,9 +46,7 @@ class AllPhoto extends Component {
             showsHorizontalScrollIndicator={false}
             data={photoData}
             extraData={photoData}
-            renderItem={({item}) => (
-              <AllPhotoItem theme={theme} item={item} />
-            )}
+            renderItem={({item}) => <AllPhotoItem theme={theme} item={item} />}
             numColumns={2}
             keyExtractor={(item, index) => index.toString()}
           />

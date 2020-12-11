@@ -12,9 +12,8 @@ import {
   White,
 } from './constantColors';
 
-export const THEMES = [
-  {
-    key: 'LIGHT',
+export const THEMES = {
+  light: {
     container: {
       backgroundColor: White,
       headerTextColor: Black,
@@ -48,7 +47,7 @@ export const THEMES = [
       },
     },
   },
-  {
+  dark: {
     key: 'DARK',
     container: {
       backgroundColor: White,
@@ -82,4 +81,4 @@ export const THEMES = [
       },
     },
   },
-];
+};

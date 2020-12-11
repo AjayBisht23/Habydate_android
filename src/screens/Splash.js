@@ -3,7 +3,7 @@ import {StatusBar, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {LOGOUT} from '../services/types';
 import {getStore} from '../../App';
-import {regex} from '../utils/regex';
+import regex from '../utils/regex';
 import {PINK} from '../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import {getCurrentUser} from '../services/userAction';

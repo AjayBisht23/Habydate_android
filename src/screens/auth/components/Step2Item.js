@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import CommonButton from '../../../components/general/CommonButton';
-import {ASPECT_RATIO, regex, W_WIDTH} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import HeightModal from './HeightModal';
 import {DatePickerDialog} from 'react-native-datepicker-dialog';
 import moment from 'moment';
@@ -198,7 +198,7 @@ class Step2Item extends Component {
             />
             <CommonButton
               theme={theme}
-              container={{marginVertical: ASPECT_RATIO(30)}}
+              container={{marginVertical: regex.aspectRatio(30)}}
               backgroundColor={theme.pinkColor}
               borderColor={theme.pinkColor}
               textColor={theme.backgroundColor}
@@ -237,7 +237,7 @@ export default Step2Item;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: W_WIDTH,
+    width: regex.getWindowWidth(),
   },
   titleText: {
     marginHorizontal: 20,

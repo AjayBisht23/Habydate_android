@@ -1,5 +1,5 @@
 import stripe from 'tipsi-stripe';
-import {regex} from '../utils/regex';
+import regex from '../utils/regex';
 import {updateUserAction} from './userAction';
 import {
   IS_STRIPE_LIVE,

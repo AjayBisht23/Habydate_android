@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {HEIGHT_RATIO} from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
+import regex from '../../utils/regex';
 
 class AllPhotoItem extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ export default AllPhotoItem;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: HEIGHT_RATIO(0.22),
+    height: regex.heightRatio(0.22),
     marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 10,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   imageView: {
     width: null,
-    height: HEIGHT_RATIO(0.22),
+    height: regex.heightRatio(0.22),
     borderRadius: 10,
   },
 });

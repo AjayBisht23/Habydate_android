@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {regex, TouchableFeedback} from '../../../../utils/regex';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import CommonButton from '../../../../components/general/CommonButton';
 import {
@@ -45,7 +45,7 @@ class SeekerRequest extends Component {
     const {user, request_status} = item;
 
     return (
-      <TouchableFeedback onPress={this.onCardPress}>
+      <TouchableWithoutFeedback onPress={this.onCardPress}>
         <View style={[styles.container, {borderColor: theme.borderColor}]}>
           <FastImage
             source={{uri: regex.getProfilePic(user.photos)}}
@@ -134,7 +134,7 @@ class SeekerRequest extends Component {
             </View>
           </View>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   }
 }

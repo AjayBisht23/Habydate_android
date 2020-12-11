@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {
-  ASPECT_RATIO,
-  regex,
-  shadow,
-  TouchableFeedback,
-} from '../../utils/regex';
+import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import {getFacebookData, getGoogleData} from '../../services/socialLogin';
 import {getUserDataAndUpdateInFirestore} from '../../services/userAction';
@@ -93,7 +94,7 @@ class GetStarted extends Component {
             </Text>
             <CommonButton
               theme={theme}
-              container={{marginTop: ASPECT_RATIO(45)}}
+              container={{marginTop: regex.aspectRatio(45)}}
               backgroundColor={theme.pinkColor}
               borderColor={theme.pinkColor}
               textColor={theme.backgroundColor}
@@ -102,7 +103,7 @@ class GetStarted extends Component {
             />
             <CommonButton
               theme={theme}
-              container={{marginTop: ASPECT_RATIO(10)}}
+              container={{marginTop: regex.aspectRatio(10)}}
               backgroundColor={theme.backgroundColor}
               borderColor={theme.pinkColor}
               textColor={theme.pinkColor}
@@ -130,7 +131,7 @@ class GetStarted extends Component {
             </View>
             <View style={styles.bottomView}>
               <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                <TouchableFeedback onPress={this.facebookPress}>
+                <TouchableWithoutFeedback onPress={this.facebookPress}>
                   <View
                     style={[
                       styles.socialView,
@@ -144,8 +145,8 @@ class GetStarted extends Component {
                       style={styles.socialIcon}
                     />
                   </View>
-                </TouchableFeedback>
-                <TouchableFeedback onPress={this.googlePress}>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.googlePress}>
                   <View
                     style={[
                       styles.socialView,
@@ -159,7 +160,7 @@ class GetStarted extends Component {
                       style={styles.socialIcon}
                     />
                   </View>
-                </TouchableFeedback>
+                </TouchableWithoutFeedback>
               </View>
               <View
                 style={{
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
   iconView: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: ASPECT_RATIO(45),
+    marginVertical: regex.aspectRatio(45),
   },
   titleText: {
     textAlign: 'center',
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
   },
   orView: {
     flexDirection: 'row',
-    marginVertical: ASPECT_RATIO(25),
+    marginVertical: regex.aspectRatio(25),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -229,12 +230,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   socialView: {
-    borderRadius: ASPECT_RATIO(30),
-    ...shadow(5),
+    borderRadius: regex.aspectRatio(30),
+    ...regex.shadow(5),
   },
   socialIcon: {
-    width: ASPECT_RATIO(45),
-    height: ASPECT_RATIO(45),
+    width: regex.aspectRatio(45),
+    height: regex.aspectRatio(45),
   },
   infoText: {
     fontSize: 14,

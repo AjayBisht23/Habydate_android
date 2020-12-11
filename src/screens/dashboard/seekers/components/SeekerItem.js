@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableFeedback, W_WIDTH} from '../../../../utils/regex';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 class SeekerItem extends Component {
@@ -12,7 +12,7 @@ class SeekerItem extends Component {
     const {theme, item, navigation} = this.props;
 
     return (
-      <TouchableFeedback
+      <TouchableWithoutFeedback
         onPress={() => navigation.navigate('SeekerUser', {seeker: item})}>
         <View style={[styles.container, {borderColor: theme.borderColor}]}>
           <FastImage source={item.source} style={[styles.imageView]} />
@@ -20,14 +20,14 @@ class SeekerItem extends Component {
             {item.title}
           </Text>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   }
 }
 
 export default SeekerItem;
 
-const totalWidth = W_WIDTH / 3;
+const totalWidth = regex.getWindowWidth() / 3;
 const imageWidth = totalWidth - 40;
 
 const styles = StyleSheet.create({

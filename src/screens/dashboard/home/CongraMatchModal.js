@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
 import FastImage from 'react-native-fast-image';
-import {regex, shadow, TouchableFeedback} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {ONLINE} from '../../../themes/constantColors';
 import {distance} from '../../../utils/location';
 
@@ -47,7 +47,7 @@ class CongraMatchModal extends Component {
           titleStyle={{fontSize: 14, fontWeight: '400'}}
           theme={theme}
           leftView={
-            <TouchableFeedback onPress={this.onClosePress}>
+            <TouchableWithoutFeedback onPress={this.onClosePress}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -55,7 +55,7 @@ class CongraMatchModal extends Component {
                   style={{fontSize: 28, color: theme.subSecondaryColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           }
         />
         <View
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     borderWidth: 1,
-    ...shadow(),
+    ...regex.shadow(),
   },
   onlineView: {
     width: 10,

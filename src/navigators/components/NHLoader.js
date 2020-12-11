@@ -1,7 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, Modal, StyleSheet, View} from 'react-native';
 import {PINK, White} from '../../themes/constantColors';
-import {shadow} from '../../utils/regex';
+import regex from '../../utils/regex';
 
 const NHLoader = (props) => {
   const {loading} = props;
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-around',
-    ...shadow(4),
+    ...regex.shadow(4),
   },
 });
 

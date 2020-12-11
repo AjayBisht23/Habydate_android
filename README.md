@@ -113,3 +113,7 @@ react-native run-ios
 ### Run
 
 - If you would like to ​run​ the app in ​Android​, you need to connect an Android phone to a system or you can ​run​ the app on an ​Android​ ​emulator​. Type ​react-native run-android​ Make sure that you have configured the AVD before running the command. If you would like to ​run​ the app on an ​iPhone​ ​simulator​(MacOS), run ​react-native run-ios​. ​NOTE:​ Make sure you run the Epicbae.xcworkspace​ project
+
+### App.js [navigators/enableFontPatch.js]
+
+- enableFontPatch(), This function set default font family for android because some phone have a issue of cut of font.      

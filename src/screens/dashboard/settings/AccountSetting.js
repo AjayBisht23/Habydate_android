@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import CommonTextInput from '../../../components/general/CommonTextInput';
 import CommonButton from '../../../components/general/CommonButton';
-import {regex, W_WIDTH} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import {updateUserAction} from '../../../services/userAction';
@@ -124,7 +124,7 @@ export default connect(mapStateToProps)(AccountSetting);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: W_WIDTH,
+    width: regex.getWindowWidth(),
   },
   titleText: {
     marginHorizontal: 20,

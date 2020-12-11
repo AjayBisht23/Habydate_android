@@ -18,7 +18,7 @@ const AppReducer = combineReducers({
   notification,
   conversation,
   seeker,
-  matche
+  matche,
 });
 
 export default AppReducer;

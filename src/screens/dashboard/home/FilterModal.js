@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from './../../../utils/regex';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import regex from './../../../utils/regex';
 import {Icon} from 'native-base';
 import Slider from 'react-native-slider';
 import CommonButton from '../../../components/general/CommonButton';
@@ -114,7 +121,7 @@ class FilterModal extends Component {
 
     let iconName = selected ? 'check-circle' : 'circle';
     return (
-      <TouchableFeedback onPress={() => this.onLookingPress(item)}>
+      <TouchableWithoutFeedback onPress={() => this.onLookingPress(item)}>
         <View style={[styles.renderItemView]}>
           <Icon
             type={'Feather'}
@@ -123,7 +130,7 @@ class FilterModal extends Component {
           />
           <Text style={styles.renderItemText}>{item.title}</Text>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -215,7 +222,7 @@ class FilterModal extends Component {
               </View>
               <View
                 style={[styles.commonView, {borderColor: theme.borderColor}]}>
-                <TouchableFeedback
+                <TouchableWithoutFeedback
                   onPress={() =>
                     this.setState({isLookingData: !isLookingData})
                   }>
@@ -235,7 +242,7 @@ class FilterModal extends Component {
                       />
                     </View>
                   </View>
-                </TouchableFeedback>
+                </TouchableWithoutFeedback>
                 {isLookingData && (
                   <View style={{marginTop: 10}}>
                     <FlatList
@@ -251,7 +258,7 @@ class FilterModal extends Component {
               </View>
               <View
                 style={[styles.commonView, {borderColor: theme.borderColor}]}>
-                <TouchableFeedback
+                <TouchableWithoutFeedback
                   onPress={() => this.setState({isShowMeData: !isShowMeData})}>
                   <View style={[styles.itemView]}>
                     <Text
@@ -269,7 +276,7 @@ class FilterModal extends Component {
                       />
                     </View>
                   </View>
-                </TouchableFeedback>
+                </TouchableWithoutFeedback>
                 {isShowMeData && (
                   <View style={{marginTop: 10}}>
                     <FlatList
@@ -340,8 +347,8 @@ export default FilterModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: ASPECT_RATIO(80),
-    width: W_WIDTH,
+    paddingTop: regex.aspectRatio(80),
+    width: regex.getWindowWidth(),
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   innerContainer: {

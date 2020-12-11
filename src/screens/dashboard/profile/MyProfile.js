@@ -6,15 +6,11 @@ import {
   Text,
   TextInput,
   View,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import {
-  HEIGHT_RATIO,
-  regex,
-  TouchableFeedback,
-  W_WIDTH,
-} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from 'native-base';
 import ReadMore from 'react-native-read-more-text';
@@ -163,7 +159,7 @@ class MyProfile extends Component {
     const {theme} = this.props;
     const {isEdit} = this.state;
     return (
-      <TouchableFeedback
+      <TouchableWithoutFeedback
         onPress={() => this.onItemInformationPress({title, value, index})}>
         <View
           style={[
@@ -193,7 +189,7 @@ class MyProfile extends Component {
             )}
           </View>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -247,7 +243,7 @@ class MyProfile extends Component {
           )}
           renderFixedHeader={() => (
             <View key="fixed-header" style={styles.fixedSection}>
-              <TouchableFeedback onPress={this.onBackPress}>
+              <TouchableWithoutFeedback onPress={this.onBackPress}>
                 <View style={styles.buttonView}>
                   <Icon
                     type={'Feather'}
@@ -255,9 +251,9 @@ class MyProfile extends Component {
                     style={{fontSize: 35, color: theme.backgroundColor}}
                   />
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableFeedback onPress={this.onEditPress}>
+                <TouchableWithoutFeedback onPress={this.onEditPress}>
                   <View style={styles.buttonView}>
                     <Icon
                       type={'Feather'}
@@ -265,7 +261,7 @@ class MyProfile extends Component {
                       style={{color: theme.backgroundColor}}
                     />
                   </View>
-                </TouchableFeedback>
+                </TouchableWithoutFeedback>
               </View>
             </View>
           )}>
@@ -290,7 +286,8 @@ class MyProfile extends Component {
                 styles.nameText,
                 {color: theme.primaryColor},
               ]}>{`${name}${regex.getAge(DoB)}`}</Text>
-            <TouchableFeedback onPress={() => navigation.navigate('Payments')}>
+            <TouchableWithoutFeedback
+              onPress={() => navigation.navigate('Payments')}>
               <View style={[styles.premiumView]}>
                 <View
                   style={[
@@ -311,7 +308,7 @@ class MyProfile extends Component {
                   </Text>
                 </View>
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
             {isEdit ? (
               <TextInput
                 style={[
@@ -390,7 +387,7 @@ class MyProfile extends Component {
                 keyExtractor={(item, index) => index.toString()}
               />
             </View>
-            <TouchableFeedback onPress={() => this.openLibrary()}>
+            <TouchableWithoutFeedback onPress={() => this.openLibrary()}>
               <View
                 style={[
                   styles.addPhotoView,
@@ -413,7 +410,7 @@ class MyProfile extends Component {
                   Add Photos
                 </Text>
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
 
             <View
               style={[
@@ -458,8 +455,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(MyProfile);
 
-const PARALLAX_HEADER_HEIGHT = HEIGHT_RATIO(0.468);
-const STICKY_HEADER_HEIGHT = HEIGHT_RATIO(0.103);
+const PARALLAX_HEADER_HEIGHT = regex.heightRatio(0.468);
+const STICKY_HEADER_HEIGHT = regex.heightRatio(0.103);
 
 const styles = StyleSheet.create({
   container: {
@@ -472,7 +469,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageView: {
-    width: W_WIDTH,
+    width: regex.getWindowWidth(),
     height: PARALLAX_HEADER_HEIGHT,
   },
   premiumView: {

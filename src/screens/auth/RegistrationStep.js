@@ -10,7 +10,7 @@ import Step5Item from './components/Step5Item';
 import Step6Item from './components/Step6Item';
 import Step7Item from './components/Step7Item';
 import Step8Item from './components/Step8Item';
-import {regex, W_WIDTH} from '../../utils/regex';
+import regex from '../../utils/regex';
 import {updateUserAction} from '../../services/userAction';
 
 class RegistrationStep extends Component {
@@ -62,7 +62,11 @@ class RegistrationStep extends Component {
       navigation.goBack();
     } else if (type === 2) {
       let index = currentIndex - 1;
-      this.scrollRef.scrollTo({x: (index - 1) * W_WIDTH, y: 0, animated: true});
+      this.scrollRef.scrollTo({
+        x: (index - 1) * regex.getWindowWidth(),
+        y: 0,
+        animated: true,
+      });
       this.setPage(index);
     } else if (type === 3) {
       this.onContinuesPress(currentIndex);
@@ -80,7 +84,11 @@ class RegistrationStep extends Component {
       navigation.navigate('AddPhoto', {data: this.getData});
       return;
     }
-    this.scrollRef.scrollTo({x: index * W_WIDTH, y: 0, animated: true});
+    this.scrollRef.scrollTo({
+      x: index * regex.getWindowWidth(),
+      y: 0,
+      animated: true,
+    });
     this.setPage(page);
     this.getData = {...this.getData, ...data};
     this.storeDataInFirestore(index, data);
@@ -128,7 +136,7 @@ class RegistrationStep extends Component {
 
   onScrollMoment = (e) => {
     let offset = e.nativeEvent.contentOffset;
-    let page = Math.round(offset.x / W_WIDTH) + 1;
+    let page = Math.round(offset.x / regex.getWindowWidth()) + 1;
     if (page > 8) return;
 
     this.setPage(page);

@@ -1,8 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, Switch, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {White} from '../../../themes/constantColors';
 import CommonButton from '../../../components/general/CommonButton';
 import {Icon} from 'native-base';
@@ -62,14 +68,14 @@ class PaymentPackages extends Component {
           <View style={styles.emptyView}>
             <FastImage
               source={require('./../../../assets/payment_background.png')}
-              style={{width: W_WIDTH, height: 238}}
+              style={{width: regex.getWindowWidth(), height: 238}}
             />
             <FastImage
               source={require('./../../../assets/payment_curve.png')}
               style={{
                 position: 'absolute',
                 top: 188,
-                width: W_WIDTH,
+                width: regex.getWindowWidth(),
                 height: 238,
               }}
             />
@@ -139,8 +145,8 @@ class PaymentPackages extends Component {
               <CommonButton
                 theme={theme}
                 container={{
-                  marginBottom: ASPECT_RATIO(10),
-                  marginTop: ASPECT_RATIO(10),
+                  marginBottom: regex.aspectRatio(10),
+                  marginTop: regex.aspectRatio(10),
                 }}
                 backgroundColor={theme.pinkColor}
                 borderColor={theme.pinkColor}
@@ -151,7 +157,7 @@ class PaymentPackages extends Component {
             </View>
           </View>
           <View style={{position: 'absolute', top: 40}}>
-            <TouchableFeedback onPress={this.onBackPress}>
+            <TouchableWithoutFeedback onPress={this.onBackPress}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -159,7 +165,7 @@ class PaymentPackages extends Component {
                   style={{fontSize: 35, color: theme.backgroundColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           </View>
         </View>
       </View>
@@ -211,7 +217,7 @@ const styles = StyleSheet.create({
   renderItemView: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: ASPECT_RATIO(2),
+    paddingVertical: regex.aspectRatio(2),
   },
   renderItemText: {
     marginLeft: 10,

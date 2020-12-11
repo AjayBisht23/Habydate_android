@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import regex from '../../../utils/regex';
 import {
   bodyTypeData,
   drinkingData,
@@ -119,7 +124,7 @@ class SelectInformation extends Component {
           title={route.params.title}
           theme={theme}
           rightView={
-            <TouchableFeedback onPress={this.onRightPress}>
+            <TouchableWithoutFeedback onPress={this.onRightPress}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -127,7 +132,7 @@ class SelectInformation extends Component {
                   style={{color: theme.pinkColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           }
           onLeftPress={this.onBackPress}
         />
@@ -158,7 +163,7 @@ export default connect(mapStateToProps)(SelectInformation);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: W_WIDTH,
+    width: regex.getWindowWidth(),
   },
   buttonView: {
     width: 45,

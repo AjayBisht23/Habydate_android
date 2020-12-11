@@ -1,6 +1,6 @@
 import {getStore} from '../../App';
 import moment from 'moment';
-import {regex} from '../utils/regex';
+import regex from '../utils/regex';
 import {seekerData} from '../json/seekerData';
 
 export function setFormatAsPerGiftedChatArray(response, otherUser) {

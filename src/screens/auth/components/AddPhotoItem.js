@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {shadow, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
+import regex from '../../../utils/regex';
 import {Icon} from 'native-base';
 import FastImage from 'react-native-fast-image';
 
@@ -31,7 +31,7 @@ class AddPhotoItem extends Component {
                   right: 0,
                 }}
               />
-              <TouchableFeedback onPress={() => removePhoto(index)}>
+              <TouchableWithoutFeedback onPress={() => removePhoto(index)}>
                 <View style={[styles.deleteView]}>
                   <Icon
                     type={'Feather'}
@@ -39,10 +39,10 @@ class AddPhotoItem extends Component {
                     style={{fontSize: 18, color: theme.backgroundColor}}
                   />
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
             </View>
           ) : (
-            <TouchableFeedback onPress={() => openLibrary(item)}>
+            <TouchableWithoutFeedback onPress={() => openLibrary(item)}>
               <View
                 style={[
                   styles.innerView,
@@ -60,7 +60,7 @@ class AddPhotoItem extends Component {
                   />
                 </View>
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           )}
         </View>
       </View>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     height: 200,
-    width: W_WIDTH / 2 - 20,
+    width: regex.getWindowWidth() / 2 - 20,
   },
   innerView: {
     flex: 1,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    ...shadow(5),
+    ...regex.shadow(5),
   },
   deleteView: {
     width: 42,
@@ -101,6 +101,6 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
     backgroundColor: '#1A1A1A95',
-    ...shadow(5),
+    ...regex.shadow(5),
   },
 });

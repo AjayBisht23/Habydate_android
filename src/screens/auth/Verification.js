@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import NHHeader from '../../components/general/NHHeader';
 import {CodeField, Cursor} from 'react-native-confirmation-code-field';
 import {Black, White} from '../../themes/constantColors';
-import {ASPECT_RATIO, regex, shadow, W_WIDTH} from '../../utils/regex';
+import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {getUserDataAndUpdateInFirestore} from '../../services/userAction';
@@ -126,7 +126,7 @@ class Verification extends Component {
               />
               <CommonButton
                 theme={theme}
-                container={{marginTop: ASPECT_RATIO(45)}}
+                container={{marginTop: regex.aspectRatio(45)}}
                 backgroundColor={theme.pinkColor}
                 borderColor={theme.pinkColor}
                 textColor={theme.backgroundColor}
@@ -135,7 +135,7 @@ class Verification extends Component {
               />
               <CommonButton
                 theme={theme}
-                container={{marginTop: ASPECT_RATIO(10)}}
+                container={{marginTop: regex.aspectRatio(10)}}
                 backgroundColor={'transparent'}
                 borderColor={'transparent'}
                 textColor={theme.pinkColor}
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   codeFiledRoot: {
     marginTop: 20,
-    width: W_WIDTH - 60,
+    width: regex.getWindowWidth() - 60,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: White,
-    ...shadow(4),
+    ...regex.shadow(4),
   },
   cellText: {
     color: Black,

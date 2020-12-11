@@ -1,32 +1,28 @@
-import {
-    LOGOUT,
-    MATCHES,
-    SWIPECARDLIMIT,
-} from '../services/types';
+import {LOGOUT, MATCHES, SWIPECARDLIMIT} from '../services/types';
 
 const initialAuthState = {
-    swipeCardLimit: 0,
-    matches: [],
+  swipeCardLimit: 0,
+  matches: [],
 };
 
 function matche(state = initialAuthState, action) {
-    switch (action.type) {
-        case SWIPECARDLIMIT:
-            return {...state, swipeCardLimit: action.payload};
+  switch (action.type) {
+    case SWIPECARDLIMIT:
+      return {...state, swipeCardLimit: action.payload};
 
-        case MATCHES:
-            return {...state, matches: action.payload};
+    case MATCHES:
+      return {...state, matches: action.payload};
 
-        case LOGOUT:
-            return {
-                ...state,
-                swipeCardLimit: 0,
-                matches: [],
-            };
+    case LOGOUT:
+      return {
+        ...state,
+        swipeCardLimit: 0,
+        matches: [],
+      };
 
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
 }
 
 export default matche;

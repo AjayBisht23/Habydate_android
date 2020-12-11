@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {seekerData} from '../../../json/seekerData';
 import NHHeader from '../../../components/general/NHHeader';
 import SeekerItem from './components/SeekerItem';
 import {Icon} from 'native-base';
-import {TouchableFeedback} from '../../../utils/regex';
 
 class SeekerLists extends Component {
   constructor(props) {
@@ -39,7 +43,7 @@ class SeekerLists extends Component {
           title={'Seekers'}
           theme={theme}
           rightView={
-            <TouchableFeedback onPress={this.onSendSeeker}>
+            <TouchableWithoutFeedback onPress={this.onSendSeeker}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -47,7 +51,7 @@ class SeekerLists extends Component {
                   style={{fontSize: 28, color: theme.primaryColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           }
           onLeftPress={this.onBackPress}
         />
@@ -65,11 +69,7 @@ class SeekerLists extends Component {
             data={seekerData}
             extraData={seekerData}
             renderItem={({item}) => (
-              <SeekerItem
-                theme={theme}
-                navigation={navigation}
-                item={item}
-              />
+              <SeekerItem theme={theme} navigation={navigation} item={item} />
             )}
             numColumns={3}
             keyExtractor={(item, index) => index.toString()}

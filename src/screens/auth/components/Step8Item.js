@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import CommonButton from '../../../components/general/CommonButton';
-import {W_WIDTH} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {
   drinkingData,
   eatingData,
@@ -168,7 +168,7 @@ export default Step8Item;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: W_WIDTH,
+    width: regex.getWindowWidth(),
   },
   titleText: {
     marginHorizontal: 20,

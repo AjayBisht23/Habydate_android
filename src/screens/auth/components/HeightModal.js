@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {ASPECT_RATIO, TouchableFeedback, W_WIDTH} from '../../../utils/regex';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import regex from '../../../utils/regex';
 import {Icon} from 'native-base';
 import {heightData} from '../../../json/generalCatogeryData';
 
@@ -29,7 +35,7 @@ class HeightModal extends Component {
       color: selected ? theme.pinkColor : theme.secondaryColor,
     };
     return (
-      <TouchableFeedback onPress={() => this.onHeightPress(item)}>
+      <TouchableWithoutFeedback onPress={() => this.onHeightPress(item)}>
         <View style={[styles.itemView, {borderColor: theme.borderColor}]}>
           <Text style={textStyle}>{item.title}</Text>
           {selected && (
@@ -41,7 +47,7 @@ class HeightModal extends Component {
           )}
           <Text style={textStyle}>{item.size}</Text>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -119,8 +125,8 @@ export default HeightModal;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: ASPECT_RATIO(80),
-    width: W_WIDTH,
+    paddingTop: regex.aspectRatio(80),
+    width: regex.getWindowWidth(),
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   innerContainer: {

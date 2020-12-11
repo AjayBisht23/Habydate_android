@@ -4,7 +4,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {connect} from 'react-redux';
 import Splash from '../screens/Splash';
-import enableFontPatch from './enableFontPatch';
 import GetStartedScreen from '../screens/auth/GetStarted';
 import HomeScreen from '../screens/dashboard/home/Home';
 import LoginAndRegisterScreen from '../screens/auth/LoginAndRegister';
@@ -40,8 +39,6 @@ import SendMySeekerRequestScreen from '../screens/dashboard/seekers/SeekerMyRequ
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
-
-enableFontPatch();
 
 const navigationOption = () => {
   return {

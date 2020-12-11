@@ -13,7 +13,7 @@ import NHHeader from '../../components/general/NHHeader';
 import {BORDER} from '../../themes/constantColors';
 import {Icon} from 'native-base';
 import CountryPicker from 'react-native-country-picker-modal';
-import {ASPECT_RATIO, regex} from '../../utils/regex';
+import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {signInPhone} from '../../services/socialLogin';
@@ -189,7 +189,7 @@ class LoginAndRegister extends Component {
               <View
                 style={{
                   marginHorizontal: 20,
-                  marginTop: ASPECT_RATIO(45),
+                  marginTop: regex.aspectRatio(45),
                   flexDirection: 'row',
                   justifyContent: 'center',
                 }}>
@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   },
   textView: {
     marginHorizontal: 20,
-    marginTop: ASPECT_RATIO(50),
+    marginTop: regex.aspectRatio(50),
     flexDirection: 'row',
     borderWidth: 1.5,
     borderColor: BORDER,

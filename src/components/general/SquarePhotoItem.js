@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {W_WIDTH} from '../../utils/regex';
+import regex from '../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 class SquarePhotoItem extends Component {
@@ -21,7 +21,7 @@ class SquarePhotoItem extends Component {
 
 export default SquarePhotoItem;
 
-const totalWidth = W_WIDTH - 40;
+const totalWidth = regex.getWindowWidth() - 40;
 
 const styles = StyleSheet.create({
   container: {

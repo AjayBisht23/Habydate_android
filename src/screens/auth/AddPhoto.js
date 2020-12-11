@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import AddPhotoItem from './components/AddPhotoItem';
 import ImagePicker from 'react-native-image-crop-picker';
 import {updateUserAction} from '../../services/userAction';
-import {regex, TouchableFeedback} from '../../utils/regex';
+import regex from '../../utils/regex';
 import {assetUploadInCloudinaryServer} from '../../services/cloudinaryStorage';
 
 class AddPhoto extends Component {
@@ -177,7 +182,7 @@ class AddPhoto extends Component {
           title={'Add Photos'}
           theme={theme}
           rightView={
-            <TouchableFeedback onPress={this.onRightPress}>
+            <TouchableWithoutFeedback onPress={this.onRightPress}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -185,7 +190,7 @@ class AddPhoto extends Component {
                   style={{color: theme.pinkColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           }
           onLeftPress={this.onBackPress}
         />

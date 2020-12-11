@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import {
-  ASPECT_RATIO,
-  regex,
-  shadow,
-  TouchableFeedback,
-} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import CommonButton from '../../../components/general/CommonButton';
 
 class Menu extends Component {
@@ -102,7 +104,7 @@ class Menu extends Component {
     else if (item.id === 4) count = notificationCount;
 
     return (
-      <TouchableFeedback onPress={() => this.onItemPress(item)}>
+      <TouchableWithoutFeedback onPress={() => this.onItemPress(item)}>
         <View
           style={{
             flexDirection: 'row',
@@ -142,7 +144,7 @@ class Menu extends Component {
             )
           )}
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   };
 
@@ -160,7 +162,7 @@ class Menu extends Component {
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
           <View style={[styles.innerView]}>
-            <View style={[styles.imageView, {...shadow(5)}]}>
+            <View style={[styles.imageView, {...regex.shadow(5)}]}>
               <FastImage
                 source={{uri: regex.getProfilePic(user.photos)}}
                 style={[styles.imageView]}
@@ -215,7 +217,7 @@ const styles = StyleSheet.create({
   innerView: {
     flex: 1,
     marginHorizontal: 20,
-    paddingTop: ASPECT_RATIO(45),
+    paddingTop: regex.aspectRatio(45),
   },
   imageView: {
     width: 80,

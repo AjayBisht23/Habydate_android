@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
-import {HEIGHT_RATIO, regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from 'native-base';
 import CommonButton from '../../../components/general/CommonButton';
@@ -43,11 +43,7 @@ class SeekerDetail extends Component {
           styles.container,
           {backgroundColor: theme.container.backgroundColor},
         ]}>
-        <NHHeader
-          title={title}
-          theme={theme}
-          onLeftPress={this.onBackPress}
-        />
+        <NHHeader title={title} theme={theme} onLeftPress={this.onBackPress} />
         <View style={[styles.innerView]}>
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -60,13 +56,13 @@ class SeekerDetail extends Component {
                 ]}>
                 <FastImage
                   source={{uri: regex.getProfilePic(user.photos)}}
-                  style={{width: null, height: HEIGHT_RATIO(0.45)}}
+                  style={{width: null, height: regex.heightRatio(0.45)}}
                 />
                 <FastImage
                   source={require('./../../../assets/seekerphotogradient.png')}
                   style={{
                     width: null,
-                    height: HEIGHT_RATIO(0.45),
+                    height: regex.heightRatio(0.45),
                     position: 'absolute',
                     bottom: 0,
                     left: 0,
@@ -218,7 +214,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userView: {
-    height: HEIGHT_RATIO(0.45),
+    height: regex.heightRatio(0.45),
     borderRadius: 5,
     overflow: 'hidden',
   },

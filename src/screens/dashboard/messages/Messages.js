@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import NHHeader from '../../../components/general/NHHeader';
 import MessagesItem from './components/MessagesItem';
 import {PINK} from '../../../themes/constantColors';
-import {TouchableFeedback} from '../../../utils/regex';
 import {getAllConversationLists} from '../../../services/conversationsAction';
 import {getSeekerRequestLists} from '../../../services/seekerAction';
 import {getWhoLikedMeLists} from '../../../services/swipeCardAction';
@@ -49,7 +54,8 @@ class Messages extends Component {
         {/*        value={true}*/}
         {/*    />*/}
         {/*</View>*/}
-        <TouchableFeedback onPress={() => navigation.navigate('SeekerRequest')}>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('SeekerRequest')}>
           <View style={[styles.rowView, {borderColor: theme.borderColor}]}>
             <Text style={[styles.headText, {color: theme.primaryColor}]}>
               Seekers Requests
@@ -70,8 +76,9 @@ class Messages extends Component {
               />
             </View>
           </View>
-        </TouchableFeedback>
-        <TouchableFeedback onPress={() => navigation.navigate('WhoLikeMe')}>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate('WhoLikeMe')}>
           <View style={[styles.rowView, {borderBottomWidth: 0}]}>
             <Text style={[styles.headText, {color: theme.primaryColor}]}>
               Who Likes Me
@@ -92,7 +99,7 @@ class Messages extends Component {
               />
             </View>
           </View>
-        </TouchableFeedback>
+        </TouchableWithoutFeedback>
         <Text style={[styles.titleText, {color: theme.primaryColor}]}>
           Messages
         </Text>

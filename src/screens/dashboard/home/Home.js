@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import Swiper from 'react-native-deck-swiper';
-import {AppState, Modal, StyleSheet, Text, View} from 'react-native';
+import {
+  AppState,
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import NHHeader from '../../../components/general/NHHeader';
-import {
-  HEIGHT_RATIO,
-  MAX_CARD_SWIPE_LIMIT,
-  regex,
-  shadow,
-  TouchableFeedback,
-} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {
   ONLINE,
   PINK,
@@ -191,7 +192,7 @@ class Home extends Component {
         let b = moment();
         let diff = a.diff(b, 'days');
         if (diff === 0) {
-          if (swipeCardLimit >= MAX_CARD_SWIPE_LIMIT) {
+          if (swipeCardLimit >= regex.getSwipeCardLimit()) {
             isUpdate = false;
             this.swiper.swipeBack();
             alert('You reached daily limit.');
@@ -351,7 +352,7 @@ class Home extends Component {
           renderCard={this.renderCardItem}
           onSwipedAll={this.onSwipedAllCards}
           backgroundColor={theme.primaryBackgroundColor}
-          containerStyle={{bottom: HEIGHT_RATIO(0.15)}}
+          containerStyle={{bottom: regex.heightRatio(0.15)}}
           stackSize={cards.length > 2 ? 3 : cards.length}
           stackSeparation={-30}
           overlayLabels={overlayLabel}
@@ -360,7 +361,8 @@ class Home extends Component {
           swipeBackCard
         />
         <View style={[styles.bottomView]}>
-          <TouchableFeedback onPress={() => this.onButtonPress('dislike')}>
+          <TouchableWithoutFeedback
+            onPress={() => this.onButtonPress('dislike')}>
             <View
               style={[
                 styles.commonLike,
@@ -372,8 +374,9 @@ class Home extends Component {
                 style={{color: RED, fontSize: 30}}
               />
             </View>
-          </TouchableFeedback>
-          <TouchableFeedback onPress={() => this.onButtonPress('superLike')}>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => this.onButtonPress('superLike')}>
             <View
               style={[
                 styles.commonLike,
@@ -389,8 +392,8 @@ class Home extends Component {
                 style={{color: SUPERLIKE, fontSize: 30}}
               />
             </View>
-          </TouchableFeedback>
-          <TouchableFeedback onPress={() => this.onButtonPress('like')}>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.onButtonPress('like')}>
             <View
               style={[
                 styles.commonLike,
@@ -402,7 +405,7 @@ class Home extends Component {
                 style={{color: theme.pinkColor, fontSize: 30}}
               />
             </View>
-          </TouchableFeedback>
+          </TouchableWithoutFeedback>
         </View>
       </View>
     );
@@ -422,7 +425,7 @@ class Home extends Component {
           title={'Discover'}
           theme={theme}
           leftView={
-            <TouchableFeedback onPress={this.onMenuPress}>
+            <TouchableWithoutFeedback onPress={this.onMenuPress}>
               <View style={styles.buttonView}>
                 <Icon
                   type={'Feather'}
@@ -430,11 +433,11 @@ class Home extends Component {
                   style={{fontSize: 28, color: theme.primaryColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           }
           rightView={
             <View style={{flexDirection: 'row'}}>
-              <TouchableFeedback onPress={this.onFilterPress}>
+              <TouchableWithoutFeedback onPress={this.onFilterPress}>
                 <View style={styles.buttonView}>
                   <Icon
                     type={'Feather'}
@@ -442,7 +445,7 @@ class Home extends Component {
                     style={{fontSize: 25, color: theme.primaryColor}}
                   />
                 </View>
-              </TouchableFeedback>
+              </TouchableWithoutFeedback>
             </View>
           }
         />
@@ -521,7 +524,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomView: {
-    height: HEIGHT_RATIO(0.15),
+    height: regex.heightRatio(0.15),
     flexDirection: 'row',
     position: 'absolute',
     bottom: 0,
@@ -533,16 +536,16 @@ const styles = StyleSheet.create({
   commonLike: {
     padding: 20,
     marginHorizontal: 8,
-    marginBottom: HEIGHT_RATIO(0.01),
+    marginBottom: regex.heightRatio(0.01),
     borderRadius: 40,
-    ...shadow(),
+    ...regex.shadow(),
   },
   cardView: {
-    height: HEIGHT_RATIO(0.63),
+    height: regex.heightRatio(0.63),
     borderRadius: 20,
     justifyContent: 'center',
     borderWidth: 1,
-    ...shadow(),
+    ...regex.shadow(),
   },
   onlineView: {
     width: 10,

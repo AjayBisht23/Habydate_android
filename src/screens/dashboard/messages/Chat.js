@@ -4,7 +4,7 @@ import {Composer, GiftedChat, Send} from 'react-native-gifted-chat';
 import {connect} from 'react-redux';
 import MessageInputToolBar from './components/MessageInputToolBar';
 import {Header, Icon, Right} from 'native-base';
-import {regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import MessageItem from './components/MessageItem';
 import FastImage from 'react-native-fast-image';
 import {PINK} from '../../../themes/constantColors';

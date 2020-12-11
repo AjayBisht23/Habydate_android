@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {regex, TouchableFeedback, W_WIDTH} from '../../../../utils/regex';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {ONLINE} from '../../../../themes/constantColors';
 import {Icon} from 'native-base';
@@ -16,7 +16,7 @@ class SeekerUser extends Component {
     let params = route.params;
 
     return (
-      <TouchableFeedback
+      <TouchableWithoutFeedback
         onPress={() =>
           navigation.navigate('SeekerSendRequest', {
             seeker: params.seeker,
@@ -73,7 +73,7 @@ class SeekerUser extends Component {
             </View>
           </View>
         </View>
-      </TouchableFeedback>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     height: 177,
-    width: W_WIDTH / 2 - 20,
+    width: regex.getWindowWidth() / 2 - 20,
     overflow: 'hidden',
   },
   innerView: {

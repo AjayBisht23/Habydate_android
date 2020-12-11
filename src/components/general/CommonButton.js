@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {TouchableFeedback} from '../../utils/regex';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import {Icon} from 'native-base';
 
 class CommonButton extends Component {
@@ -24,7 +23,7 @@ class CommonButton extends Component {
 
     return (
       <View style={[styles.viewContainer, container]}>
-        <TouchableFeedback onPress={() => onPress()}>
+        <TouchableWithoutFeedback onPress={() => onPress()}>
           <View
             style={[
               styles.buttonInnerContainer,
@@ -45,7 +44,7 @@ class CommonButton extends Component {
               />
             )}
           </View>
-        </TouchableFeedback>
+        </TouchableWithoutFeedback>
       </View>
     );
   }

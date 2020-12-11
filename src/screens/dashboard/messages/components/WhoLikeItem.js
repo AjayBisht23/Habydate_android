@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {regex} from '../../../../utils/regex';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import moment from 'moment';
 

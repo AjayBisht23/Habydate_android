@@ -1,7 +1,7 @@
 import React from 'react';
 import {Keyboard, StyleSheet, View} from 'react-native';
 import {Actions, Composer, Send} from 'react-native-gifted-chat';
-import {regex} from '../../../../utils/regex';
+import regex from '../../../../utils/regex';
 
 const styles = StyleSheet.create({
   container: {

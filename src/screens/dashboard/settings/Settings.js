@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
-import {Alert, ScrollView, StyleSheet, Switch, Text, View} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import {White} from '../../../themes/constantColors';
-import {regex, TouchableFeedback} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {deleteUser, updateUserAction} from '../../../services/userAction';
 import * as messages from '../../../utils/messages';
 
@@ -86,7 +94,7 @@ class Settings extends Component {
           <ScrollView
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}>
-            <TouchableFeedback
+            <TouchableWithoutFeedback
               onPress={() => navigation.navigate('AccountSetting')}>
               <View
                 style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
@@ -99,7 +107,7 @@ class Settings extends Component {
                   style={{color: theme.subSecondaryColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
             <View
               style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
               <Text style={[styles.text, {color: theme.subPrimaryColor}]}>
@@ -161,7 +169,7 @@ class Settings extends Component {
                 style={{color: theme.backgroundColor}}
               />
             </View>
-            <TouchableFeedback onPress={this.onDeletePress}>
+            <TouchableWithoutFeedback onPress={this.onDeletePress}>
               <View
                 style={[styles.view, {backgroundColor: theme.backgroundColor}]}>
                 <Text style={[styles.text, {color: theme.pinkColor}]}>
@@ -173,7 +181,7 @@ class Settings extends Component {
                   style={{color: theme.backgroundColor}}
                 />
               </View>
-            </TouchableFeedback>
+            </TouchableWithoutFeedback>
           </ScrollView>
         </View>
       </View>

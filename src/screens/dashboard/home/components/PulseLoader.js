@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Animated, Easing, TouchableOpacity, View} from 'react-native';
 import Pulse from './Pulse';
 import {PINK, White} from '../../../../themes/constantColors';
-import {shadow} from '../../../../utils/regex';
+import regex from '../../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 
 export default class LocationPulseLoader extends React.Component {
@@ -87,7 +87,7 @@ export default class LocationPulseLoader extends React.Component {
               backgroundColor: avatarBackgroundColor,
               borderWidth: 2,
               borderColor: White,
-              ...shadow(5),
+              ...regex.shadow(5),
             }}
           />
         </TouchableOpacity>

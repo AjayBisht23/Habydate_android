@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import SeekerRequest from './components/SeekerRequest';
 import FastImage from 'react-native-fast-image';
-import {regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {updateUserAction} from '../../../services/userAction';
 import {getStore} from '../../../../App';
 import {SEEKER_REQUESTS_COUNT} from '../../../services/types';

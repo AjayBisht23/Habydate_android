@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import WhoLikeItem from './components/WhoLikeItem';
-import {regex} from '../../../utils/regex';
+import regex from '../../../utils/regex';
 import {updateUserAction} from '../../../services/userAction';
 import {getStore} from '../../../../App';
 import {PEOPLE_WHO_LIKED_COUNT} from '../../../services/types';
@@ -60,9 +60,7 @@ class MessagesScreen extends Component {
           showsHorizontalScrollIndicator={false}
           data={peopleWhoLiked}
           extraData={peopleWhoLiked}
-          renderItem={({item}) => (
-            <WhoLikeItem theme={theme} item={item} />
-          )}
+          renderItem={({item}) => <WhoLikeItem theme={theme} item={item} />}
           keyExtractor={(item, index) => index.toString()}
         />
       );
