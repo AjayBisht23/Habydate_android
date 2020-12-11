@@ -112,9 +112,9 @@ class SeekerUsers extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  location: state.auth.location,
+  location: state.location.location,
 });
 
 export default connect(mapStateToProps)(SeekerUsers);

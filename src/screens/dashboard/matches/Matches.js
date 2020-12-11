@@ -85,9 +85,9 @@ class Matches extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  matches: state.auth.matches,
+  matches: state.matche.matches,
 });
 
 export default connect(mapStateToProps)(Matches);

@@ -452,7 +452,7 @@ class MyProfile extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
 });
 

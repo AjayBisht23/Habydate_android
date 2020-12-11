@@ -200,10 +200,10 @@ class Menu extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  notificationCount: state.auth.notificationCount,
-  conversationCount: state.auth.conversationCount,
+  notificationCount: state.notification.notificationCount,
+  conversationCount: state.conversation.conversationCount,
 });
 
 export default connect(mapStateToProps)(Menu);

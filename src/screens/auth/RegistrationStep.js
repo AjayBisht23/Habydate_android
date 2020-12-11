@@ -214,7 +214,7 @@ class RegistrationStep extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
 });
 
 export default connect(mapStateToProps)(RegistrationStep);

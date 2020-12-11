@@ -478,7 +478,7 @@ class Chat extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
 });
 

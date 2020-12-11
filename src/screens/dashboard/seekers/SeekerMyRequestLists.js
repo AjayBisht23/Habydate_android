@@ -68,9 +68,9 @@ class SeekerMyRequestLists extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  mySendSeekerRequests: state.auth.mySendSeekerRequests,
+  mySendSeekerRequests: state.seeker.mySendSeekerRequests,
 });
 
 export default connect(mapStateToProps)(SeekerMyRequestLists);

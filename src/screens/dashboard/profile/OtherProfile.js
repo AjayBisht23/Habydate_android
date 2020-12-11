@@ -297,8 +297,8 @@ class OtherProfile extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
-  location: state.auth.location,
+  theme: state.theme.theme,
+  location: state.location.location,
 });
 
 export default connect(mapStateToProps)(OtherProfile);

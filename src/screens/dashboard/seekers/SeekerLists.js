@@ -81,7 +81,7 @@ class SeekerLists extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
 });
 
 export default connect(mapStateToProps)(SeekerLists);

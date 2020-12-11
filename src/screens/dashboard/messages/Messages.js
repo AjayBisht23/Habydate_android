@@ -142,11 +142,11 @@ class Messages extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  conversations: state.auth.conversations,
-  seekerUnreadCount: state.auth.seekerUnreadCount,
-  whoLikedUnreadCount: state.auth.whoLikedUnreadCount,
+  conversations: state.conversation.conversations,
+  seekerUnreadCount: state.seeker.seekerUnreadCount,
+  whoLikedUnreadCount: state.peopleLiked.whoLikedUnreadCount,
 });
 
 export default connect(mapStateToProps)(Messages);

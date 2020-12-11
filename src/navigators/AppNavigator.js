@@ -217,8 +217,8 @@ class AppNavigator extends React.PureComponent {
 const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   user: state.auth.user,
-  theme: state.auth.theme,
-  showLoader: state.auth.showLoader,
+  theme: state.theme.theme,
+  showLoader: state.loader.showLoader,
 });
 
 export default connect(mapStateToProps)(AppNavigator);

@@ -499,10 +499,10 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  matches: state.auth.matches,
-  swipeCardLimit: state.auth.swipeCardLimit,
+  matches: state.matche.matches,
+  swipeCardLimit: state.matche.swipeCardLimit,
 });
 
 export default connect(mapStateToProps)(Home);

@@ -96,9 +96,9 @@ class MessagesScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.auth.theme,
+  theme: state.theme.theme,
   user: state.auth.user,
-  peopleWhoLiked: state.auth.peopleWhoLiked,
+  peopleWhoLiked: state.peopleLiked.peopleWhoLiked,
 });
 
 export default connect(mapStateToProps)(MessagesScreen);
