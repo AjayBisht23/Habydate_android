@@ -48,7 +48,7 @@ class AllPhoto extends Component {
             extraData={photoData}
             renderItem={({item}) => <AllPhotoItem theme={theme} item={item} />}
             numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.public_id.toString()}
           />
         </View>
       </View>

@@ -75,7 +75,7 @@ class SeekerUsers extends Component {
           extraData={nearByUsers}
           renderItem={({item}) => <SeekerUser {...this.props} item={item} />}
           numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.uid.toString()}
         />
       );
     }

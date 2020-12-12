@@ -214,7 +214,7 @@ class AddPhoto extends Component {
               />
             )}
             numColumns={2}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.id.toString()}
           />
         </View>
       </View>

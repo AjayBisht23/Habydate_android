@@ -72,7 +72,7 @@ class SeekerLists extends Component {
               <SeekerItem theme={theme} navigation={navigation} item={item} />
             )}
             numColumns={3}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.id.toString()}
           />
         </View>
       </View>

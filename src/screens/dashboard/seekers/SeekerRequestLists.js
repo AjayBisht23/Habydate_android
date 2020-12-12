@@ -73,7 +73,7 @@ class SeekerRequestLists extends Component {
               item={item}
             />
           )}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.seeker_id.toString()}
         />
       );
     }

@@ -61,7 +61,7 @@ class MessagesScreen extends Component {
           data={peopleWhoLiked}
           extraData={peopleWhoLiked}
           renderItem={({item}) => <WhoLikeItem theme={theme} item={item} />}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.uid.toString()}
         />
       );
     }

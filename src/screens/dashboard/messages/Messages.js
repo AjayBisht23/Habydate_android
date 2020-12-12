@@ -140,7 +140,7 @@ class Messages extends Component {
                 navigation={navigation}
               />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.matches_id.toString()}
           />
         </View>
       </View>

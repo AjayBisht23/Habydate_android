@@ -52,7 +52,7 @@ class Matches extends Component {
           extraData={matches}
           renderItem={({item}) => <MatchItem theme={theme} item={item} />}
           numColumns={2}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.customId.toString()}
         />
       );
     }

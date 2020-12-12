@@ -227,7 +227,7 @@ class OtherProfile extends Component {
                     <SquarePhotoItem theme={theme} item={item} />
                   )}
                   numColumns={3}
-                  keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(item, index) => item.public_id.toString()}
                 />
               </View>
             )}
@@ -273,7 +273,7 @@ class OtherProfile extends Component {
                     <SquarePhotoItem theme={theme} item={item} />
                   )}
                   numColumns={3}
-                  keyExtractor={(item, index) => index.toString()}
+                  keyExtractor={(item, index) => item.id.toString()}
                 />
               </View>
             )}
