@@ -13,7 +13,7 @@ export const getFacebookData = async () => {
     'email',
   ]);
   if (result.isCancelled) {
-    throw 'User cancelled the login process';
+    throw 'The user canceled the sign-in flow.';
   }
 
   // Once signed in, get the users AccesToken
