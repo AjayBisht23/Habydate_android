@@ -445,12 +445,28 @@ class MyProfile extends Component {
             {this.renderItemView('Body Type', bodyType, PAGE_NAME.BODY_TYPE)}
             {this.renderItemView('Gender', gender, PAGE_NAME.GENDER)}
             {this.renderItemView('Sexuality', sexuality, PAGE_NAME.SEXUALITY)}
-            {this.renderItemView('Personality', personality, PAGE_NAME.PERSONALITY)}
+            {this.renderItemView(
+              'Personality',
+              personality,
+              PAGE_NAME.PERSONALITY,
+            )}
             {this.renderItemView('Education', education, PAGE_NAME.EDUCATION)}
-            {this.renderItemView('Marital Status', maritalStatus, PAGE_NAME.MARITAL_STATUS)}
-            {this.renderItemView('Looking for', lookingFor, PAGE_NAME.LOOKING_FOR)}
+            {this.renderItemView(
+              'Marital Status',
+              maritalStatus,
+              PAGE_NAME.MARITAL_STATUS,
+            )}
+            {this.renderItemView(
+              'Looking for',
+              lookingFor,
+              PAGE_NAME.LOOKING_FOR,
+            )}
             {this.renderItemView('Religion', religion, PAGE_NAME.RELIGION)}
-            {this.renderItemView('Drinking', drinkingStatus, PAGE_NAME.DRINKING)}
+            {this.renderItemView(
+              'Drinking',
+              drinkingStatus,
+              PAGE_NAME.DRINKING,
+            )}
             {this.renderItemView('Smoking', smokingStatus, PAGE_NAME.SMOKING)}
             {this.renderItemView('Eating', eatingStatus, PAGE_NAME.EATING)}
             <View style={{marginVertical: 15}} />

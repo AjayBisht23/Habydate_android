@@ -58,7 +58,10 @@ function CommonView() {
       <Stack.Screen name="AllPhotos" component={AllPhoto} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="SeekerDetail" component={SeekerDetail} />
-      <Stack.Screen name="UpdateYourInformation" component={UpdateYourInformation} />
+      <Stack.Screen
+        name="UpdateYourInformation"
+        component={UpdateYourInformation}
+      />
       <Stack.Screen name="WhoLikeMe" component={WhoLikesMe} />
       <Stack.Screen name="SeekerRequest" component={SeekerRequest} />
     </>
