@@ -24,7 +24,7 @@ class Verification extends Component {
 
   nextPress = () => {
     const {value} = this.state;
-    const {navigation, route} = this.props;
+    const {route} = this.props;
     let params = route.params;
 
     if (regex.isEmpty(value)) alert(messages.enterVerifyOtp);

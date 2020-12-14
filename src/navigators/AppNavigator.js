@@ -4,38 +4,39 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {connect} from 'react-redux';
 import Splash from '../screens/Splash';
-import GetStartedScreen from '../screens/auth/GetStarted';
-import HomeScreen from '../screens/dashboard/home/Home';
-import LoginAndRegisterScreen from '../screens/auth/LoginAndRegister';
-import VerificationScreen from '../screens/auth/Verification';
-import RegistrationStepScreen from '../screens/auth/RegistrationStep';
-import AddPhotoScreen from '../screens/auth/AddPhoto';
-import CongratulationsScreen from '../screens/auth/Congratulations';
-import MenuScreen from '../screens/dashboard/menu/Menu';
-import MatchesScreen from '../screens/dashboard/matches/Matches';
-import MessagesScreen from '../screens/dashboard/messages/Messages';
-import WhoLikesMeScreen from '../screens/dashboard/messages/WhoLikesMe';
-import SeekerRequestScreen from '../screens/dashboard/seekers/SeekerRequestLists';
-import PaymentPackagesScreen from '../screens/dashboard/payment/PaymentPackages';
-import PaymentMethodScreen from '../screens/dashboard/payment/PaymentMethod';
-import NotificationsScreen from '../screens/dashboard/notifications/Notifications';
-import SeekerDetailScreen from '../screens/dashboard/seekers/SeekerDetail';
-import SeekerListsScreen from '../screens/dashboard/seekers/SeekerLists';
-import SeekerUsersScreen from '../screens/dashboard/seekers/SeekerUsers';
-import SeekerSendRequestScreen from '../screens/dashboard/seekers/SeekerForm';
-import SettingsScreen from '../screens/dashboard/settings/Settings';
-import AccountSettingScreen from '../screens/dashboard/settings/AccountSetting';
-import MyProfileScreen from '../screens/dashboard/profile/MyProfile';
-import OtherProfileScreen from '../screens/dashboard/profile/OtherProfile';
-import AllPhotoScreen from '../screens/dashboard/profile/AllPhoto';
-import ChatScreen from '../screens/dashboard/messages/Chat';
-import VerifiedCodeScreen from '../screens/auth/VerifiedCode';
+import GetStarted from '../screens/auth/GetStarted';
+import Home from '../screens/dashboard/home/Home';
+import Login from '../screens/auth/Login';
+import Verification from '../screens/auth/Verification';
+import RegistrationStep from '../screens/auth/RegistrationStep';
+import AddPhoto from '../screens/auth/AddPhoto';
+import Congratulations from '../screens/auth/Congratulations';
+import Menu from '../screens/dashboard/menu/Menu';
+import Matches from '../screens/dashboard/matches/Matches';
+import Messages from '../screens/dashboard/messages/Messages';
+import WhoLikesMe from '../screens/dashboard/messages/WhoLikesMe';
+import SeekerRequest from '../screens/dashboard/seekers/SeekerRequestLists';
+import PaymentPackages from '../screens/dashboard/payment/PaymentPackages';
+import PaymentMethod from '../screens/dashboard/payment/PaymentMethod';
+import Notifications from '../screens/dashboard/notifications/Notifications';
+import SeekerDetail from '../screens/dashboard/seekers/SeekerDetail';
+import SeekerLists from '../screens/dashboard/seekers/SeekerLists';
+import SeekerUsers from '../screens/dashboard/seekers/SeekerUsers';
+import SeekerSendRequest from '../screens/dashboard/seekers/SeekerForm';
+import Settings from '../screens/dashboard/settings/Settings';
+import AccountSetting from '../screens/dashboard/settings/AccountSetting';
+import MyProfile from '../screens/dashboard/profile/MyProfile';
+import OtherProfile from '../screens/dashboard/profile/OtherProfile';
+import AllPhoto from '../screens/dashboard/profile/AllPhoto';
+import Chat from '../screens/dashboard/messages/Chat';
+import Verified from '../screens/auth/VerifiedCode';
 import {firebase} from '@react-native-firebase/analytics';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/config';
-import SelectInformationScreen from '../screens/dashboard/profile/SelectInformation';
+import SelectInformation from '../screens/dashboard/profile/SelectInformation';
 import NHLoader from './components/NHLoader';
-import SendMySeekerRequestScreen from '../screens/dashboard/seekers/SeekerMyRequestLists';
+import SendMySeekerRequest from '../screens/dashboard/seekers/SeekerMyRequestLists';
+import Register from '../screens/auth/Register';
 
 let Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -53,16 +54,16 @@ let appNav = null;
 function CommonView() {
   return (
     <>
-      <Stack.Screen name="OtherProfile" component={OtherProfileScreen} />
-      <Stack.Screen name="AllPhotos" component={AllPhotoScreen} />
-      <Stack.Screen name="ChatScreen" component={ChatScreen} />
-      <Stack.Screen name="SeekerDetail" component={SeekerDetailScreen} />
+      <Stack.Screen name="OtherProfile" component={OtherProfile} />
+      <Stack.Screen name="AllPhotos" component={AllPhoto} />
+      <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="SeekerDetail" component={SeekerDetail} />
       <Stack.Screen
         name="SelectionInformation"
-        component={SelectInformationScreen}
+        component={SelectInformation}
       />
-      <Stack.Screen name="WhoLikeMe" component={WhoLikesMeScreen} />
-      <Stack.Screen name="SeekerRequest" component={SeekerRequestScreen} />
+      <Stack.Screen name="WhoLikeMe" component={WhoLikesMe} />
+      <Stack.Screen name="SeekerRequest" component={SeekerRequest} />
     </>
   );
 }
@@ -70,7 +71,7 @@ function CommonView() {
 function HomeStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Home" component={Home} />
       {CommonView()}
     </Stack.Navigator>
   );
@@ -79,7 +80,7 @@ function HomeStackScreen() {
 function MyProfileStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="MyProfile" component={MyProfileScreen} />
+      <Stack.Screen name="MyProfile" component={MyProfile} />
       {CommonView()}
     </Stack.Navigator>
   );
@@ -88,8 +89,8 @@ function MyProfileStackScreen() {
 function PaymentStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="PaymentPackages" component={PaymentPackagesScreen} />
-      <Stack.Screen name="PaymentMethod" component={PaymentMethodScreen} />
+      <Stack.Screen name="PaymentPackages" component={PaymentPackages} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
     </Stack.Navigator>
   );
 }
@@ -97,7 +98,7 @@ function PaymentStackScreen() {
 function MatchesStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="Matches" component={MatchesScreen} />
+      <Stack.Screen name="Matches" component={Matches} />
       {CommonView()}
     </Stack.Navigator>
   );
@@ -106,7 +107,7 @@ function MatchesStackScreen() {
 function MessagesStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="Messages" component={MessagesScreen} />
+      <Stack.Screen name="Messages" component={Messages} />
       {CommonView()}
     </Stack.Navigator>
   );
@@ -115,7 +116,7 @@ function MessagesStackScreen() {
 function NotificationStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="Notification" component={NotificationsScreen} />
+      <Stack.Screen name="Notification" component={Notifications} />
       {CommonView()}
     </Stack.Navigator>
   );
@@ -124,15 +125,15 @@ function NotificationStackScreen() {
 function SeekerStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="SeekerList" component={SeekerListsScreen} />
-      <Stack.Screen name="SeekerUser" component={SeekerUsersScreen} />
+      <Stack.Screen name="SeekerList" component={SeekerLists} />
+      <Stack.Screen name="SeekerUser" component={SeekerUsers} />
       <Stack.Screen
         name="SeekerSendRequest"
-        component={SeekerSendRequestScreen}
+        component={SeekerSendRequest}
       />
       <Stack.Screen
         name="SendMySeekerRequest"
-        component={SendMySeekerRequestScreen}
+        component={SendMySeekerRequest}
       />
       {CommonView()}
     </Stack.Navigator>
@@ -142,8 +143,8 @@ function SeekerStackScreen() {
 function SettingStackScreen() {
   return (
     <Stack.Navigator screenOptions={navigationOption()}>
-      <Stack.Screen name="Setting" component={SettingsScreen} />
-      <Stack.Screen name="AccountSetting" component={AccountSettingScreen} />
+      <Stack.Screen name="Setting" component={Settings} />
+      <Stack.Screen name="AccountSetting" component={AccountSetting} />
     </Stack.Navigator>
   );
 }
@@ -170,27 +171,31 @@ class AppNavigator extends React.PureComponent {
       <NavigationContainer>
         {user === null ? (
           <Stack.Navigator screenOptions={navigationOption()}>
-            <Stack.Screen name="GetStarted" component={GetStartedScreen} />
+            <Stack.Screen name="GetStarted" component={GetStarted} />
             <Stack.Screen
-              name="LoginAndRegister"
-              component={LoginAndRegisterScreen}
+              name="Login"
+              component={Login}
             />
-            <Stack.Screen name="Verification" component={VerificationScreen} />
+              <Stack.Screen
+                  name="Register"
+                  component={Register}
+              />
+            <Stack.Screen name="Verification" component={Verification} />
             <Stack.Screen
               name="RegistrationStep"
-              component={RegistrationStepScreen}
+              component={RegistrationStep}
             />
-            <Stack.Screen name="AddPhoto" component={AddPhotoScreen} />
+            <Stack.Screen name="AddPhoto" component={AddPhoto} />
             <Stack.Screen
               name="Congratulations"
-              component={CongratulationsScreen}
+              component={Congratulations}
             />
-            <Stack.Screen name="VerifiedCode" component={VerifiedCodeScreen} />
+            <Stack.Screen name="VerifiedCode" component={Verified} />
           </Stack.Navigator>
         ) : (
           <Drawer.Navigator
             initialRouteName="Home"
-            drawerContent={(props) => <MenuScreen {...props} />}
+            drawerContent={(props) => <Menu {...props} />}
             edgeWidth={0}>
             <Drawer.Screen name="MyProfile" component={MyProfileStackScreen} />
             <Drawer.Screen name="Home" component={HomeStackScreen} />

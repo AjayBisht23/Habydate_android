@@ -20,12 +20,12 @@ class GetStarted extends Component {
 
   newAccountPress = () => {
     const {navigation} = this.props;
-    navigation.navigate('LoginAndRegister', {type: 1});
+    navigation.navigate('Register');
   };
 
   loginPress = () => {
     const {navigation} = this.props;
-    navigation.navigate('LoginAndRegister', {type: 2});
+    navigation.navigate('Login');
   };
 
   facebookPress = () => {

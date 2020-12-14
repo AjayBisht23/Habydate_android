@@ -18,7 +18,7 @@ import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {signInPhone} from '../../services/socialLogin';
 
-class LoginAndRegister extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,9 +36,7 @@ class LoginAndRegister extends Component {
 
   nextPress = () => {
     const {phone_number, callingCode} = this.state;
-    const {navigation, route} = this.props;
-    let params = route.params;
-    let type = params.type;
+    const {navigation} = this.props;
 
     if (regex.isEmpty(phone_number)) alert(messages.enterPhoneNumber);
     else {
@@ -51,7 +49,6 @@ class LoginAndRegister extends Component {
           .then((confirmResult) => {
             regex.hideLoader();
             navigation.navigate('Verification', {
-              type,
               callingCode,
               phone_number,
               confirmResult,
@@ -66,9 +63,7 @@ class LoginAndRegister extends Component {
   };
 
   joinNowPress = () => {
-    const {navigation, route} = this.props;
-    let params = route.params;
-    let type = params.type;
+    const {navigation} = this.props;
 
     Keyboard.dismiss();
     this.setState({
@@ -76,26 +71,17 @@ class LoginAndRegister extends Component {
       callingCode: ['1'],
       phone_number: '',
     });
-    if (type === 1) navigation.navigate('LoginAndRegister', {type: 2});
-    else navigation.navigate('LoginAndRegister', {type: 1});
+    navigation.navigate('Register');
   };
 
   render() {
     const {phone_number, countryCode, visibleCountryCode} = this.state;
-    const {theme, route} = this.props;
-    let params = route.params;
-    let type = params.type;
+    const {theme} = this.props;
 
     let title = 'Log In';
     let subTitle = 'Enter your phone number to Log In';
     let infoText = `Don't have an account yet? `;
     let actionText = `Join Now`;
-    if (type === 1) {
-      title = 'Create new account';
-      subTitle = 'Enter your phone number to Sign Up';
-      infoText = `Already have an account? `;
-      actionText = 'Log In';
-    }
 
     return (
       <View
@@ -248,7 +234,7 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(LoginAndRegister);
+export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {
