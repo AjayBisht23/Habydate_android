@@ -14,11 +14,15 @@ import regex from '../../../utils/regex';
 import FastImage from 'react-native-fast-image';
 import {Icon} from 'native-base';
 import ReadMore from 'react-native-read-more-text';
-import {updateUserAction} from '../../../services/userAction';
 import SquarePhotoItem from '../../../components/general/SquarePhotoItem';
 import ImagePicker from 'react-native-image-crop-picker';
 import {assetUploadInCloudinaryServer} from '../../../services/cloudinaryStorage';
 import {Transparent} from '../../../themes/constantColors';
+import {
+  hideLoaderAction,
+  showLoaderAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class MyProfile extends Component {
   constructor(props) {
@@ -67,7 +71,11 @@ class MyProfile extends Component {
       delete getUpdateData['DoB'];
       delete getUpdateData['photos'];
       delete getUpdateData['isEdit'];
-      updateUserAction(this.props.user.uid, getUpdateData, 'profile');
+      this.props.updateUserDataAction(
+        this.props.user.uid,
+        getUpdateData,
+        'profile',
+      );
     }
   };
 
@@ -116,7 +124,7 @@ class MyProfile extends Component {
   };
 
   uploadPhotos = (images) => {
-    regex.showLoader();
+    this.props.showLoaderAction();
     let uploadPhotos = [];
     for (let i = 0; i < images.length; i++) {
       uploadPhotos.push(assetUploadInCloudinaryServer(images[i]), false);
@@ -124,7 +132,7 @@ class MyProfile extends Component {
 
     Promise.all(uploadPhotos)
       .then((response) => {
-        regex.hideLoader();
+        this.props.hideLoaderAction();
         let photos = [...this.state.photos];
         response.forEach((asset) => {
           photos.push({
@@ -134,10 +142,14 @@ class MyProfile extends Component {
         });
         this.lastIndex = photos.length;
         this.setState({photos});
-        updateUserAction(this.props.user.uid, {photos: photos}, 'profile');
+        this.props.updateUserDataAction(
+          this.props.user.uid,
+          {photos: photos},
+          'profile',
+        );
       })
       .catch((error) => {
-        regex.hideLoader();
+        this.props.hideLoaderAction();
       });
   };
 
@@ -453,7 +465,11 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(MyProfile);
+export default connect(mapStateToProps, {
+  showLoaderAction,
+  hideLoaderAction,
+  updateUserDataAction,
+})(MyProfile);
 
 const PARALLAX_HEADER_HEIGHT = regex.heightRatio(0.468);
 const STICKY_HEADER_HEIGHT = regex.heightRatio(0.103);

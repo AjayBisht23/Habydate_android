@@ -3,10 +3,11 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import NotificationItem from './components/NotificationItem';
-import {getNotificationLists} from '../../../services/notificationsAction';
-import {updateUserAction} from '../../../services/userAction';
-import {getStore} from '../../../../App';
-import {NOTIFICATION_UNREAD_COUNT} from '../../../actions/types';
+import {
+  notificationAction,
+  notificationCountAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class Notifications extends Component {
   constructor(props) {
@@ -28,18 +29,24 @@ class Notifications extends Component {
   }
 
   getData = () => {
-    getNotificationLists(this.props.user.uid).then((res) => {
-      if (res.length > 0)
-        this.updateNotificationCount({notificationReadCount: res.length});
-    });
+    this.props
+      .notificationAction({
+        uid: this.props.user.uid,
+        notificationReadCount: this.props.user.notificationReadCount,
+      })
+      .then((res) => {
+        if (res.length > 0)
+          this.updateNotificationCount({notificationReadCount: res.length});
+      });
   };
 
   updateNotificationCount = (parameter) => {
-    updateUserAction(this.props.user.uid, parameter, 'notifications');
-    getStore.dispatch({
-      type: NOTIFICATION_UNREAD_COUNT,
-      payload: 0,
-    });
+    this.props.updateUserDataAction(
+      this.props.user.uid,
+      parameter,
+      'notifications',
+    );
+    this.props.notificationCountAction();
   };
 
   onBackPress = () => {
@@ -89,7 +96,11 @@ const mapStateToProps = (state) => ({
   notifications: state.notification.notifications,
 });
 
-export default connect(mapStateToProps)(Notifications);
+export default connect(mapStateToProps, {
+  notificationAction,
+  notificationCountAction,
+  updateUserDataAction,
+})(Notifications);
 
 const styles = StyleSheet.create({
   container: {

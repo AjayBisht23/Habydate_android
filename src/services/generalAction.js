@@ -1,10 +1,12 @@
-import {getStore} from '../../App';
 import moment from 'moment';
 import regex from '../utils/regex';
 import {seekerData} from '../json/seekerData';
 
-export function setFormatAsPerGiftedChatArray(response, otherUser) {
-  let currentUser = getStore.getState().auth.user;
+export function setFormatAsPerGiftedChatArray(
+  currentUser,
+  response,
+  otherUser,
+) {
   const getMessages = response.docs.map((doc) => {
     const firebaseData = doc.data();
 

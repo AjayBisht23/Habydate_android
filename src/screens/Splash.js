@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {StatusBar, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {LOGOUT} from '../actions/types';
-import {getStore} from '../../App';
 import regex from '../utils/regex';
 import {PINK} from '../themes/constantColors';
 import FastImage from 'react-native-fast-image';
 import {getCurrentUser} from '../services/userAction';
+import {connect} from 'react-redux';
+import {loginAction, logoutAction, updateUserDataAction} from '../actions';
 
 class Splash extends Component {
   constructor(props) {
@@ -29,9 +29,12 @@ class Splash extends Component {
           .then((user) => {
             StatusBar.setHidden(false);
             let stepCompleted = user.user.stepCompleted;
-            if (stepCompleted > 8)
-              regex.setDashboard({token: user.user.uid, ...user.user});
-            else this.openAuth();
+            if (stepCompleted > 8) {
+              let data = {token: user.user.uid, ...user.user};
+              regex.setDashboard(data).then((response) => {
+                if (response) this.props.loginAction(data);
+              });
+            } else this.openAuth();
           })
           .catch((error) => {
             this.openAuth();
@@ -44,8 +47,8 @@ class Splash extends Component {
 
   openAuth = () => {
     StatusBar.setHidden(false);
-    regex.authSignOut();
-    getStore.dispatch({type: LOGOUT});
+    regex.authSignOut(this);
+    this.props.logoutAction();
   };
 
   render() {
@@ -66,4 +69,6 @@ class Splash extends Component {
   }
 }
 
-export default Splash;
+export default connect(null, {loginAction, logoutAction, updateUserDataAction})(
+  Splash,
+);

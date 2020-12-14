@@ -1,6 +1,4 @@
 import {seekerRequestCollection} from '../config/firestore';
-import {getStore} from '../../App';
-import {MY_SEND_SEEKER_REQUESTS, SEEKER_REQUESTS} from '../actions/types';
 import {getUserDetail} from './userAction';
 import moment from 'moment';
 import {createNewNotification} from './notificationsAction';
@@ -36,10 +34,10 @@ export function sendSeekerRequest(parameter) {
   });
 }
 
-export function getSeekerRequestLists(id) {
+export function getSeekerRequestLists(parameter) {
   return new Promise((resolve, reject) => {
     seekerRequestCollection
-      .where('request_to', '==', id)
+      .where('request_to', '==', parameter.uid)
       .where('request_status', 'in', ['', 'accepted'])
       .onSnapshot((snapshot) => {
         const getUserInfo = snapshot.docs.map((doc) => {
@@ -61,18 +59,14 @@ export function getSeekerRequestLists(id) {
             });
           }
 
-          let seekerReadCount = getStore.getState().auth.user.seekerReadCount;
+          let seekerReadCount = parameter.seekerReadCount;
           if (seekerReadCount !== undefined) {
             seekerReadCount = response.length - seekerReadCount;
           } else {
             seekerReadCount = response.length;
           }
 
-          getStore.dispatch({
-            type: SEEKER_REQUESTS,
-            payload: {data: response, count: seekerReadCount},
-          });
-          resolve(response);
+          resolve({data: response, count: seekerReadCount});
         });
       });
   });
@@ -101,10 +95,6 @@ export function getMySeekerRequestLists(id) {
               ...data,
             });
           }
-          getStore.dispatch({
-            type: MY_SEND_SEEKER_REQUESTS,
-            payload: response,
-          });
           resolve(response);
         });
       });

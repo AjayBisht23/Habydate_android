@@ -1,13 +1,9 @@
 import {matchesCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
-import {getStore} from '../../App';
-import {MATCHES} from '../actions/types';
-import {
-  createNewConversation,
-  getAllConversationLists,
-} from './conversationsAction';
+import {createNewConversation} from './conversationsAction';
 import {createNewNotification} from './notificationsAction';
+import {getAllConversationListAction} from '../actions';
 
 export function checkMatchExits(uid, other_uid) {
   return new Promise((resolve, reject) => {
@@ -103,14 +99,7 @@ export function getAllMatchesLists(uid, isGetConversation) {
           });
         }
 
-        getStore.dispatch({
-          type: MATCHES,
-          payload: response,
-        });
-
-        if (isGetConversation) {
-          getAllConversationLists(uid);
-        }
+        if (isGetConversation) getAllConversationListAction(uid);
 
         resolve(response);
       });

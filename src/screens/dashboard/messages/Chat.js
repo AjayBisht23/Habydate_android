@@ -53,7 +53,11 @@ class Chat extends React.Component {
       .collection('Messages')
       .orderBy('createdAt', 'desc')
       .onSnapshot((response) => {
-        let messages = setFormatAsPerGiftedChatArray(response, otherUser);
+        let messages = setFormatAsPerGiftedChatArray(
+          this.props.user,
+          response,
+          otherUser,
+        );
         this.setState({messages});
       });
   };
@@ -69,7 +73,11 @@ class Chat extends React.Component {
       .collection('Messages')
       .orderBy('createdAt', 'desc')
       .onSnapshot((response) => {
-        let messages = setFormatAsPerGiftedChatArray(response, otherUser);
+        let messages = setFormatAsPerGiftedChatArray(
+          this.props.user,
+          response,
+          otherUser,
+        );
         this.setState({messages});
       });
   };

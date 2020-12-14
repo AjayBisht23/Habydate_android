@@ -5,6 +5,11 @@ import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import {openCardModal, setUpStripe} from '../../../services/paymentAction';
 import moment from 'moment';
+import {
+  hideLoaderAction,
+  showLoaderAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class PaymentMethod extends Component {
   constructor(props) {
@@ -21,13 +26,13 @@ class PaymentMethod extends Component {
   };
 
   openCardDetail = async () => {
-    const {user, route, navigation} = this.props;
+    const {user, route} = this.props;
     let params = route.params;
     let type = params.isMonth ? 'M' : 'y';
     let packageEndDate = moment().add(1, type).unix();
     let amount = params.isMonth ? 25 : 250;
 
-    openCardModal(user, amount, packageEndDate, navigation);
+    openCardModal(user, amount, packageEndDate, this);
   };
 
   render() {
@@ -99,7 +104,11 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(PaymentMethod);
+export default connect(mapStateToProps, {
+  showLoaderAction,
+  hideLoaderAction,
+  updateUserDataAction,
+})(PaymentMethod);
 
 const styles = StyleSheet.create({
   container: {

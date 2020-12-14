@@ -6,11 +6,14 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import regex from '../../../utils/regex';
 import CommonButton from '../../../components/general/CommonButton';
+import * as messages from '../../../utils/messages';
+import {logoutAction, updateUserDataAction} from '../../../actions';
 
 class Menu extends Component {
   constructor(props) {
@@ -91,8 +94,27 @@ class Menu extends Component {
     } else if (item.id === 9) {
       navigation.navigate('Settings');
     } else if (item.id === 10) {
-      regex.logout(navigation);
+      this.logout();
     }
+  };
+
+  logout = () => {
+    Alert.alert(
+      'Logout',
+      messages.logout,
+      [
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+        {
+          text: 'OK',
+          onPress: () => {
+            this.props.navigation.closeDrawer();
+            regex.clearData(this);
+            this.props.logoutAction();
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   renderItem = ({item, index}) => {
@@ -208,7 +230,9 @@ const mapStateToProps = (state) => ({
   conversationCount: state.conversation.conversationCount,
 });
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps, {logoutAction, updateUserDataAction})(
+  Menu,
+);
 
 const styles = StyleSheet.create({
   container: {

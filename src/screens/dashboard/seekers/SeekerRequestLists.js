@@ -5,9 +5,7 @@ import NHHeader from '../../../components/general/NHHeader';
 import SeekerRequest from './components/SeekerRequest';
 import FastImage from 'react-native-fast-image';
 import regex from '../../../utils/regex';
-import {updateUserAction} from '../../../services/userAction';
-import {getStore} from '../../../../App';
-import {SEEKER_REQUESTS_COUNT} from '../../../actions/types';
+import {seekerRequestCountAction, updateUserDataAction} from '../../../actions';
 
 class SeekerRequestLists extends Component {
   constructor(props) {
@@ -21,11 +19,12 @@ class SeekerRequestLists extends Component {
   }
 
   updateSeekerRequestCount = (parameter) => {
-    updateUserAction(this.props.user.uid, parameter, 'seekerRequest');
-    getStore.dispatch({
-      type: SEEKER_REQUESTS_COUNT,
-      payload: 0,
-    });
+    this.props.updateUserDataAction(
+      this.props.user.uid,
+      parameter,
+      'seekerRequest',
+    );
+    this.props.seekerRequestCountAction();
   };
 
   onBackPress = () => {
@@ -111,7 +110,10 @@ const mapStateToProps = (state) => ({
   seekerRequests: state.seeker.seekerRequests,
 });
 
-export default connect(mapStateToProps)(SeekerRequestLists);
+export default connect(mapStateToProps, {
+  seekerRequestCountAction,
+  updateUserDataAction,
+})(SeekerRequestLists);
 
 const styles = StyleSheet.create({
   container: {

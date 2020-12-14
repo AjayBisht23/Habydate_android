@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import SeekerRequest from './components/SeekerRequest';
-import {getMySeekerRequestLists} from '../../../services/seekerAction';
+import {mySeekerRequestListAction} from '../../../actions';
 
 class SeekerMyRequestLists extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class SeekerMyRequestLists extends Component {
   }
 
   componentDidMount(): void {
-    getMySeekerRequestLists(this.props.user.uid);
+    this.props.mySeekerRequestListAction(this.props.user.uid);
   }
 
   onBackPress = () => {
@@ -73,7 +73,9 @@ const mapStateToProps = (state) => ({
   mySendSeekerRequests: state.seeker.mySendSeekerRequests,
 });
 
-export default connect(mapStateToProps)(SeekerMyRequestLists);
+export default connect(mapStateToProps, {mySeekerRequestListAction})(
+  SeekerMyRequestLists,
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -5,8 +5,12 @@ import CommonButton from '../../../components/general/CommonButton';
 import regex from '../../../utils/regex';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
-import {updateUserAction} from '../../../services/userAction';
 import * as messages from '../../../utils/messages';
+import {
+  hideLoaderAction,
+  showLoaderAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class AccountSetting extends Component {
   constructor(props) {
@@ -40,13 +44,17 @@ class AccountSetting extends Component {
     } else if (!regex.validateEmail(email)) {
       alert(messages.enterValidEmail);
     } else {
-      regex.showLoader();
-      updateUserAction(this.props.user.uid, this.state, 'account_setting').then(
-        () => {
-          regex.hideLoader();
+      this.props.showLoaderAction();
+      this.props
+        .updateUserDataAction(
+          this.props.user.uid,
+          this.state,
+          'account_setting',
+        )
+        .then(() => {
+          this.props.hideLoaderAction();
           this.onBackPress();
-        },
-      );
+        });
     }
   };
 
@@ -119,7 +127,11 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(AccountSetting);
+export default connect(mapStateToProps, {
+  showLoaderAction,
+  hideLoaderAction,
+  updateUserDataAction,
+})(AccountSetting);
 
 const styles = StyleSheet.create({
   container: {

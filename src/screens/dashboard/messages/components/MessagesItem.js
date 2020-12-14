@@ -19,7 +19,7 @@ class MessagesItem extends Component {
     return (
       <TouchableWithoutFeedback
         onPress={() =>
-          navigation.navigate('ChatScreen', {
+          navigation.navigate('Chat', {
             conversation: item,
             type: 'messages',
           })

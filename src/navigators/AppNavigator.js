@@ -58,10 +58,7 @@ function CommonView() {
       <Stack.Screen name="AllPhotos" component={AllPhoto} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="SeekerDetail" component={SeekerDetail} />
-      <Stack.Screen
-        name="SelectionInformation"
-        component={SelectInformation}
-      />
+      <Stack.Screen name="SelectionInformation" component={SelectInformation} />
       <Stack.Screen name="WhoLikeMe" component={WhoLikesMe} />
       <Stack.Screen name="SeekerRequest" component={SeekerRequest} />
     </>
@@ -127,10 +124,7 @@ function SeekerStackScreen() {
     <Stack.Navigator screenOptions={navigationOption()}>
       <Stack.Screen name="SeekerList" component={SeekerLists} />
       <Stack.Screen name="SeekerUser" component={SeekerUsers} />
-      <Stack.Screen
-        name="SeekerSendRequest"
-        component={SeekerSendRequest}
-      />
+      <Stack.Screen name="SeekerSendRequest" component={SeekerSendRequest} />
       <Stack.Screen
         name="SendMySeekerRequest"
         component={SendMySeekerRequest}
@@ -172,24 +166,15 @@ class AppNavigator extends React.PureComponent {
         {user === null ? (
           <Stack.Navigator screenOptions={navigationOption()}>
             <Stack.Screen name="GetStarted" component={GetStarted} />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-            />
-              <Stack.Screen
-                  name="Register"
-                  component={Register}
-              />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Verification" component={Verification} />
             <Stack.Screen
               name="RegistrationStep"
               component={RegistrationStep}
             />
             <Stack.Screen name="AddPhoto" component={AddPhoto} />
-            <Stack.Screen
-              name="Congratulations"
-              component={Congratulations}
-            />
+            <Stack.Screen name="Congratulations" component={Congratulations} />
             <Stack.Screen name="VerifiedCode" component={Verified} />
           </Stack.Navigator>
         ) : (

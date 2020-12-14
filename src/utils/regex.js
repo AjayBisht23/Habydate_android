@@ -1,14 +1,10 @@
 'use strict';
 
-import {Alert, Dimensions, Platform, StatusBar} from 'react-native';
+import {Dimensions, Platform, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER} from '../actions/types';
-import {getStore} from '../../App';
-import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
-import {updateUserAction} from '../services/userAction';
 
 const helper = {
   getOS: () => Platform.OS,
@@ -100,7 +96,6 @@ const helper = {
   setDashboard: (data) => {
     return new Promise(async (resolve, reject) => {
       await AsyncStorage.setItem('userToken', JSON.stringify(data.token));
-      getStore.dispatch({type: LOGIN, payload: data});
       helper.changeStatusStyle('light-content');
       resolve(true);
     });
@@ -122,53 +117,22 @@ const helper = {
     return helper.getDayLeft(packageEndDate) !== 0;
   },
 
-  logout: async (navigation) => {
-    Alert.alert(
-      'Logout',
-      messages.logout,
-      [
-        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
-        {
-          text: 'OK',
-          onPress: () => {
-            navigation.closeDrawer();
-            helper.clearData();
-          },
-        },
-      ],
-      {cancelable: false},
-    );
-  },
-
-  authSignOut: () => {
+  authSignOut: (context) => {
     let user = auth().currentUser;
     if (Boolean(user)) {
       let getUser = user._user;
       let uid = getUser.uid;
-      updateUserAction(uid, {online: false}, 'register');
+      context.props.updateUserDataAction(uid, {online: false}, 'register');
       auth()
         .signOut()
         .then(() => console.log('User signed out!'));
     }
   },
 
-  clearData: async () => {
-    helper.authSignOut();
+  clearData: async (context) => {
+    helper.authSignOut(context);
     helper.changeStatusStyle('default');
     await AsyncStorage.clear();
-    getStore.dispatch({type: LOGOUT});
-  },
-
-  showLoader: () => {
-    getStore.dispatch({
-      type: SHOW_LOADER,
-    });
-  },
-
-  hideLoader: () => {
-    getStore.dispatch({
-      type: HIDE_LOADER,
-    });
   },
 };
 

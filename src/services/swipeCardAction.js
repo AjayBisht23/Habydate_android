@@ -1,8 +1,6 @@
 import {swipeCardsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
-import {getStore} from '../../App';
-import {PEOPLE_WHO_LIKED} from '../actions/types';
 import {addSwipeMatch} from './matchesAction';
 
 export function checkOtherUserSwipeExits(uid, other_uid) {
@@ -49,10 +47,10 @@ export function swipeCardUser(uid, other_uid, action) {
   });
 }
 
-export function getWhoLikedMeLists(uid) {
+export function getWhoLikedMeLists(parameter) {
   return new Promise((resolve, reject) => {
     swipeCardsCollection
-      .where('other_uid', '==', uid)
+      .where('other_uid', '==', parameter.uid)
       .where('action', '==', 'like')
       .onSnapshot((snapshot) => {
         if (Boolean(snapshot)) {
@@ -73,18 +71,14 @@ export function getWhoLikedMeLists(uid) {
               });
             }
 
-            let likedReadCount = getStore.getState().auth.user.likedReadCount;
+            let likedReadCount = parameter.likedReadCount;
             if (likedReadCount !== undefined) {
               likedReadCount = response.length - likedReadCount;
             } else {
               likedReadCount = response.length;
             }
 
-            getStore.dispatch({
-              type: PEOPLE_WHO_LIKED,
-              payload: {data: response, count: likedReadCount},
-            });
-            resolve(response);
+            resolve({data: response, count: likedReadCount});
           });
         }
       });

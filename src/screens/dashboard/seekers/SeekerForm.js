@@ -19,6 +19,7 @@ import {Black, White} from '../../../themes/constantColors';
 import * as messages from '../../../utils/messages';
 import {sendSeekerRequest} from '../../../services/seekerAction';
 import {distance} from '../../../utils/location';
+import {hideLoaderAction, showLoaderAction} from '../../../actions';
 
 class SeekerForm extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ class SeekerForm extends Component {
     if (!Boolean(dateTime)) alert(messages.seekerDate);
     else if (!Boolean(address)) alert(messages.seekerAddress);
     else {
-      regex.showLoader();
+      this.props.showLoaderAction();
       let parameter = {
         request_to: user.uid,
         request_by: this.props.user.uid,
@@ -72,7 +73,7 @@ class SeekerForm extends Component {
         request_status: '',
       };
       sendSeekerRequest(parameter).then(() => {
-        regex.hideLoader();
+        this.props.hideLoaderAction();
         navigation.popToTop();
       });
     }
@@ -317,7 +318,9 @@ const mapStateToProps = (state) => ({
   location: state.location.location,
 });
 
-export default connect(mapStateToProps)(SeekerForm);
+export default connect(mapStateToProps, {showLoaderAction, hideLoaderAction})(
+  SeekerForm,
+);
 
 const styles = StyleSheet.create({
   container: {

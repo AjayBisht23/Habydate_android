@@ -1,6 +1,4 @@
 import stripe from 'tipsi-stripe';
-import regex from '../utils/regex';
-import {updateUserAction} from './userAction';
 import {
   IS_STRIPE_LIVE,
   STRIPE_CLOUD_SERVER_URL,
@@ -13,7 +11,7 @@ export function setUpStripe() {
   });
 }
 
-export function openCardModal(user, amount, packageEndDate, navigation) {
+export function openCardModal(user, amount, packageEndDate, context) {
   stripe
     .paymentRequestWithCardForm({
       smsAutofillDisabled: true,
@@ -33,7 +31,7 @@ export function openCardModal(user, amount, packageEndDate, navigation) {
       },
     })
     .then((response) => {
-      regex.showLoader();
+      context.props.showLoaderAction();
       let tokenId = response.tokenId;
       if (Boolean(tokenId)) {
         paymentUsingCard({
@@ -43,17 +41,25 @@ export function openCardModal(user, amount, packageEndDate, navigation) {
           description: 'Legendbae plan purchased.',
         })
           .then((response) => {
-            regex.hideLoader();
+            context.props.hideLoaderAction();
             if (Boolean(response.response)) {
-              updateUserAction(user.uid, {packageEndDate}, 'payment');
-              navigation.navigate('Home');
+              context.props.updateUserDataAction(
+                user.uid,
+                {packageEndDate},
+                'payment',
+              );
+              context.props.navigation.navigate('Home');
             }
           })
           .catch((error) => {
-            regex.hideLoader();
+            context.props.hideLoaderAction();
             if (!IS_STRIPE_LIVE) {
-              updateUserAction(user.uid, {packageEndDate}, 'payment');
-              navigation.navigate('Home');
+              context.props.updateUserDataAction(
+                user.uid,
+                {packageEndDate},
+                'payment',
+              );
+              context.props.navigation.navigate('Home');
             }
           });
       }

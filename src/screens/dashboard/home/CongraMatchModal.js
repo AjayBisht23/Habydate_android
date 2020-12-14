@@ -22,7 +22,7 @@ class CongraMatchModal extends Component {
     this.onClosePress();
     const {uid, data, navigation} = this.props;
     let matches_id = `${uid}${data.uid}`;
-    navigation.navigate('ChatScreen', {
+    navigation.navigate('Chat', {
       conversation: {matches_id, user: data},
       type: 'messages',
     });

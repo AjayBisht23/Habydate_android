@@ -13,8 +13,13 @@ import NHHeader from '../../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import {White} from '../../../themes/constantColors';
 import regex from '../../../utils/regex';
-import {deleteUser, updateUserAction} from '../../../services/userAction';
+import {deleteUser} from '../../../services/userAction';
 import * as messages from '../../../utils/messages';
+import {
+  hideLoaderAction,
+  showLoaderAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class Settings extends Component {
   constructor(props) {
@@ -33,7 +38,7 @@ class Settings extends Component {
   };
 
   updateData = (parameter) => {
-    updateUserAction(this.props.user.uid, parameter, 'settings');
+    this.props.updateUserDataAction(this.props.user.uid, parameter, 'settings');
   };
 
   notificationSwitch = (notificationOn) => {
@@ -52,10 +57,10 @@ class Settings extends Component {
   };
 
   okClick = () => {
-    regex.showLoader();
+    this.props.showLoaderAction();
     deleteUser(this.props.user.uid).then(() => {
-      regex.hideLoader();
-      regex.clearData();
+      this.props.hideLoaderAction();
+      regex.clearData(this);
     });
   };
 
@@ -194,7 +199,11 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(Settings);
+export default connect(mapStateToProps, {
+  showLoaderAction,
+  hideLoaderAction,
+  updateUserDataAction,
+})(Settings);
 
 const styles = StyleSheet.create({
   container: {

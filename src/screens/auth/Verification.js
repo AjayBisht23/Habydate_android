@@ -8,6 +8,7 @@ import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {getUserDataAndUpdateInFirestore} from '../../services/userAction';
+import {hideLoaderAction, loginAction, showLoaderAction} from '../../actions';
 
 class Verification extends Component {
   constructor(props) {
@@ -32,17 +33,17 @@ class Verification extends Component {
       let confirmResult = params.confirmResult;
 
       if (value.length === 6) {
-        regex.showLoader();
+        this.props.showLoaderAction();
         confirmResult
           .confirm(value)
           .then((response) => {
             getUserDataAndUpdateInFirestore(response).then((response) => {
-              regex.hideLoader();
+              this.props.hideLoaderAction();
               this.checkUserData(response);
             });
           })
           .catch((error) => {
-            regex.hideLoader();
+            this.props.hideLoaderAction();
             alert(error.message);
           });
       } else alert('Please enter a 6 digit OTP code.');
@@ -55,7 +56,10 @@ class Verification extends Component {
 
     if (user.stepCompleted > 8) {
       // Dashboard
-      regex.setDashboard({token: user.uid, ...user});
+      let data = {token: user.uid, ...user};
+      regex.setDashboard(data).then((response) => {
+        if (response) this.props.loginAction(data);
+      });
     } else if (user.stepCompleted === 8) {
       // Profile step Remaining
       navigation.navigate('AddPhoto', {data: user});
@@ -154,7 +158,11 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(Verification);
+export default connect(mapStateToProps, {
+  loginAction,
+  showLoaderAction,
+  hideLoaderAction,
+})(Verification);
 
 const CELL_COUNT = 6;
 const styles = StyleSheet.create({

@@ -11,7 +11,7 @@ import Step6Item from './components/Step6Item';
 import Step7Item from './components/Step7Item';
 import Step8Item from './components/Step8Item';
 import regex from '../../utils/regex';
-import {updateUserAction} from '../../services/userAction';
+import {updateUserDataAction} from '../../actions';
 
 class RegistrationStep extends Component {
   constructor(props) {
@@ -123,7 +123,7 @@ class RegistrationStep extends Component {
         : data;
     }
 
-    updateUserAction(
+    this.props.updateUserDataAction(
       uid,
       {...parameter, stepCompleted: this.lastStepCompleted},
       'register',
@@ -225,7 +225,9 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(RegistrationStep);
+export default connect(mapStateToProps, {updateUserDataAction})(
+  RegistrationStep,
+);
 
 const styles = StyleSheet.create({
   container: {

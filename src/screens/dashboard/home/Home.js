@@ -24,13 +24,16 @@ import FilterModal from './FilterModal';
 import {distance, getCurrentLocation} from '../../../utils/location';
 import PulseLoader from './components/PulseLoader';
 import CongraMatchModal from './CongraMatchModal';
-import {discoverUsers, updateUserAction} from '../../../services/userAction';
+import {discoverUsers} from '../../../services/userAction';
 import {swipeCardUser} from '../../../services/swipeCardAction';
 import moment from 'moment';
-import {getStore} from '../../../../App';
-import {SWIPECARDLIMIT} from '../../../actions/types';
-import {getNotificationLists} from '../../../services/notificationsAction';
-import {getAllMatchesLists} from '../../../services/matchesAction';
+import {
+  matchesAction,
+  notificationAction,
+  swipeCardLimitAction,
+  updateLocationAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class Home extends Component {
   constructor(props) {
@@ -54,7 +57,7 @@ class Home extends Component {
     this.getLastSwipeLimit();
     this.updateOnlineStatus();
     this.getNotificationData();
-    getCurrentLocation()
+    getCurrentLocation(this)
       .then((location) => {
         this.location = location.coords;
         this.getNearByUserData();
@@ -67,13 +70,24 @@ class Home extends Component {
 
   _handleAppStateChange = (nextAppState) => {
     if (nextAppState === 'active') {
-      updateUserAction(this.props.user.uid, {online: true}, 'splash');
+      this.props.updateUserDataAction(
+        this.props.user.uid,
+        {online: true},
+        'splash',
+      );
     } else if (nextAppState === 'background' || nextAppState === 'inactive')
-      updateUserAction(this.props.user.uid, {online: false}, 'splash');
+      this.props.updateUserDataAction(
+        this.props.user.uid,
+        {online: false},
+        'splash',
+      );
   };
 
   getNotificationData = () => {
-    getNotificationLists(this.props.user.uid);
+    this.props.notificationAction({
+      uid: this.props.user.uid,
+      notificationReadCount: this.props.user.notificationReadCount,
+    });
   };
 
   getLastSwipeLimit = () => {
@@ -84,23 +98,18 @@ class Home extends Component {
         let a = moment.unix(swipeStartDate).local();
         let b = moment();
         let diff = a.diff(b, 'days');
-        if (diff === 0) {
-          getStore.dispatch({
-            type: SWIPECARDLIMIT,
-            payload: dailySwipeCount,
-          });
-        }
+        if (diff === 0) this.props.swipeCardLimitAction(dailySwipeCount);
       }
     }
   };
 
   updateOnlineStatus = () => {
-    updateUserAction(this.props.user.uid, {online: true}, 'home');
+    updateUserDataAction(this.props.user.uid, {online: true}, 'home');
   };
 
   getNearByUserData = () => {
     this.setLoader(true, () => {
-      getAllMatchesLists(this.props.user.uid, true).then((response) => {
+      this.props.matchesAction(this.props.user.uid, true).then((response) => {
         discoverUsers(
           this.props.user.uid,
           this.location,
@@ -206,11 +215,8 @@ class Home extends Component {
         parameter = {swipeStartDate: moment().utc().unix(), dailySwipeCount: 1};
 
       if (isUpdate) {
-        updateUserAction(uid, parameter, 'home');
-        getStore.dispatch({
-          type: SWIPECARDLIMIT,
-          payload: parameter.dailySwipeCount,
-        });
+        this.props.updateUserDataAction(uid, parameter, 'home');
+        this.props.swipeCardLimitAction(parameter.dailySwipeCount);
       }
     }
 
@@ -508,7 +514,13 @@ const mapStateToProps = (state) => ({
   swipeCardLimit: state.matche.swipeCardLimit,
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {
+  swipeCardLimitAction,
+  updateLocationAction,
+  notificationAction,
+  matchesAction,
+  updateUserDataAction,
+})(Home);
 
 const styles = StyleSheet.create({
   container: {

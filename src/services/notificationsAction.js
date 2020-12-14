@@ -1,8 +1,6 @@
 import {notificationsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
-import {getStore} from '../../App';
-import {NOTIFICATIONS} from '../actions/types';
 
 export function createNewNotification(parameter) {
   return new Promise((resolve, reject) => {
@@ -17,10 +15,10 @@ export function createNewNotification(parameter) {
   });
 }
 
-export function getNotificationLists(uid) {
+export function getNotificationLists(parameter) {
   return new Promise((resolve, reject) => {
     notificationsCollection
-      .where('to_user', '==', uid)
+      .where('to_user', '==', parameter.uid)
       .get()
       .then((response) => {
         const getUserInfo = response.docs.map((doc) => {
@@ -42,20 +40,14 @@ export function getNotificationLists(uid) {
             });
           }
 
-          let notificationReadCount = getStore.getState().auth.user
-            .notificationReadCount;
+          let notificationReadCount = parameter.notificationReadCount;
           if (notificationReadCount !== undefined) {
             notificationReadCount = response.length - notificationReadCount;
           } else {
             notificationReadCount = response.length;
           }
 
-          getStore.dispatch({
-            type: NOTIFICATIONS,
-            payload: {data: response, count: notificationReadCount},
-          });
-
-          resolve(response);
+          resolve({data: response, count: notificationReadCount});
         });
       });
   });

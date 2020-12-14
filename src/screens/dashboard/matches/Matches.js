@@ -3,8 +3,8 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import MatchItem from './components/MatchItem';
-import {getAllMatchesLists} from '../../../services/matchesAction';
 import regex from '../../../utils/regex';
+import {matchesAction} from '../../../actions';
 
 class Matches extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Matches extends Component {
   }
 
   componentDidMount(): void {
-    getAllMatchesLists(this.props.user.uid, true);
+    this.props.matchesAction(this.props.user.uid, true);
   }
 
   onBackPress = () => {
@@ -90,7 +90,7 @@ const mapStateToProps = (state) => ({
   matches: state.matche.matches,
 });
 
-export default connect(mapStateToProps)(Matches);
+export default connect(mapStateToProps, {matchesAction})(Matches);
 
 const styles = StyleSheet.create({
   container: {

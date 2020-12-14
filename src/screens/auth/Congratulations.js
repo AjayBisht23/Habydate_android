@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
+import {loginAction} from '../../actions';
 
 class Congratulations extends Component {
   constructor(props) {
@@ -15,7 +16,10 @@ class Congratulations extends Component {
     let params = route.params;
     let data = params.data;
 
-    regex.setDashboard({token: data.uid, ...data});
+    let parameter = {token: data.uid, ...data};
+    regex.setDashboard(parameter).then((response) => {
+      if (response) this.props.loginAction(parameter);
+    });
   };
 
   render() {
@@ -71,7 +75,7 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(Congratulations);
+export default connect(mapStateToProps, {loginAction})(Congratulations);
 
 const styles = StyleSheet.create({
   container: {

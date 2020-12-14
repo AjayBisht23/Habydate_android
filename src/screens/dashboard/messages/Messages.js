@@ -11,9 +11,11 @@ import {Icon} from 'native-base';
 import NHHeader from '../../../components/general/NHHeader';
 import MessagesItem from './components/MessagesItem';
 import {PINK} from '../../../themes/constantColors';
-import {getAllConversationLists} from '../../../services/conversationsAction';
-import {getSeekerRequestLists} from '../../../services/seekerAction';
-import {getWhoLikedMeLists} from '../../../services/swipeCardAction';
+import {
+  getAllConversationListAction,
+  seekerRequestListAction,
+  peopleWhoLikedAction,
+} from '../../../actions';
 
 class Messages extends Component {
   constructor(props) {
@@ -21,9 +23,15 @@ class Messages extends Component {
   }
 
   componentDidMount(): void {
-    getAllConversationLists(this.props.user.uid);
-    getSeekerRequestLists(this.props.user.uid);
-    getWhoLikedMeLists(this.props.user.uid);
+    this.props.getAllConversationListAction(this.props.user.uid);
+    this.props.seekerRequestListAction({
+      uid: this.props.user.uid,
+      seekerReadCount: this.props.user.seekerReadCount,
+    });
+    this.props.peopleWhoLikedAction({
+      uid: this.props.user.uid,
+      likedReadCount: this.props.user.likedReadCount,
+    });
   }
 
   onBackPress = () => {
@@ -156,7 +164,11 @@ const mapStateToProps = (state) => ({
   whoLikedUnreadCount: state.peopleLiked.whoLikedUnreadCount,
 });
 
-export default connect(mapStateToProps)(Messages);
+export default connect(mapStateToProps, {
+  getAllConversationListAction,
+  seekerRequestListAction,
+  peopleWhoLikedAction,
+})(Messages);
 
 const styles = StyleSheet.create({
   container: {

@@ -10,9 +10,12 @@ import NHHeader from '../../components/general/NHHeader';
 import {Icon} from 'native-base';
 import AddPhotoItem from './components/AddPhotoItem';
 import ImagePicker from 'react-native-image-crop-picker';
-import {updateUserAction} from '../../services/userAction';
-import regex from '../../utils/regex';
 import {assetUploadInCloudinaryServer} from '../../services/cloudinaryStorage';
+import {
+  hideLoaderAction,
+  showLoaderAction,
+  updateUserDataAction,
+} from '../../actions';
 
 class AddPhoto extends Component {
   lastIndex = 0;
@@ -63,7 +66,7 @@ class AddPhoto extends Component {
         },
       ],
     };
-    regex.hideLoader();
+    this.props.hideLoaderAction();
   }
 
   onBackPress = () => {
@@ -85,7 +88,7 @@ class AddPhoto extends Component {
     let data = route.params.data;
     let uid = data.uid;
     if (getResults.length > 0) {
-      regex.showLoader();
+      this.props.showLoaderAction();
       let uploadPhotos = [];
       getResults.forEach((file) => {
         uploadPhotos.push(assetUploadInCloudinaryServer(file, false));
@@ -93,7 +96,7 @@ class AddPhoto extends Component {
 
       Promise.all(uploadPhotos)
         .then((response) => {
-          regex.hideLoader();
+          this.props.hideLoaderAction();
           let photos = [];
           response.forEach((asset) => {
             photos.push({
@@ -101,17 +104,25 @@ class AddPhoto extends Component {
               public_id: asset.public_id,
             });
           });
-          updateUserAction(uid, {stepCompleted: 9, photos: photos}, 'register');
+          this.props.updateUserDataAction(
+            uid,
+            {stepCompleted: 9, photos: photos},
+            'register',
+          );
           navigation.navigate('Congratulations', {
             data: {...data, photos: photos},
             photoData: getResults,
           });
         })
         .catch((error) => {
-          regex.hideLoader();
+          this.props.hideLoaderAction();
         });
     } else {
-      updateUserAction(uid, {stepCompleted: 9, photos: []}, 'register');
+      this.props.updateUserDataAction(
+        uid,
+        {stepCompleted: 9, photos: []},
+        'register',
+      );
       navigation.navigate('Congratulations', {
         data: {...data, photos: []},
         photoData: [
@@ -226,7 +237,11 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(AddPhoto);
+export default connect(mapStateToProps, {
+  showLoaderAction,
+  hideLoaderAction,
+  updateUserDataAction,
+})(AddPhoto);
 
 const styles = StyleSheet.create({
   container: {

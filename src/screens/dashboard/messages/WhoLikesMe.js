@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 import NHHeader from '../../../components/general/NHHeader';
 import WhoLikeItem from './components/WhoLikeItem';
 import regex from '../../../utils/regex';
-import {updateUserAction} from '../../../services/userAction';
-import {getStore} from '../../../../App';
-import {PEOPLE_WHO_LIKED_COUNT} from '../../../actions/types';
+import {
+  peopleWhoLikedCountCountAction,
+  updateUserDataAction,
+} from '../../../actions';
 
 class MessagesScreen extends Component {
   constructor(props) {
@@ -20,11 +21,8 @@ class MessagesScreen extends Component {
   }
 
   updateWhoLikedCount = (parameter) => {
-    updateUserAction(this.props.user.uid, parameter, 'whoLiked');
-    getStore.dispatch({
-      type: PEOPLE_WHO_LIKED_COUNT,
-      payload: 0,
-    });
+    this.props.updateUserDataAction(this.props.user.uid, parameter, 'whoLiked');
+    this.props.peopleWhoLikedCountCountAction();
   };
 
   onBackPress = () => {
@@ -99,7 +97,10 @@ const mapStateToProps = (state) => ({
   peopleWhoLiked: state.peopleLiked.peopleWhoLiked,
 });
 
-export default connect(mapStateToProps)(MessagesScreen);
+export default connect(mapStateToProps, {
+  peopleWhoLikedCountCountAction,
+  updateUserDataAction,
+})(MessagesScreen);
 
 const styles = StyleSheet.create({
   container: {

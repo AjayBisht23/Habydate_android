@@ -1,7 +1,5 @@
 import {conversationsCollection} from '../config/firestore';
 import moment from 'moment';
-import {getStore} from '../../App';
-import {CONVERSATIONS} from '../actions/types';
 import {getAllMatchesLists} from './matchesAction';
 
 export function createNewConversation(id, members) {
@@ -27,7 +25,7 @@ export function createNewConversation(id, members) {
 
 export function getAllConversationLists(uid) {
   return new Promise((resolve, reject) => {
-    getAllMatchesLists(uid).then((response) => {
+    getAllMatchesLists(uid, false).then((response) => {
       if (response.length > 0) {
         let getConversations = response.map(function (o) {
           return o.customId;
@@ -59,11 +57,7 @@ export function getAllConversationLists(uid) {
                 conversations.push(data);
               }
 
-              getStore.dispatch({
-                type: CONVERSATIONS,
-                payload: {data: conversations, count: conversationUnreadCount},
-              });
-              resolve(conversations);
+              resolve({data: conversations, count: conversationUnreadCount});
             }
           });
       }

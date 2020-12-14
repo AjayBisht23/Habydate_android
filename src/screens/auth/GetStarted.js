@@ -12,6 +12,7 @@ import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import {getFacebookData, getGoogleData} from '../../services/socialLogin';
 import {getUserDataAndUpdateInFirestore} from '../../services/userAction';
+import {hideLoaderAction, loginAction, showLoaderAction} from '../../actions';
 
 class GetStarted extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class GetStarted extends Component {
   };
 
   facebookPress = () => {
-    regex.showLoader();
+    this.props.showLoaderAction();
     getFacebookData()
       .then((response) => {
         getUserDataAndUpdateInFirestore(response).then((response) => {
@@ -37,12 +38,12 @@ class GetStarted extends Component {
         });
       })
       .catch((error) => {
-        regex.hideLoader();
+        this.props.hideLoaderAction();
       });
   };
 
   googlePress = () => {
-    regex.showLoader();
+    this.props.showLoaderAction();
     getGoogleData()
       .then((response) => {
         getUserDataAndUpdateInFirestore(response).then((response) => {
@@ -50,18 +51,21 @@ class GetStarted extends Component {
         });
       })
       .catch((error) => {
-        regex.hideLoader();
+        this.props.hideLoaderAction();
       });
   };
 
   checkUserData = (response) => {
-    regex.hideLoader();
+    this.props.hideLoaderAction();
     const {navigation} = this.props;
     let user = response.user;
 
     if (user.stepCompleted > 8) {
       // Dashboard
-      regex.setDashboard({token: user.uid, ...user});
+      let data = {token: user.uid, ...user};
+      regex.setDashboard(data).then((response) => {
+        if (response) this.props.loginAction(data);
+      });
     } else if (user.stepCompleted === 8) {
       // Profile step Remaining
       navigation.navigate('AddPhoto', {data: user});
@@ -204,7 +208,11 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(GetStarted);
+export default connect(mapStateToProps, {
+  loginAction,
+  showLoaderAction,
+  hideLoaderAction,
+})(GetStarted);
 
 const styles = StyleSheet.create({
   container: {

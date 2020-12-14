@@ -17,6 +17,7 @@ import regex from '../../utils/regex';
 import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {signInPhone} from '../../services/socialLogin';
+import {hideLoaderAction, showLoaderAction} from '../../actions';
 
 class Login extends Component {
   constructor(props) {
@@ -44,10 +45,10 @@ class Login extends Component {
 
       // Request to send OTP
       if (regex.validatePhoneNumber(phone)) {
-        regex.showLoader();
+        this.props.showLoaderAction();
         signInPhone(phone)
           .then((confirmResult) => {
-            regex.hideLoader();
+            this.props.hideLoaderAction();
             navigation.navigate('Verification', {
               callingCode,
               phone_number,
@@ -55,7 +56,7 @@ class Login extends Component {
             });
           })
           .catch((error) => {
-            regex.hideLoader();
+            this.props.hideLoaderAction();
             alert(error.message);
           });
       } else alert('Invalid Phone Number');
@@ -234,7 +235,9 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, {showLoaderAction, hideLoaderAction})(
+  Login,
+);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,6 +1,4 @@
-import {SET_USER_DATA} from '../actions/types';
 import {usersCollection} from './../config/firestore';
-import {getStore} from '../../App';
 import auth from '@react-native-firebase/auth';
 import regex from '../utils/regex';
 import {getGeoHashRange} from '../utils/location';
@@ -28,10 +26,6 @@ export function updateUserAction(uid, parameter, callFrom) {
         if (callFrom !== 'register') {
           getUserDetail(uid, parameter).then((data) => {
             let response = data.response._data;
-            getStore.dispatch({
-              type: SET_USER_DATA,
-              payload: response,
-            });
             return resolve(response);
           });
         } else {
