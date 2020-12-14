@@ -3,7 +3,7 @@ import {
   MY_SEND_SEEKER_REQUESTS,
   SEEKER_REQUESTS,
   SEEKER_REQUESTS_COUNT,
-} from '../services/types';
+} from '../actions/types';
 
 const initialAuthState = {
   mySendSeekerRequests: [],

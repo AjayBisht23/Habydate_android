@@ -1,4 +1,4 @@
-import {SET_USER_DATA} from './types';
+import {SET_USER_DATA} from '../actions/types';
 import {usersCollection} from './../config/firestore';
 import {getStore} from '../../App';
 import auth from '@react-native-firebase/auth';

@@ -8,12 +8,13 @@
 
 import React from 'react';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import AppReducer from './src/reducers';
+import {applyMiddleware, createStore} from 'redux';
+import thunk from "redux-thunk";
+import reducer from './src/reducers';
 import AppNavigator from './src/navigators/AppNavigator';
 import enableFontPatch from './src/navigators/enableFontPatch';
 
-export const getStore = createStore(AppReducer);
+export const getStore = createStore(reducer, applyMiddleware(thunk));
 
 // Android: Set Default Font sans-serif-medium
 enableFontPatch();

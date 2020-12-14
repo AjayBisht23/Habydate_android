@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StatusBar, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {LOGOUT} from '../services/types';
+import {LOGOUT} from '../actions/types';
 import {getStore} from '../../App';
 import regex from '../utils/regex';
 import {PINK} from '../themes/constantColors';

@@ -1,4 +1,4 @@
-import {HIDE_LOADER, LOGOUT, SHOW_LOADER} from '../services/types';
+import {HIDE_LOADER, LOGOUT, SHOW_LOADER} from '../actions/types';
 
 const initialState = {
   showLoader: false,

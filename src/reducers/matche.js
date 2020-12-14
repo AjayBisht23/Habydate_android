@@ -1,4 +1,4 @@
-import {LOGOUT, MATCHES, SWIPECARDLIMIT} from '../services/types';
+import {LOGOUT, MATCHES, SWIPECARDLIMIT} from '../actions/types';
 
 const initialAuthState = {
   swipeCardLimit: 0,

@@ -1,4 +1,4 @@
-import {GET_LOCATION} from '../services/types';
+import {GET_LOCATION} from '../actions/types';
 
 const initialState = {
   location: {latitude: 0.0, longitude: 0.0},

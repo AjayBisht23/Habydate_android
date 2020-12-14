@@ -1,6 +1,6 @@
 import {seekerRequestCollection} from '../config/firestore';
 import {getStore} from '../../App';
-import {MY_SEND_SEEKER_REQUESTS, SEEKER_REQUESTS} from './types';
+import {MY_SEND_SEEKER_REQUESTS, SEEKER_REQUESTS} from '../actions/types';
 import {getUserDetail} from './userAction';
 import moment from 'moment';
 import {createNewNotification} from './notificationsAction';

@@ -2,7 +2,7 @@ import {matchesCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
 import {getStore} from '../../App';
-import {MATCHES} from './types';
+import {MATCHES} from '../actions/types';
 import {
   createNewConversation,
   getAllConversationLists,

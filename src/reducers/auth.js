@@ -1,4 +1,4 @@
-import {LOGIN, LOGOUT, SET_USER_DATA} from '../services/types';
+import {LOGIN, LOGOUT, SET_USER_DATA} from '../actions/types';
 
 const initialAuthState = {
   loading: true,

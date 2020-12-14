@@ -1,4 +1,4 @@
-import {THEME} from '../services/types';
+import {THEME} from '../actions/types';
 import {THEMES} from '../themes/themes';
 
 const initialState = {

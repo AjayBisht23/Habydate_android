@@ -1,7 +1,7 @@
 import {conversationsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getStore} from '../../App';
-import {CONVERSATIONS} from './types';
+import {CONVERSATIONS} from '../actions/types';
 import {getAllMatchesLists} from './matchesAction';
 
 export function createNewConversation(id, members) {

@@ -1,4 +1,4 @@
-import {CONVERSATIONS, LOGOUT} from '../services/types';
+import {CONVERSATIONS, LOGOUT} from '../actions/types';
 
 const initialState = {
   conversations: [],

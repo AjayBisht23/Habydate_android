@@ -2,7 +2,7 @@ import {swipeCardsCollection} from '../config/firestore';
 import moment from 'moment';
 import {getUserDetail} from './userAction';
 import {getStore} from '../../App';
-import {PEOPLE_WHO_LIKED} from './types';
+import {PEOPLE_WHO_LIKED} from '../actions/types';
 import {addSwipeMatch} from './matchesAction';
 
 export function checkOtherUserSwipeExits(uid, other_uid) {

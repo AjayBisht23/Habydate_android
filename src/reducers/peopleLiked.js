@@ -2,7 +2,7 @@ import {
   LOGOUT,
   PEOPLE_WHO_LIKED,
   PEOPLE_WHO_LIKED_COUNT,
-} from '../services/types';
+} from '../actions/types';
 
 const initialState = {
   peopleWhoLiked: [],

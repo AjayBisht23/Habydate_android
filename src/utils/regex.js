@@ -2,7 +2,7 @@
 
 import {Alert, Dimensions, Platform, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER} from '../services/types';
+import {HIDE_LOADER, LOGIN, LOGOUT, SHOW_LOADER} from '../actions/types';
 import {getStore} from '../../App';
 import * as messages from './messages';
 import {TIMETEXTCOLOR} from '../themes/constantColors';

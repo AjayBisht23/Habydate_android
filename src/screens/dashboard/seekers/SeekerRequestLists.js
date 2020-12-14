@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import regex from '../../../utils/regex';
 import {updateUserAction} from '../../../services/userAction';
 import {getStore} from '../../../../App';
-import {SEEKER_REQUESTS_COUNT} from '../../../services/types';
+import {SEEKER_REQUESTS_COUNT} from '../../../actions/types';
 
 class SeekerRequestLists extends Component {
   constructor(props) {

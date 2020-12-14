@@ -28,7 +28,7 @@ import {discoverUsers, updateUserAction} from '../../../services/userAction';
 import {swipeCardUser} from '../../../services/swipeCardAction';
 import moment from 'moment';
 import {getStore} from '../../../../App';
-import {SWIPECARDLIMIT} from '../../../services/types';
+import {SWIPECARDLIMIT} from '../../../actions/types';
 import {getNotificationLists} from '../../../services/notificationsAction';
 import {getAllMatchesLists} from '../../../services/matchesAction';
 

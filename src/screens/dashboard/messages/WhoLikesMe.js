@@ -6,7 +6,7 @@ import WhoLikeItem from './components/WhoLikeItem';
 import regex from '../../../utils/regex';
 import {updateUserAction} from '../../../services/userAction';
 import {getStore} from '../../../../App';
-import {PEOPLE_WHO_LIKED_COUNT} from '../../../services/types';
+import {PEOPLE_WHO_LIKED_COUNT} from '../../../actions/types';
 
 class MessagesScreen extends Component {
   constructor(props) {

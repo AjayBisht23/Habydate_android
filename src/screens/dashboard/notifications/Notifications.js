@@ -6,7 +6,7 @@ import NotificationItem from './components/NotificationItem';
 import {getNotificationLists} from '../../../services/notificationsAction';
 import {updateUserAction} from '../../../services/userAction';
 import {getStore} from '../../../../App';
-import {NOTIFICATION_UNREAD_COUNT} from '../../../services/types';
+import {NOTIFICATION_UNREAD_COUNT} from '../../../actions/types';
 
 class Notifications extends Component {
   constructor(props) {

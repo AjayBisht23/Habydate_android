@@ -1,6 +1,6 @@
 import Geolocation from '@react-native-community/geolocation';
 import {getStore} from '../../App';
-import {GET_LOCATION} from '../services/types';
+import {GET_LOCATION} from '../actions/types';
 import {updateUserAction} from '../services/userAction';
 import auth from '@react-native-firebase/auth';
 import geohash from 'ngeohash';

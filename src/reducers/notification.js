@@ -2,7 +2,7 @@ import {
   LOGOUT,
   NOTIFICATION_UNREAD_COUNT,
   NOTIFICATIONS,
-} from '../services/types';
+} from '../actions/types';
 
 const initialState = {
   notifications: [],
