@@ -24,8 +24,9 @@ import CommonButton from '../../../components/general/CommonButton';
 import {connect} from 'react-redux';
 import {Icon} from 'native-base';
 import NHHeader from '../../../components/general/NHHeader';
+import {PAGE_NAME} from '../../../utils/pageEnum';
 
-class SelectInformation extends Component {
+class UpdateYourInformation extends Component {
   constructor(props) {
     super(props);
 
@@ -47,29 +48,29 @@ class SelectInformation extends Component {
 
     let params = props.route.params;
     this.state.lookingFor = params.value;
-    if (params.index === 1) {
+    if (params.index === PAGE_NAME.HEIGHT) {
       this.state.lookingData = heightData;
-    } else if (params.index === 2) {
+    } else if (params.index === PAGE_NAME.BODY_TYPE) {
       this.state.lookingData = bodyTypeData;
-    } else if (params.index === 3) {
+    } else if (params.index === PAGE_NAME.GENDER) {
       this.state.lookingData = genderData;
-    } else if (params.index === 4) {
+    } else if (params.index === PAGE_NAME.SEXUALITY) {
       this.state.lookingData = sexualityData;
-    } else if (params.index === 5) {
+    } else if (params.index === PAGE_NAME.PERSONALITY) {
       this.state.lookingData = personalityData;
-    } else if (params.index === 6) {
+    } else if (params.index === PAGE_NAME.EDUCATION) {
       this.state.lookingData = educationData;
-    } else if (params.index === 7) {
+    } else if (params.index === PAGE_NAME.MARITAL_STATUS) {
       this.state.lookingData = maritalData;
-    } else if (params.index === 8) {
+    } else if (params.index === PAGE_NAME.LOOKING_FOR) {
       this.state.lookingData = lookingData;
-    } else if (params.index === 9) {
+    } else if (params.index === PAGE_NAME.RELIGION) {
       this.state.lookingData = religionData;
-    } else if (params.index === 10) {
+    } else if (params.index === PAGE_NAME.DRINKING) {
       this.state.lookingData = drinkingData;
-    } else if (params.index === 11) {
+    } else if (params.index === PAGE_NAME.SMOKING) {
       this.state.lookingData = smokingData;
-    } else if (params.index === 12) {
+    } else if (params.index === PAGE_NAME.EATING) {
       this.state.lookingData = eatingData;
     }
   }
@@ -158,7 +159,7 @@ const mapStateToProps = (state) => ({
   theme: state.theme.theme,
 });
 
-export default connect(mapStateToProps)(SelectInformation);
+export default connect(mapStateToProps)(UpdateYourInformation);
 
 const styles = StyleSheet.create({
   container: {

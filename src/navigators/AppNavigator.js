@@ -33,7 +33,7 @@ import Verified from '../screens/auth/VerifiedCode';
 import {firebase} from '@react-native-firebase/analytics';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {WEB_CLIENT_ID} from '../config/config';
-import SelectInformation from '../screens/dashboard/profile/SelectInformation';
+import UpdateYourInformation from '../screens/dashboard/profile/UpdateYourInformation';
 import NHLoader from './components/NHLoader';
 import SendMySeekerRequest from '../screens/dashboard/seekers/SeekerMyRequestLists';
 import Register from '../screens/auth/Register';
@@ -58,7 +58,7 @@ function CommonView() {
       <Stack.Screen name="AllPhotos" component={AllPhoto} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="SeekerDetail" component={SeekerDetail} />
-      <Stack.Screen name="SelectionInformation" component={SelectInformation} />
+      <Stack.Screen name="UpdateYourInformation" component={UpdateYourInformation} />
       <Stack.Screen name="WhoLikeMe" component={WhoLikesMe} />
       <Stack.Screen name="SeekerRequest" component={SeekerRequest} />
     </>

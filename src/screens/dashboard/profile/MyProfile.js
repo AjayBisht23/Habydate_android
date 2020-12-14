@@ -23,6 +23,7 @@ import {
   showLoaderAction,
   updateUserDataAction,
 } from '../../../actions';
+import {PAGE_NAME} from '../../../utils/pageEnum';
 
 class MyProfile extends Component {
   constructor(props) {
@@ -87,35 +88,35 @@ class MyProfile extends Component {
 
     if (!isEdit) return;
 
-    navigation.navigate('SelectionInformation', {
+    navigation.navigate('UpdateYourInformation', {
       title,
       value,
       index,
       callback: (params) => {
         let parameter = {};
-        if (params.index === 1) {
+        if (params.index === PAGE_NAME.HEIGHT) {
           parameter.height = params.value;
-        } else if (params.index === 2) {
+        } else if (params.index === PAGE_NAME.BODY_TYPE) {
           parameter.bodyType = params.value;
-        } else if (params.index === 3) {
+        } else if (params.index === PAGE_NAME.GENDER) {
           parameter.gender = params.value;
-        } else if (params.index === 4) {
+        } else if (params.index === PAGE_NAME.SEXUALITY) {
           parameter.sexuality = params.value;
-        } else if (params.index === 5) {
+        } else if (params.index === PAGE_NAME.PERSONALITY) {
           parameter.personality = params.value;
-        } else if (params.index === 6) {
+        } else if (params.index === PAGE_NAME.EDUCATION) {
           parameter.education = params.value;
-        } else if (params.index === 7) {
+        } else if (params.index === PAGE_NAME.MARITAL_STATUS) {
           parameter.maritalStatus = params.value;
-        } else if (params.index === 8) {
+        } else if (params.index === PAGE_NAME.LOOKING_FOR) {
           parameter.lookingFor = params.value;
-        } else if (params.index === 9) {
+        } else if (params.index === PAGE_NAME.RELIGION) {
           parameter.religion = params.value;
-        } else if (params.index === 10) {
+        } else if (params.index === PAGE_NAME.DRINKING) {
           parameter.drinkingStatus = params.value;
-        } else if (params.index === 11) {
+        } else if (params.index === PAGE_NAME.SMOKING) {
           parameter.smokingStatus = params.value;
-        } else if (params.index === 12) {
+        } else if (params.index === PAGE_NAME.EATING) {
           parameter.eatingStatus = params.value;
         }
         this.setState({...this.state, ...parameter});
@@ -440,18 +441,18 @@ class MyProfile extends Component {
                 Your Information
               </Text>
             </View>
-            {this.renderItemView('Height', height, 1)}
-            {this.renderItemView('Body Type', bodyType, 2)}
-            {this.renderItemView('Gender', gender, 3)}
-            {this.renderItemView('Sexuality', sexuality, 4)}
-            {this.renderItemView('Personality', personality, 5)}
-            {this.renderItemView('Education', education, 6)}
-            {this.renderItemView('Marital Status', maritalStatus, 7)}
-            {this.renderItemView('Looking for', lookingFor, 8)}
-            {this.renderItemView('Religion', religion, 9)}
-            {this.renderItemView('Drinking', drinkingStatus, 10)}
-            {this.renderItemView('Smoking', smokingStatus, 11)}
-            {this.renderItemView('Eating', eatingStatus, 12)}
+            {this.renderItemView('Height', height, PAGE_NAME.HEIGHT)}
+            {this.renderItemView('Body Type', bodyType, PAGE_NAME.BODY_TYPE)}
+            {this.renderItemView('Gender', gender, PAGE_NAME.GENDER)}
+            {this.renderItemView('Sexuality', sexuality, PAGE_NAME.SEXUALITY)}
+            {this.renderItemView('Personality', personality, PAGE_NAME.PERSONALITY)}
+            {this.renderItemView('Education', education, PAGE_NAME.EDUCATION)}
+            {this.renderItemView('Marital Status', maritalStatus, PAGE_NAME.MARITAL_STATUS)}
+            {this.renderItemView('Looking for', lookingFor, PAGE_NAME.LOOKING_FOR)}
+            {this.renderItemView('Religion', religion, PAGE_NAME.RELIGION)}
+            {this.renderItemView('Drinking', drinkingStatus, PAGE_NAME.DRINKING)}
+            {this.renderItemView('Smoking', smokingStatus, PAGE_NAME.SMOKING)}
+            {this.renderItemView('Eating', eatingStatus, PAGE_NAME.EATING)}
             <View style={{marginVertical: 15}} />
           </View>
         </ParallaxScrollView>
