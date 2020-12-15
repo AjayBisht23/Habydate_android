@@ -1,4 +1,4 @@
-import {CLOUDINARY_CLOUD_NAME, CLOUDINARY_PRESENT_NAME} from '../config/config';
+import {CLOUDINARY_CLOUD_NAME, CLOUDINARY_PRESENT_NAME} from '@env';
 import regex from '../utils/regex';
 
 export function assetUploadInCloudinaryServer(photo, isReturnData) {

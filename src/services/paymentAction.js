@@ -1,9 +1,8 @@
 import stripe from 'tipsi-stripe';
 import {
-  IS_STRIPE_LIVE,
   STRIPE_CLOUD_SERVER_URL,
   STRIPE_PUBLIC_KEY,
-} from '../config/config';
+} from '@env';
 
 export function setUpStripe() {
   stripe.setOptions({
@@ -34,34 +33,39 @@ export function openCardModal(user, amount, packageEndDate, context) {
       context.props.showLoaderAction();
       let tokenId = response.tokenId;
       if (Boolean(tokenId)) {
-        paymentUsingCard({
-          amount: amount,
-          currency: 'usd',
-          token: tokenId,
-          description: 'Legendbae plan purchased.',
-        })
-          .then((response) => {
-            context.props.hideLoaderAction();
-            if (Boolean(response.response)) {
-              context.props.updateUserDataAction(
-                user.uid,
-                {packageEndDate},
-                'payment',
-              );
-              context.props.navigation.navigate('Home');
-            }
+        if (response.livemode) {
+          paymentUsingCard({
+            amount: amount,
+            currency: 'usd',
+            token: tokenId,
+            description: 'Legendbae plan purchased.',
           })
-          .catch((error) => {
-            context.props.hideLoaderAction();
-            if (!IS_STRIPE_LIVE) {
-              context.props.updateUserDataAction(
+              .then((response) => {
+                context.props.hideLoaderAction();
+                if (Boolean(response.response)) {
+                  context.props.updateUserDataAction(
+                      user.uid,
+                      {packageEndDate},
+                      'payment',
+                  );
+                  context.props.navigation.navigate('Home');
+                }
+              })
+              .catch((error) => {
+                context.props.hideLoaderAction();
+                setTimeout(() => alert('Something went wrong.'), 10);
+              });
+        } else {
+          context.props.hideLoaderAction();
+          setTimeout(() => {
+            context.props.updateUserDataAction(
                 user.uid,
                 {packageEndDate},
                 'payment',
-              );
-              context.props.navigation.navigate('Home');
-            }
-          });
+            );
+            context.props.navigation.navigate('Home');
+          }, 5);
+        }
       }
     });
 }

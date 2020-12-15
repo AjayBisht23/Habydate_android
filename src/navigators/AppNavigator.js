@@ -32,7 +32,7 @@ import Chat from '../screens/dashboard/messages/Chat';
 import Verified from '../screens/auth/VerifiedCode';
 import {firebase} from '@react-native-firebase/analytics';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import {WEB_CLIENT_ID} from '../config/config';
+import {WEB_CLIENT_ID} from '@env';
 import UpdateYourInformation from '../screens/dashboard/profile/UpdateYourInformation';
 import NHLoader from './components/NHLoader';
 import SendMySeekerRequest from '../screens/dashboard/seekers/SeekerMyRequestLists';
