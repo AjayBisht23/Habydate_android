@@ -33,7 +33,8 @@ export function getAllConversationLists(uid) {
 
         conversationsCollection
           .where('matches_id', 'in', getConversations)
-          .onSnapshot((snapshot) => {
+          .get()
+          .then((snapshot) => {
             if (Boolean(snapshot)) {
               let docs = snapshot.docs;
               let conversations = [];

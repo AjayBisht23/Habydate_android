@@ -495,5 +495,6 @@ export default connect(mapStateToProps)(Chat);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 8
   },
 });

@@ -16,6 +16,7 @@ import {
   seekerRequestListAction,
   peopleWhoLikedAction,
 } from '../../../actions';
+import {conversationsCollection} from '../../../config/firestore';
 
 class Messages extends Component {
   constructor(props) {
@@ -32,7 +33,14 @@ class Messages extends Component {
       uid: this.props.user.uid,
       likedReadCount: this.props.user.likedReadCount,
     });
+    this.addListenerOnConversation();
   }
+
+  addListenerOnConversation = () => {
+    conversationsCollection.onSnapshot(documentSnapshot => {
+      this.props.getAllConversationListAction(this.props.user.uid);
+    });
+  };
 
   onBackPress = () => {
     const {navigation} = this.props;
