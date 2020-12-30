@@ -119,7 +119,7 @@ class Settings extends Component {
                 Notifications
               </Text>
               <Switch
-                trackColor={{false: theme.pinkColor, true: theme.pinkColor}}
+                trackColor={{false: theme.borderColor, true: theme.pinkColor}}
                 thumbColor={White}
                 ios_backgroundColor={'transparent'}
                 onValueChange={this.notificationSwitch}
@@ -132,7 +132,7 @@ class Settings extends Component {
                 Pause Matches
               </Text>
               <Switch
-                trackColor={{false: theme.pinkColor, true: theme.pinkColor}}
+                trackColor={{false: theme.borderColor, true: theme.pinkColor}}
                 thumbColor={White}
                 ios_backgroundColor={'transparent'}
                 onValueChange={this.matchSwitch}
@@ -145,7 +145,7 @@ class Settings extends Component {
                 Match Sound
               </Text>
               <Switch
-                trackColor={{false: theme.pinkColor, true: theme.pinkColor}}
+                trackColor={{false: theme.borderColor, true: theme.pinkColor}}
                 thumbColor={White}
                 ios_backgroundColor={'transparent'}
                 onValueChange={this.soundSwitch}
