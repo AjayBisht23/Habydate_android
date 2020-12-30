@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   Keyboard,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -91,7 +92,7 @@ class Login extends Component {
           {backgroundColor: theme.container.backgroundColor},
         ]}>
         <NHHeader theme onLeftPress={this.onBackPress} />
-        <KeyboardAwareScrollView
+        <ScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
@@ -225,7 +226,7 @@ class Login extends Component {
               </View>
             </View>
           </View>
-        </KeyboardAwareScrollView>
+        </ScrollView>
       </View>
     );
   }
