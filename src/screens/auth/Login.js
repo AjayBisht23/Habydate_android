@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Keyboard,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -18,6 +17,7 @@ import CommonButton from '../../components/general/CommonButton';
 import * as messages from '../../utils/messages';
 import {signInPhone} from '../../services/socialLogin';
 import {hideLoaderAction, showLoaderAction} from '../../actions';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 class Login extends Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class Login extends Component {
           {backgroundColor: theme.container.backgroundColor},
         ]}>
         <NHHeader theme onLeftPress={this.onBackPress} />
-        <ScrollView
+        <KeyboardAwareScrollView
           contentContainerStyle={styles.container}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}>
@@ -225,7 +225,7 @@ class Login extends Component {
               </View>
             </View>
           </View>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </View>
     );
   }
