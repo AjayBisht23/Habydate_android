@@ -59,7 +59,7 @@ class RegistrationStep extends Component {
     const {currentIndex} = this.state;
     const {navigation} = this.props;
     if (type === 1) {
-      navigation.goBack();
+      navigation.popToTop();
     } else if (type === 2) {
       let index = currentIndex - 1;
       this.scrollRef.scrollTo({
