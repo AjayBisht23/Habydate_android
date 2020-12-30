@@ -19,8 +19,14 @@ class Step3Item extends Component {
   }
 
   onSexualityPress = (item) => {
+    const {onPress} = this.props;
     if (item.title === this.state.sexuality) this.setState({sexuality: ''});
-    else this.setState({sexuality: item.title});
+    else
+      this.setState({sexuality: item.title}, () => {
+        const {sexuality, personality} = this.state;
+        if (personality !== '' && sexuality !== '')
+          onPress(3, {sexuality, personality});
+      });
   };
 
   renderSexualityItem = ({item}) => {
@@ -43,7 +49,7 @@ class Step3Item extends Component {
   };
 
   onPersonalityPress = (item) => {
-    const {sexuality, personality} = this.state;
+    const {personality} = this.state;
     const {onPress} = this.props;
     if (item.title === personality) this.setState({personality: ''});
     else

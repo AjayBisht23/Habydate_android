@@ -24,7 +24,7 @@ class Step8Item extends Component {
   onDrinkingPress = (item) => {
     if (item.title === this.state.drinkingStatus)
       this.setState({drinkingStatus: ''});
-    else this.setState({drinkingStatus: item.title});
+    else this.setState({drinkingStatus: item.title}, this.checkAndAutoChange);
   };
 
   renderDrinkingItem = ({item}) => {
@@ -49,7 +49,7 @@ class Step8Item extends Component {
   onSmokingPress = (item) => {
     if (item.title === this.state.smokingStatus)
       this.setState({smokingStatus: ''});
-    else this.setState({smokingStatus: item.title});
+    else this.setState({smokingStatus: item.title}, this.checkAndAutoChange);
   };
 
   renderSmokingItem = ({item}) => {
@@ -73,18 +73,15 @@ class Step8Item extends Component {
 
   onEatingPress = (item) => {
     const {eatingStatus} = this.state;
-    const {onPress} = this.props;
     if (item.title === eatingStatus) this.setState({eatingStatus: ''});
-    else
-      this.setState({eatingStatus: item.title}, () => {
-        const {drinkingStatus, smokingStatus, eatingStatus} = this.state;
-        if (
-          drinkingStatus !== '' &&
-          smokingStatus !== '' &&
-          eatingStatus !== ''
-        )
-          onPress(8, {drinkingStatus, smokingStatus, eatingStatus});
-      });
+    else this.setState({eatingStatus: item.title}, this.checkAndAutoChange);
+  };
+
+  checkAndAutoChange = () => {
+    const {onPress} = this.props;
+    const {drinkingStatus, smokingStatus, eatingStatus} = this.state;
+    if (drinkingStatus !== '' && smokingStatus !== '' && eatingStatus !== '')
+      onPress(8, {drinkingStatus, smokingStatus, eatingStatus});
   };
 
   renderEatingItem = ({item}) => {
