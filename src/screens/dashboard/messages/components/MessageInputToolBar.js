@@ -9,8 +9,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 5,
+    borderWidth: 1,
+    borderRadius: 30,
+    marginHorizontal: 10,
   },
   primary: {
     flexDirection: 'row',
@@ -121,7 +123,7 @@ export default class MessageInputToolBar extends React.Component {
         style={[
           styles.container,
           this.props.containerStyle,
-          {position: this.state.position},
+          {position: this.state.position, borderColor: theme.borderColor},
         ]}>
         <View
           style={{
