@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
 import {Header, Icon} from 'native-base';
-import {White} from '../../themes/constantColors';
+import {Black} from '../../themes/constantColors';
 
 class NHHeader extends React.PureComponent {
   render() {
@@ -20,7 +20,7 @@ class NHHeader extends React.PureComponent {
       // Register Step Header
       let getIndex = currentIndex;
       return (
-        <Header style={styles.header} transparent androidStatusBarColor={White}>
+        <Header style={styles.header} transparent androidStatusBarColor={Black}>
           <View style={styles.container}>
             {currentIndex === 1 ? (
               <TouchableWithoutFeedback onPress={() => onLeftPress(1)}>
@@ -96,7 +96,7 @@ class NHHeader extends React.PureComponent {
     }
 
     return (
-      <Header style={styles.header} transparent androidStatusBarColor={White}>
+      <Header style={styles.header} transparent androidStatusBarColor={Black}>
         <View style={styles.container}>
           {leftView ? (
             leftView

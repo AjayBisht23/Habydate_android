@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StatusBar, View} from 'react-native';
+import {View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import regex from '../utils/regex';
 import {PINK} from '../themes/constantColors';
@@ -16,7 +16,6 @@ class Splash extends Component {
   componentDidMount(): void {
     this.bootstrapAsync();
     regex.changeStatusStyle('default');
-    StatusBar.setHidden(true);
   }
 
   bootstrapAsync = async () => {
@@ -27,7 +26,6 @@ class Splash extends Component {
       if (userToken !== null) {
         getCurrentUser()
           .then((user) => {
-            StatusBar.setHidden(false);
             let stepCompleted = user.user.stepCompleted;
             if (stepCompleted > 8) {
               let data = {token: user.user.uid, ...user.user};
@@ -46,7 +44,6 @@ class Splash extends Component {
   };
 
   openAuth = () => {
-    StatusBar.setHidden(false);
     regex.authSignOut(this);
     this.props.logoutAction();
   };

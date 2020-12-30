@@ -2,7 +2,7 @@
 
 import {Dimensions, Platform, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {TIMETEXTCOLOR} from '../themes/constantColors';
+import {Black, TIMETEXTCOLOR} from '../themes/constantColors';
 import moment from 'moment';
 import auth from '@react-native-firebase/auth';
 
@@ -71,6 +71,8 @@ const helper = {
 
   changeStatusStyle: (type) => {
     StatusBar.setBarStyle(type, true);
+    if (helper.getOS() === 'android')
+      StatusBar.setBackgroundColor(Black, false);
   },
 
   getProfilePic: (photos) => {
