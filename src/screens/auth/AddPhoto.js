@@ -16,6 +16,7 @@ import {
   showLoaderAction,
   updateUserDataAction,
 } from '../../actions';
+import * as messages from '../../utils/messages';
 
 class AddPhoto extends Component {
   lastIndex = 0;
@@ -118,20 +119,21 @@ class AddPhoto extends Component {
           this.props.hideLoaderAction();
         });
     } else {
-      this.props.updateUserDataAction(
-        uid,
-        {stepCompleted: 9, photos: []},
-        'register',
-      );
-      navigation.navigate('Congratulations', {
-        data: {...data, photos: []},
-        photoData: [
-          {
-            path:
-              'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png',
-          },
-        ],
-      });
+      alert(messages.selectProfile);
+      // this.props.updateUserDataAction(
+      //   uid,
+      //   {stepCompleted: 9, photos: []},
+      //   'register',
+      // );
+      // navigation.navigate('Congratulations', {
+      //   data: {...data, photos: []},
+      //   photoData: [
+      //     {
+      //       path:
+      //         'https://i7.uihere.com/icons/263/936/60/user-avatar-dad7b8c4dcef5018355540aed51e83ea.png',
+      //     },
+      //   ],
+      // });
     }
   };
 
