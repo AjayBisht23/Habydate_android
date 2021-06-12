@@ -130,7 +130,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.epicbae.hardik"
+        applicationId "com.vervebot.dating"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.epicbae.hardik;
+package com.vervebot.dating;
 
 import com.facebook.react.ReactActivity;
 

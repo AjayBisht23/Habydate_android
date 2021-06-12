@@ -1,4 +1,4 @@
-package com.epicbae.hardik;
+package com.vervebot.dating;
 
 import android.content.Intent;
 import android.os.Bundle;

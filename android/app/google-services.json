@@ -1,49 +1,40 @@
 {
   "project_info": {
-    "project_number": "925724026895",
-    "firebase_url": "https://epicbae-246b2.firebaseio.com",
-    "project_id": "epicbae-246b2",
-    "storage_bucket": "epicbae-246b2.appspot.com"
+    "project_number": "1014202248157",
+    "project_id": "dating-app-25717",
+    "storage_bucket": "dating-app-25717.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:925724026895:android:5b51bcf2286add22dbdb7a",
+        "mobilesdk_app_id": "1:1014202248157:android:9ba436d44c32dd281f2434",
         "android_client_info": {
-          "package_name": "com.epicbae.hardik"
+          "package_name": "com.vervebot.dating"
         }
       },
       "oauth_client": [
         {
-          "client_id": "925724026895-m3t8760ugc8sjg14ef3ejj5d3qmunhj3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.epicbae.hardik",
-            "certificate_hash": "3ebfa4a8eabad31c1fe62ad75b1e248867e0dde8"
-          }
-        },
-        {
-          "client_id": "925724026895-eqjae2u9rie08pnjttsdautkn9vba4o6.apps.googleusercontent.com",
+          "client_id": "1014202248157-cggvqovvra2gn767uhrvd4c3ul0n9d8q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB-jt5r9UeoOat1tKG2joBXxZ6NkBib2vA"
+          "current_key": "AIzaSyCh2bXKuX1gcTrpKBJ4IzZHEj7_j6ElfHs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "925724026895-eqjae2u9rie08pnjttsdautkn9vba4o6.apps.googleusercontent.com",
+              "client_id": "1014202248157-cggvqovvra2gn767uhrvd4c3ul0n9d8q.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "925724026895-ormh6dq4ku8375f7172naa9ki9c3lbf7.apps.googleusercontent.com",
+              "client_id": "1014202248157-givvhqfa3d7d9uuigmem2ek11ipocv02.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.epicbae.hardik"
+                "bundle_id": "com.vervebot.dating"
               }
             }
           ]
