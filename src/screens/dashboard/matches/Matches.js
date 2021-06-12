@@ -29,7 +29,7 @@ class Matches extends Component {
       return (
         <View style={styles.emptyView}>
           <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>
-            See people who matches with you with Legendbae Premium
+            See people who matches with you with HabyDate Premium
           </Text>
         </View>
       );

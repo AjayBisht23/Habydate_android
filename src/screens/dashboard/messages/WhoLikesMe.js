@@ -37,7 +37,7 @@ class MessagesScreen extends Component {
       return (
         <View style={styles.emptyView}>
           <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>
-            See people who likes you with Legendbae Premium
+            See people who likes you with HabyDate Premium
           </Text>
         </View>
       );

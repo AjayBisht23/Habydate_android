@@ -35,7 +35,7 @@ export function openCardModal(user, amount, packageEndDate, context) {
             amount: amount,
             currency: 'usd',
             token: tokenId,
-            description: 'Legendbae plan purchased.',
+            description: 'HabyDate plan purchased.',
           })
             .then((response) => {
               context.props.hideLoaderAction();

@@ -220,7 +220,7 @@ class Login extends Component {
                   <Text
                     style={[styles.infoText, {color: theme.subPrimaryColor}]}>
                     {' '}
-                    of Legendbae
+                    of HabyDate
                   </Text>
                 </View>
               </View>

@@ -143,8 +143,7 @@ class GetStarted extends Component {
                     ]}>
                     <FastImage
                       source={{
-                        uri:
-                          'https://icons-for-free.com/iconfiles/png/512/facebook+logo+logo+website+icon-1320190502625926346.png',
+                        uri: 'https://icons-for-free.com/iconfiles/png/512/facebook+logo+logo+website+icon-1320190502625926346.png',
                       }}
                       style={styles.socialIcon}
                     />
@@ -158,8 +157,7 @@ class GetStarted extends Component {
                     ]}>
                     <FastImage
                       source={{
-                        uri:
-                          'https://cdn4.iconfinder.com/data/icons/bettericons/354/google-2-color-512.png',
+                        uri: 'https://cdn4.iconfinder.com/data/icons/bettericons/354/google-2-color-512.png',
                       }}
                       style={styles.socialIcon}
                     />
@@ -192,7 +190,7 @@ class GetStarted extends Component {
                   <Text
                     style={[styles.infoText, {color: theme.subPrimaryColor}]}>
                     {' '}
-                    of Legendbae
+                    of HabyDate
                   </Text>
                 </View>
               </View>

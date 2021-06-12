@@ -52,7 +52,7 @@ class SeekerUsers extends Component {
       return (
         <View style={styles.emptyView}>
           <Text style={[styles.infoText, {color: theme.subPrimaryColor}]}>
-            Nearby see people with Legendbae Premium
+            Nearby see people with HabyDate Premium
           </Text>
         </View>
       );
