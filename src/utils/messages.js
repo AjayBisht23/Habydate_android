@@ -14,6 +14,7 @@ let messages = {
   enterHeight: 'Please select your height.',
   enterBodyType: 'Please select your body type.',
   enterGender: 'Please select your gender.',
+  enterIncome: 'Please select your income',
   selectProfile: 'Please select your profile picture.',
 
   logout: 'Are you sure you want to logout?',

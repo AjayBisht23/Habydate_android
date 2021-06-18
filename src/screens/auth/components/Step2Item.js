@@ -12,7 +12,11 @@ import regex from '../../../utils/regex';
 import HeightModal from './HeightModal';
 import {DatePickerDialog} from 'react-native-datepicker-dialog';
 import moment from 'moment';
-import {bodyTypeData, genderData} from '../../../json/generalCatogeryData';
+import {
+  bodyTypeData,
+  genderData,
+  incomeData,
+} from '../../../json/generalCatogeryData';
 import * as messages from '../../../utils/messages';
 
 class Step2Item extends Component {
@@ -27,19 +31,21 @@ class Step2Item extends Component {
       gender: props.data.gender,
       bodyTypeData: bodyTypeData,
       genderData: genderData,
+      income: props.data.income,
     };
   }
 
   nextPress = () => {
-    const {DoB, height, bodyType, gender} = this.state;
+    const {DoB, height, bodyType, gender, income} = this.state;
     const {onPress} = this.props;
 
     if (DoB === 'MM / DD / YYYY') alert(messages.enterDOB);
     else if (height === `0' / 00'`) alert(messages.enterHeight);
     else if (regex.isEmpty(bodyType)) alert(messages.enterBodyType);
     else if (regex.isEmpty(gender)) alert(messages.enterGender);
+    else if (regex.isEmpty(income)) alert(messages.enterIncome);
     else {
-      onPress(2, {DoB, height, bodyType, gender});
+      onPress(2, {DoB, height, bodyType, gender, income});
     }
   };
 
@@ -122,8 +128,33 @@ class Step2Item extends Component {
     );
   };
 
+  onIncomePress = (item) => {
+    this.setState({income: item.title});
+  };
+
+  renderIncomeItem = ({item}) => {
+    debugger
+    const {income} = this.state;
+    const {theme} = this.props;
+    let selected = false;
+    if (income === item.title) selected = true;
+
+    return (
+      <CommonButton
+        theme={theme}
+        container={{marginVertical: 8}}
+        backgroundColor={theme.backgroundColor}
+        borderColor={selected ? theme.pinkColor : theme.borderColor}
+        textColor={selected ? theme.pinkColor : theme.secondaryColor}
+        title={item.title}
+        onPress={() => this.onIncomePress(item)}
+      />
+    );
+  };
+
   render() {
-    const {DoB, height, bodyTypeData, genderData, modalVisible} = this.state;
+    const {DoB, height, bodyTypeData, genderData, modalVisible, income} =
+      this.state;
     const {theme} = this.props;
 
     return (
@@ -194,6 +225,17 @@ class Step2Item extends Component {
               scrollEnabled={false}
               data={genderData}
               renderItem={this.renderGenderItem}
+              keyExtractor={(item) => item.id.toString()}
+            />
+            <Text style={[styles.titleText, {color: theme.primaryColor}]}>
+              {'Annual Income'}
+            </Text>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              scrollEnabled={false}
+              data={incomeData}
+              renderItem={this.renderIncomeItem}
               keyExtractor={(item) => item.id.toString()}
             />
             <CommonButton

@@ -150,6 +150,24 @@ export const bodyTypeData = [
   },
 ];
 
+export const incomeData = [
+  {
+    id: 1,
+    title: '25,000-50,000',
+    selected: false,
+  },
+  {
+    id: 2,
+    title: '50,000-100,000',
+    selected: false,
+  },
+  {
+    id: 3,
+    title: 'Over 100,000',
+    selected: false,
+  },
+];
+
 export const genderData = [
   {
     id: 1,

@@ -31,6 +31,7 @@ class RegistrationStep extends Component {
       height: regex.isEmpty(params.height) ? `0' / 00'` : params.height,
       bodyType: regex.isEmpty(params.bodyType) ? '' : params.bodyType,
       gender: regex.isEmpty(params.gender) ? '' : params.gender,
+      income: regex.isEmpty(params.income)? '': params.income,
       sexuality: regex.isEmpty(params.sexuality) ? '' : params.sexuality,
       personality: regex.isEmpty(params.personality) ? '' : params.personality,
       education: regex.isEmpty(params.education) ? '' : params.education,
