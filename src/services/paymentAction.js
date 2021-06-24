@@ -1,5 +1,7 @@
 import stripe from 'tipsi-stripe';
 import {STRIPE_CLOUD_SERVER_URL, STRIPE_PUBLIC_KEY} from '@env';
+import {getSpecificFieldData, getUserDetail} from './userAction';
+import moment from 'moment';
 
 export function setUpStripe() {
   stripe.setOptions({
@@ -29,6 +31,30 @@ export function openCardModal(user, amount, packageEndDate, context) {
     .then((response) => {
       context.props.showLoaderAction();
       let tokenId = response.tokenId;
+      const updateDB = async () => {
+        const res = await getSpecificFieldData(user.uid);
+        console.log(res);
+        const isRenewal = res.packageEndDate;
+        const newPackageEndDate = moment(packageEndDate * 1000)
+          .add(1, 'M')
+          .unix();
+        if (isRenewal) {
+          debugger;
+          context.props.updateUserDataAction(
+            user.uid,
+            {packageEndDate},
+            'payment',
+          );
+        } else {
+          debugger;
+          context.props.updateUserDataAction(
+            user.uid,
+            {packageEndDate: newPackageEndDate},
+            'payment',
+          );
+        }
+        context.props.navigation.navigate('Home');
+      };
       if (Boolean(tokenId)) {
         if (response.livemode) {
           paymentUsingCard({
@@ -40,12 +66,8 @@ export function openCardModal(user, amount, packageEndDate, context) {
             .then((response) => {
               context.props.hideLoaderAction();
               if (Boolean(response.response)) {
-                context.props.updateUserDataAction(
-                  user.uid,
-                  {packageEndDate},
-                  'payment',
-                );
-                context.props.navigation.navigate('Home');
+                debugger;
+                updateDB();
               }
             })
             .catch((error) => {
@@ -55,12 +77,26 @@ export function openCardModal(user, amount, packageEndDate, context) {
         } else {
           context.props.hideLoaderAction();
           setTimeout(() => {
-            context.props.updateUserDataAction(
-              user.uid,
-              {packageEndDate},
-              'payment',
-            );
-            context.props.navigation.navigate('Home');
+            updateDB();
+            // debugger;
+            // const isRenewal = await getUserDetail(user.uid, 'isRenewal');
+            // if (!Boolean(isRenewal)) {
+            //   const newPackageEndDate =
+            //     packageEndDate + moment().add(1, 'M').unix();
+            //   context.props.updateUserDataAction(
+            //     user.uid,
+            //     {packageEndDate: newPackageEndDate, isRenewal: true},
+            //     'payment',
+            //   );
+            // } else {
+            //   debugger;
+            //   context.props.updateUserDataAction(
+            //     user.uid,
+            //     {packageEndDate},
+            //     'payment',
+            //   );
+            // }
+            // context.props.navigation.navigate('Home');
           }, 5);
         }
       }

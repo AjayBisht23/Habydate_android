@@ -52,6 +52,15 @@ export function getUserDetail(uid, data) {
   });
 }
 
+export async function getSpecificFieldData(uid) {
+  const res = await usersCollection.doc(uid).get();
+  if (res) {
+    return res.data()
+  } else {
+    return "error"
+  }
+  
+}
 export const getUserDataAndUpdateInFirestore = (response) => {
   return new Promise((resolve, reject) => {
     let user = response.user;

@@ -16,7 +16,7 @@ class PaymentMethod extends Component {
     super(props);
   }
 
-  componentDidMount(): void {
+  componentDidMount() {
     setUpStripe();
   }
 
@@ -30,7 +30,7 @@ class PaymentMethod extends Component {
     let params = route.params;
     let type = params.isMonth ? 'M' : 'y';
     let packageEndDate = moment().add(1, type).unix();
-    let amount = params.isMonth ? 25 : 250;
+    let amount = params.isMonth ? 29.95 : 75.95;
 
     openCardModal(user, amount, packageEndDate, this);
   };

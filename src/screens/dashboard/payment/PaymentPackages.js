@@ -127,7 +127,7 @@ class PaymentPackages extends Component {
                   <Text style={styles.packageTitleText}>{'Premium Plan'}</Text>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Text style={styles.priceText}>{`$${
-                      isMonth ? '25' : '250'
+                      isMonth ? '29.5' : '75.95'
                     }`}</Text>
                     <Text
                       style={[
