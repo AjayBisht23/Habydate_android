@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Modal, TouchableOpacity, Button} from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import regex from '../../utils/regex';
@@ -9,9 +9,59 @@ import {loginAction} from '../../actions';
 class Congratulations extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      show: false,
+      toggle1:false,
+      toggle2:false,
+      toggle3:false,
+      toggle4:false,
+      toggle5:false,
+      toggle6:false,
+      toggle7:false,
+      toggle8:false,
+      toggle10:false
+    }
   }
 
-  discoverNowPress = () => {
+  show1 = () => {
+    const newState1 = !this.state.toggle1;
+    this.setState({toggle1:newState1})
+ }
+
+ show2 = () => {
+  const newState2 = !this.state.toggle2;
+    this.setState({toggle2:newState2})
+}
+show3 = () => {
+  const newState3 = !this.state.toggle3;
+    this.setState({toggle3:newState3})
+}
+show4 = () => {
+  const newState4 = !this.state.toggle4;
+    this.setState({toggle4:newState4})
+}
+show5 = () => {
+  const newState5 = !this.state.toggle5;
+    this.setState({toggle5:newState5})
+}
+show6 = () => {
+  const newState6 = !this.state.toggle6;
+    this.setState({toggle6:newState6})
+}
+show7 = () => {
+  const newState7 = !this.state.toggle7;
+    this.setState({toggle7:newState7})
+}
+show8 = () => {
+  const newState8 = !this.state.toggle8;
+    this.setState({toggle8:newState8})
+}
+show10 = () => {
+  const newState10 = !this.state.toggle10;
+    this.setState({toggle10:newState10})
+}   
+
+discoverData = () => {
     const {route} = this.props;
     let params = route.params;
     let data = params.data;
@@ -20,6 +70,11 @@ class Congratulations extends Component {
     regex.setDashboard(parameter).then((response) => {
       if (response) this.props.loginAction(parameter);
     });
+    this.setState({show:false})
+}
+
+  discoverNowPress = () => {
+    this.setState({show:true})
   };
 
   render() {
@@ -27,6 +82,16 @@ class Congratulations extends Component {
     let params = route.params;
     let photoData = params.photoData;
     let data = params.data;
+    const {toggle1, toggle2, toggle3,toggle4,toggle5,toggle6,toggle7,toggle8,toggle10} = this.state;
+    const buttonbg1 = toggle1?"#FF1493":"gray";
+    const buttonbg2 = toggle2?"#FF1493":"gray";
+    const buttonbg3 = toggle3?"#FF1493":"gray";
+    const buttonbg4 = toggle4?"#FF1493":"gray";
+    const buttonbg5 = toggle5?"#FF1493":"gray";
+    const buttonbg6 = toggle6?"#FF1493":"gray";
+    const buttonbg7 = toggle7?"#FF1493":"gray";
+    const buttonbg8 = toggle8?"#FF1493":"gray";
+    const buttonbg10 = toggle10?"#FF1493":"gray";
 
     return (
       <View
@@ -66,6 +131,41 @@ class Congratulations extends Component {
             onPress={this.discoverNowPress}
           />
         </View>
+        <Modal transparent= {true} visible={this.state.show} animationType="slide">
+              <View style = {{backgroundColor:"#000000aa", flex:1}}>
+                 <View style={{borderRadius:20,height:"90%",backgroundColor:"#ffffff", width:"80%", top :"5%", alignSelf:"center", padding:"5%", display:"flex", justifyContent:"space-between"}}>
+                 <Text style={{alignSelf:"center", fontSize:20}}>Intrested In</Text>
+                 <TouchableOpacity  style= {{backgroundColor:"white", height: 40, borderRadius:30, borderColor:buttonbg1, borderWidth:1}} onPress = {() => this.show1()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color:buttonbg1}}>Dating</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg2}} onPress = {() => this.show2()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg2}}>Friendship</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white",height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg3}} onPress = {() => this.show3()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg3}}>Chat Buddy</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg4}} onPress = {() => this.show4()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg4}}>High Buddy</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg5}} onPress = {() => this.show5()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg5}}>Sugar Daddy</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg6}} onPress = {() => this.show6()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg6}}>Sugar Momma</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg7}} onPress = {() => this.show7()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg7}}>Sugar Baby</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg8}} onPress = {() => this.show8()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color: buttonbg8}}>Hookups</Text>
+                     </TouchableOpacity>
+                     <TouchableOpacity style= {{backgroundColor:"white", height: 40, borderRadius:30, borderWidth:1, borderColor:buttonbg10}} onPress = {() => this.show10()}>
+                       <Text style= {{alignSelf:"center", top:"20%", color:buttonbg10}}>Friends with benefits</Text>
+                     </TouchableOpacity>
+                     <Button title="Ok" color="#FF1493" onPress={() => this.discoverData()}/>
+                 </View>
+              </View>
+            </Modal>
       </View>
     );
   }
