@@ -7,6 +7,8 @@ import {
   TextInput,
   View,
   TouchableWithoutFeedback,
+  TouchableOpacity,
+  Modal, Button
 } from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -30,6 +32,7 @@ class MyProfile extends Component {
     super(props);
     let user = props.user;
     this.state = {
+      show: false,
       name: user.name,
       DoB: user.DoB,
       photos: user.photos,
@@ -79,6 +82,14 @@ class MyProfile extends Component {
       );
     }
   };
+
+  setPic = () => {
+     this.setState({show:false})
+  }
+
+  deletePic = () => {
+    this.setState({show:false})
+ }
 
   _handleTextReady = () => {};
 
@@ -261,7 +272,7 @@ class MyProfile extends Component {
                   <Icon
                     type={'Feather'}
                     name={'chevron-left'}
-                    style={{fontSize: 35, color: theme.backgroundColor}}
+                    style={{fontSize: 35, color:'pink'}}
                   />
                 </View>
               </TouchableWithoutFeedback>
@@ -271,7 +282,7 @@ class MyProfile extends Component {
                     <Icon
                       type={'Feather'}
                       name={isEdit ? 'send' : 'edit'}
-                      style={{color: theme.backgroundColor}}
+                      style={{color: 'pink'}}
                     />
                   </View>
                 </TouchableWithoutFeedback>
@@ -394,12 +405,23 @@ class MyProfile extends Component {
                 data={photos}
                 extraData={photos}
                 renderItem={({item}) => (
-                  <SquarePhotoItem theme={theme} item={item} />
+                  <TouchableOpacity onLongPress = {() => this.setState({show:true})}>
+                     <SquarePhotoItem theme={theme} item={item} />
+                  </TouchableOpacity>
                 )}
                 numColumns={3}
-                keyExtractor={(item, index) => item.public_id.toString()}
+                //keyExtractor={(item, index) => item.public_id.toString()}
               />
             </View>
+            <Modal transparent={true} visible={this.state.show} animationType="slide">
+              <View style = {{backgroundColor:"#000000aa", flex:1}}>
+                 <View style={{borderRadius:20,height:"25%",backgroundColor:"#ffffff", width:"80%", top :"30%", alignSelf:"center", padding:"5%", display:"flex", justifyContent:"space-between"}}>
+                     <Button title="SET AS PROFILE PICTURE" color="#8B008B" onPress = {() => this.setPic()}/>
+                     <Button title="DELETE" color="#8B008B" onPress = {() => this.deletePic()}/>
+                     <Button title="Cancel"  color="#8B008B" onPress = {() => this.setState({show:false})}/>
+                 </View>
+              </View>
+            </Modal>
             <TouchableWithoutFeedback onPress={() => this.openLibrary()}>
               <View
                 style={[
