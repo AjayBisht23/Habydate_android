@@ -7,6 +7,7 @@ import {
   View,
   TouchableWithoutFeedback,
   Alert,
+  Linking
 } from 'react-native';
 import {connect} from 'react-redux';
 import FastImage from 'react-native-fast-image';
@@ -60,13 +61,24 @@ class Menu extends Component {
           title: 'Terms and Conditions',
           count: 0,
         },
+
         {
           id: 9,
-          title: 'Settings',
+          title: 'Privacy policy',
           count: 0,
         },
         {
           id: 10,
+          title: 'Refund policy',
+          count: 0,
+        },
+        {
+          id: 11,
+          title: 'Settings',
+          count: 0,
+        },
+        {
+          id: 12,
           title: 'Logout',
           count: 0,
         },
@@ -91,9 +103,14 @@ class Menu extends Component {
     } else if (item.id === 6) {
     } else if (item.id === 7) {
     } else if (item.id === 8) {
+      this.termsAndCondition();
     } else if (item.id === 9) {
-      navigation.navigate('Settings');
+      this.privacyPolicy();
     } else if (item.id === 10) {
+      this.RefundPolicy();
+    } else if (item.id === 11) {
+      navigation.navigate('Settings');
+    } else if (item.id === 12) {
       this.logout();
     }
   };
@@ -116,6 +133,18 @@ class Menu extends Component {
       {cancelable: false},
     );
   };
+
+  termsAndCondition = () => {
+    Linking.openURL('http://habydate.vervebot.io/term-condition/')
+}
+
+privacyPolicy = () => {
+  Linking.openURL('http://habydate.vervebot.io/privacy-policy/')
+}
+
+RefundPolicy = () => {
+  Linking.openURL('http://habydate.vervebot.io/refund-policy/')
+}
 
   renderItem = ({item, index}) => {
     const {theme, user, notificationCount, conversationCount} = this.props;
