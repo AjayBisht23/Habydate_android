@@ -130,6 +130,17 @@ export function deleteUser(uid) {
   });
 }
 
+export function deletePhoto(photos) {
+  return new Promise((resolve, reject) => {
+    usersCollection
+      .doc(photos)
+      .delete()
+      .then(() => {
+        resolve(true);
+      });
+  });
+}
+
 export function discoverUsers(uid, location, distance) {
   return new Promise((resolve, reject) => {
     const {latitude, longitude} = location;
