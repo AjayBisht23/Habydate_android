@@ -26,6 +26,8 @@ import {
   updateUserDataAction,
 } from '../../../actions';
 import {PAGE_NAME} from '../../../utils/pageEnum';
+import {deletePhoto} from '../../../services/userAction';
+import * as messages from '../../../utils/messages';
 
 class MyProfile extends Component {
   constructor(props) {
@@ -87,9 +89,26 @@ class MyProfile extends Component {
      this.setState({show:false})
   }
 
-  deletePic = () => {
+ okClick = () => {
+    this.props.showLoaderAction();
+    deletePhoto(this.props.user.photos).then(() => {
+    this.props.hideLoaderAction();
+      regex.clearData(this);
+    });
     this.setState({show:false})
  }
+
+ deletePic = () => {
+  Alert.alert(
+    'Delete Photo',
+    messages.deleteMsg,
+    [
+      {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      {text: 'OK', onPress: this.okClick},
+    ],
+    {cancelable: false},
+  );
+};
 
   _handleTextReady = () => {};
 
