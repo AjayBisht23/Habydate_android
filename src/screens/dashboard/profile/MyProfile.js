@@ -8,7 +8,7 @@ import {
   View,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Modal, Button
+  Modal, Button,Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
