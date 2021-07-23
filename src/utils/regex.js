@@ -76,6 +76,7 @@ const helper = {
   },
 
   getProfilePic: (photos) => {
+    console.log(photos)
     if (photos !== undefined) {
       if (photos.length > 0) return photos[0].photoUrl;
       else
@@ -114,8 +115,8 @@ const helper = {
       return endDate.diff(startData, 'days');
     } else return 0;
   },
-  
-   getDaysLeft: (packageEndDate) => {
+
+  getDaysLeft: (packageEndDate) => {
     if (helper.checkPremiumUser(packageEndDate)) {
       return ('Premium Plan Activated');
     } else return ('Upgrade Premium');
