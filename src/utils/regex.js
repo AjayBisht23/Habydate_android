@@ -114,6 +114,12 @@ const helper = {
       return endDate.diff(startData, 'days');
     } else return 0;
   },
+  
+   getDaysLeft: (packageEndDate) => {
+    if (helper.checkPremiumUser(packageEndDate)) {
+      return ('Premium Plan Activated');
+    } else return ('Upgrade Premium');
+  },
 
   isPremiumUser: (packageEndDate) => {
     return helper.getDayLeft(packageEndDate) !== 0;
