@@ -8,7 +8,7 @@ import {
   View,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  Modal, Button,Alert
+  Modal, Button, Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -89,10 +89,10 @@ class MyProfile extends Component {
      this.setState({show:false})
   }
 
- okClick = () => {
-    this.props.showLoaderAction();
+  okClick = () => {
+    // this.props.showLoaderAction();
     deletePhoto(this.props.user.photos).then(() => {
-    this.props.hideLoaderAction();
+      // this.props.hideLoaderAction();
       regex.clearData(this);
     });
     this.setState({show:false})
@@ -237,7 +237,7 @@ class MyProfile extends Component {
   };
 
   render() {
-    const {theme, navigation} = this.props;
+    const {theme, navigation, user} = this.props;
     const {
       isEdit,
       name,
@@ -328,7 +328,7 @@ class MyProfile extends Component {
               style={[
                 styles.nameText,
                 {color: theme.primaryColor},
-              ]}>{`${name}${regex.getAge(DoB)}`}</Text>
+              ]}>{`${name}${regex.getAge(DoB)}`}</Text> 
             <TouchableWithoutFeedback
               onPress={() => navigation.navigate('Payments')}>
               <View style={[styles.premiumView]}>
@@ -346,8 +346,7 @@ class MyProfile extends Component {
                     style={[
                       styles.premiumText,
                       {color: theme.backgroundColor},
-                    ]}>
-                    Upgrade to Premium
+                    ]}>{regex.getDaysLeft(user.packageEndDate)}
                   </Text>
                 </View>
               </View>
