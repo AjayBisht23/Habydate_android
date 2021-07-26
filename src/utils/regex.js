@@ -116,7 +116,7 @@ const helper = {
     } else return 0;
   },
 
-  getDaysLeft: (packageEndDate) => {
+  getDayLeft: (packageEndDate) => {
     if (helper.checkPremiumUser(packageEndDate)) {
       return ('Premium Plan Activated');
     } else return ('Upgrade Premium');
